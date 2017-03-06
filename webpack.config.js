@@ -4,7 +4,7 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: './src/admin/index.html',
-  filename: './admin/index.html',
+  filename: './index.html',
   inject: 'body'
 })
 
