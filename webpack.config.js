@@ -1,10 +1,21 @@
 const path = require('path');
+const webpack = require('webpack')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: './src/admin/index.html',
   filename: './admin/index.html',
   inject: 'body'
+})
+
+
+const env = process.env.NODE_ENV
+
+
+const DefinePluginConfig = new webpack.DefinePlugin({
+  ENV: {
+    awsConfig: 'dev'
+  }
 })
 
 module.exports = {
@@ -19,5 +30,5 @@ module.exports = {
       { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ }
     ]
   },
-  plugins: [HtmlWebpackPluginConfig]
+  plugins: [HtmlWebpackPluginConfig, DefinePluginConfig]
 }
