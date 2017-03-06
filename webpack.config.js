@@ -2,15 +2,15 @@ const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
-  template: './admin/index.html',
-  filename: 'index.html',
+  template: './src/admin/index.html',
+  filename: './admin/index.html',
   inject: 'body'
 })
 
 module.exports = {
-  entry: './admin/index.js',
+  entry: './src/admin/index.js',
   output: {
-    path: path.resolve('dist'),
+    path: path.resolve('dist/admin'),
     filename: 'admin_bundle.js'
   },
   module: {
