@@ -22,13 +22,18 @@ module.exports = {
   entry: './src/admin/index.js',
   output: {
     path: path.resolve('dist/admin'),
+    publicPath: '/admin',
     filename: 'admin_bundle.js'
   },
   module: {
     loaders: [
-      { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
-      { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ }
+      { test: /\.jsx?$/, loader: 'babel-loader', exclude: /node_modules/ }
     ]
+  },
+  devServer: {
+    historyApiFallback: {
+      index: '/admin/'
+    }
   },
   plugins: [HtmlWebpackPluginConfig, DefinePluginConfig]
 }
