@@ -28,7 +28,6 @@ export function create(event, context, callback) {
 }
 
 export function show(event, context, callback) {
-  console.log(event)
   const params = {
     TableName: 'postsTable',
     Key: {
@@ -41,6 +40,20 @@ export function show(event, context, callback) {
       fail(callback);
     } else {
       succeed(data.Item, callback);
+    }
+  })
+}
+
+export function list(event, context, callback) {
+  const params = {
+    TableName: 'postsTable',
+  }
+
+  dynamoDb.scan(params, (error, data) => {
+    if(error) {
+      fail(callback);
+    } else {
+      succeed(data.Items, callback);
     }
   })
 }

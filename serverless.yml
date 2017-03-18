@@ -54,6 +54,12 @@ functions:
       - http:
           path: posts/{id}
           method: get
+  list_posts:
+    handler: posts.list
+    events:
+      - http:
+          path: posts
+          method: get
 
 # you can add CloudFormation resource templates here
 resources:
