@@ -1,6 +1,6 @@
 import shortid from 'shortid'
 import AWS from 'aws-sdk'
-import { fail, succeed } from './response'
+import { fail, succeed } from './../lib/respond'
 
 AWS.config.update({region:'us-east-1'});
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
