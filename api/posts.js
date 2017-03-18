@@ -1,5 +1,6 @@
 import shortid from 'shortid'
 import AWS from 'aws-sdk'
+import { fail, succeed } from './response'
 
 AWS.config.update({region:'us-east-1'});
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
@@ -18,26 +19,28 @@ export function create(event, context, callback) {
   }
 
   dynamoDb.put(params, (error, data) => {
-    const headers = {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': true,
-    };
-
     if (error) {
-      const response = {
-        statusCode: 500,
-        headers: headers,
-        body: JSON.stringify({status: false}),
-      };
-      callback(null, response);
-      return;
+      fail(callback);
+    } else {
+      succeed(callback, params.Item);
     }
+  })
+}
 
-    const response = {
-      statusCode: 200,
-      headers: headers,
-      body: JSON.stringify(params.Item),
+export function show(event, context, callback) {
+  console.log(event)
+  const params = {
+    TableName: 'postsTable',
+    Key: {
+      id: event.pathParameters.id
     }
-    callback(null, response);
+  }
+
+  dynamoDb.get(params, (error, data) => {
+    if(error) {
+      fail(callback);
+    } else {
+      succeed(data.Item, callback);
+    }
   })
 }

@@ -48,6 +48,12 @@ functions:
           path: posts
           method: post
           cors: true
+  show_post:
+    handler: posts.show
+    events:
+      - http:
+          path: posts/{id}
+          method: get
 
 # you can add CloudFormation resource templates here
 resources:
