@@ -15,26 +15,39 @@ service: blogengine # NOTE: update this with your service name
 
 custom:
   webBucketName: "${opt:stage, self:provider.stage}.cloudblog.1000mileweb.com"
-
+  webpack: './webpack.api.config.js'
+  webpackIncludeModules: true
 
 provider:
   name: aws
   runtime: nodejs4.3
   stage: 'dev'
   region: us-east-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:us-east-1:*:*"
 
-
-
-# you can add packaging information here
-package:
- include:
-   - handler.js
- exclude:
-   - '*'
+plugins:
+  - serverless-webpack
 
 functions:
   hello:
-    handler: handler.hello
+    handler: hello.handler
+  create_post:
+    handler: posts.create
+    events:
+      - http:
+          path: posts
+          method: post
+          cors: true
 
 # you can add CloudFormation resource templates here
 resources:
@@ -60,5 +73,33 @@ resources:
               Action:
               - s3:GetObject
               Resource: arn:aws:s3:::${self:custom.webBucketName}/*
+    PostsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: postsTable
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    PostsTableIamPolicy:
+      Type: AWS::IAM::Policy
+      DependsOn: PostsTable
+      Properties:
+        PolicyName: lambda-poststable
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:GetItem
+                - dynamodb:PutItem
+              Resource: arn:aws:dynamodb:*:*:table/my-table
+        Roles:
+          - Ref: IamRoleLambdaExecution
 
 
