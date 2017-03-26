@@ -58,6 +58,18 @@ functions:
       - http:
           path: posts
           method: get
+  update_post:
+    handler: posts.update
+    events:
+      - http:
+          path: posts/{id}
+          method: put
+  delete_post:
+    handler: posts.destroy
+    events:
+      - http:
+          path: posts/{id}
+          method: delete
 
 # you can add CloudFormation resource templates here
 resources:
