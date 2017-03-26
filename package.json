@@ -6,12 +6,13 @@
   "author": "richard@1000mileweb.com",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --port 8088",
+    "start": "webpack-dev-server --config webpack.admin.config.js --port 8088",
     "test": "jest",
-    "build-client": "webpack -p",
-    "deploy-dev": "serverless deploy && webpack && aws s3 sync dist s3://dev.cloudblog.1000mileweb.com"
+    "build-client": "webpack --config webpack.admin.config.js -p",
+    "deploy-dev": "serverless deploy && webpack --config webpack.admin.config.js && aws s3 sync dist s3://dev.cloudblog.1000mileweb.com"
   },
   "dependencies": {
+    "async": "^2.1.5",
     "aws-sdk": "^2.28.0",
     "html-webpack-plugin": "^2.28.0",
     "path": "^0.12.7",

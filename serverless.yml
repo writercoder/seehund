@@ -39,8 +39,6 @@ plugins:
   - serverless-webpack
 
 functions:
-  hello:
-    handler: hello.handler
   create_post:
     handler: posts.create
     events:
