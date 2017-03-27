@@ -33,5 +33,5 @@ module.exports = {
       index: '/admin/'
     }
   },
-  plugins: [HtmlWebpackPluginConfig, DefinePluginConfig]
+  plugins: [HtmlWebpackPluginConfig, DefinePluginConfig, new webpack.SourceMapDevToolPlugin]
 }

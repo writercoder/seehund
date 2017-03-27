@@ -1,5 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App.jsx';
+import { Provider } from 'mobx-react';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import App from './components/App.jsx';
+import {PostsStore} from '../stores/posts-store';
+
+const posts = new PostsStore();
+
+ReactDOM.render(
+  <Provider posts={posts}>
+    <App posts={posts} />
+  </Provider>,
+  document.getElementById('root'));

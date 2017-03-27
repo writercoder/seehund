@@ -1,25 +1,16 @@
 import React from 'react';
-import awsConfig from './../config/aws'
-
-console.info(awsConfig)
-
 import {
   BrowserRouter as Router,
   Route,
   Link
 } from 'react-router-dom'
+import DevTools from 'mobx-react-devtools'
+import PostsIndexPage from './posts/PostsIndexPage.jsx'
 
 const Dashboard = () => (
   <div>
     <h2>Dashboard</h2>
     <p>Welcome to your blog</p>
-  </div>
-)
-
-const PostsIndex = ({ match }) => (
-  <div>
-    <h2>Posts</h2>
-    <p>TODO List Posts</p>
   </div>
 )
 
@@ -32,18 +23,24 @@ const NewPost = () => (
 
 export default class App extends React.Component {
   render() {
+
+    const posts = this.props.posts;
+
     return (
       <Router basename="/admin">
         <div>
           <ul>
             <li><Link to="/">Dashboard</Link></li>
             <li><Link to="/posts">Posts</Link></li>
-            <li><Link to="/new_post">New Post</Link></li>
+            <li><Link to="/posts/new">New Post</Link></li>
           </ul>
 
           <Route exact path="/" component={Dashboard} />
-          <Route path="/posts" component={PostsIndex} />
-          <Route path="/new_post" component={NewPost} />
+          <Route exact path="/posts/new" component={NewPost} />
+          <Route exact path="/posts/:id" component={NewPost} />
+          <Route exact path="/posts"
+                 component={(props) => <PostsIndexPage posts={posts} {...props} /> } />
+          <DevTools />
         </div>
       </Router>
     )
