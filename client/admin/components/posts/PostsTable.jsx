@@ -1,20 +1,21 @@
 import React from 'react'
-import {observer} from "mobx-react";
+import {observer, inject} from "mobx-react";
 
 @observer
 class PostRow extends React.Component {
   render() {
     const post = this.props.post;
     return (<tr>
+      <td>{ post.id }</td>
       <td>{ post.title }</td>
       <td>{ post.content }</td>
-      <td>{ `posts/${post.id}` }</td>
+      <td><a href={ `posts/${post.id}` }>Edit</a></td>
     </tr>)
   }
 }
 
 
-@observer
+@inject("postsStore") @observer
 export default class PostsTable extends React.Component  {
   render() {
     const posts = this.props.postsStore.posts
@@ -22,6 +23,7 @@ export default class PostsTable extends React.Component  {
       <table>
         <thead>
           <tr>
+            <th>ID</th>
             <th>Title</th>
             <th>Content</th>
             <th></th>

@@ -1,14 +1,13 @@
 import React from 'react'
-import {action} from 'mobx'
-import {observer} from 'mobx-react'
+import {observer, inject} from 'mobx-react'
 import PostsTable from './PostsTable.jsx'
 
-@observer
+@inject("postsStore") @observer
 export default class PostsIndexPage extends React.Component {
 
   render() {
-    if(this.props.posts.fetched) {
-      return <PostsTable postsStore={ this.props.posts } />
+    if(this.props.postsStore.fetched) {
+      return <PostsTable />
     } else {
       return (
         <p>Loading posts</p>
@@ -17,7 +16,7 @@ export default class PostsIndexPage extends React.Component {
   }
 
   componentWillMount() {
-    this.props.posts.fetch()
+    this.props.postsStore.fetch()
   }
 
 }

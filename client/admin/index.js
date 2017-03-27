@@ -8,7 +8,7 @@ import {PostsStore} from '../stores/posts-store';
 const posts = new PostsStore();
 
 ReactDOM.render(
-  <Provider posts={posts}>
+  <Provider postsStore={posts}>
     <App posts={posts} />
   </Provider>,
   document.getElementById('root'));

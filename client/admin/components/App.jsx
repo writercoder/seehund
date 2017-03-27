@@ -4,8 +4,11 @@ import {
   Route,
   Link
 } from 'react-router-dom'
+import {observer} from "mobx-react";
 import DevTools from 'mobx-react-devtools'
 import PostsIndexPage from './posts/PostsIndexPage.jsx'
+import NewPostPage from './posts/NewPostPage.jsx'
+import PostPage from './posts/PostPage.jsx'
 
 const Dashboard = () => (
   <div>
@@ -14,17 +17,9 @@ const Dashboard = () => (
   </div>
 )
 
-const NewPost = () => (
-  <div>
-    <h2>New Posts</h2>
-    <p>TODO New Post Form</p>
-  </div>
-)
-
+@observer
 export default class App extends React.Component {
   render() {
-
-    const posts = this.props.posts;
 
     return (
       <Router basename="/admin">
@@ -36,10 +31,15 @@ export default class App extends React.Component {
           </ul>
 
           <Route exact path="/" component={Dashboard} />
-          <Route exact path="/posts/new" component={NewPost} />
-          <Route exact path="/posts/:id" component={NewPost} />
+          <Route exact path="/posts/:id" render={(props) => {
+            if(props.match.params.id == 'new') {
+              return <NewPostPage />
+            } else {
+              return <PostPage id={props.match.params.id} />
+            }
+          }} />
           <Route exact path="/posts"
-                 component={(props) => <PostsIndexPage posts={posts} {...props} /> } />
+                 render={(props) => <PostsIndexPage {...props} /> } />
           <DevTools />
         </div>
       </Router>
