@@ -20,6 +20,7 @@ export class PostsStore {
   @observable lastError
   @observable posts = []
   @observable fetched = false
+  @observable updating = false
 
   @action fetch() {
     this.fetched = false
@@ -44,9 +45,30 @@ export class PostsStore {
         }
       })
   }
-  createPost(fields) {
-    // Call API
-    // Update collection on success
+  @action createPost(fields, success) {
+    this.updating = true
+    popsicle
+      .post({
+        url: `${config.apiUrl}/posts`,
+        body: fields })
+      .use(popsicle.plugins.parse('json'))
+      .then((res) => {
+        if(res.status == 200) {
+          const post = res.body
+          const newPost = new Post(post.id, post.title, post.content, post.createdAt);
+          runInAction("Adding newly created post to collection", () => {
+            this.posts.push(newPost);
+            this.updating = false;
+            this.lastError = null;
+          })
+          success(newPost)
+        } else {
+          runInAction("Error creating post", () => {
+            this.lastError = "Error creating post"
+            this.updating = false
+          })
+        }
+      })
   }
 
   updatePost(id, fields) {
