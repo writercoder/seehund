@@ -4,20 +4,20 @@ import { observable } from 'mobx';
 export default class PostForm extends React.Component {
 
   @observable title;
-  @observable body;
+  @observable content;
 
   constructor(props) {
     super(props);
     if(!!props.post) {
       this.title = props.post.title;
-      this.body = props.post.body;
+      this.content = props.post.content;
     }
   }
 
   onSubmit = (e) => {
     this.props.onSubmit({
       title: this.title,
-      body: this.body
+      content: this.content
     })
     e.preventDefault()
   }
@@ -36,11 +36,11 @@ export default class PostForm extends React.Component {
         </p>
 
         <p>
-          <label htmlFor="postBody">Post Body</label>
+          <label htmlFor="postContent">Post Content</label>
           <textarea
-            id="postBody"
-            value={ this.body }
-            onChange={ (e) => this.body = e.target.value }></textarea>
+            id="postContent"
+            value={ this.content }
+            onChange={ (e) => this.content = e.target.value }></textarea>
         </p>
 
         <p>
