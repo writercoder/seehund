@@ -64,12 +64,14 @@ functions:
       - http:
           path: posts/{id}
           method: put
+          cors: true
   delete_post:
     handler: posts.destroy
     events:
       - http:
           path: posts/{id}
           method: delete
+          cors: true
 
 # you can add CloudFormation resource templates here
 resources:
