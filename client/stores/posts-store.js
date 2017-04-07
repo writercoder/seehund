@@ -22,6 +22,10 @@ export class PostsStore {
   @observable fetched = false
   @observable updating = false
 
+  getPost(id) {
+    return this.posts.find((p) => p.id == id)
+  }
+
   @action fetch() {
     this.fetched = false
     popsicle
@@ -32,7 +36,6 @@ export class PostsStore {
         if(res.status == 200) {
           runInAction("Updating posts from server response" , () => {
             res.body.map((post) => {
-              console.info(this)
               this.posts.push(new Post(post.id, post.title, post.content, post.createdAt))
             })
             this.fetched = true;

@@ -1,10 +1,12 @@
 import React from 'react';
-import { observable } from 'mobx';
+import { observable, extendObservable } from 'mobx';
+import {observer, inject} from "mobx-react";
 
+@observer
 export default class PostForm extends React.Component {
 
-  @observable title;
-  @observable content;
+  @observable title = '';
+  @observable content = '';
 
   constructor(props) {
     super(props);
@@ -23,7 +25,6 @@ export default class PostForm extends React.Component {
   }
 
   render() {
-
     const submitText = !!this.props.post ? 'Update Post' : 'Create Post'
 
     return (
@@ -32,7 +33,7 @@ export default class PostForm extends React.Component {
           <label htmlFor="postTitle">Post Title</label>
           <input type="text" id="postTitle"
                  value={ this.title }
-                 onChange={ (e) => this.title = e.target.value } />
+                 onChange={ (e) => { this.title = e.target.value } } />
         </p>
 
         <p>
