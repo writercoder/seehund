@@ -6,12 +6,14 @@ import PostForm from './PostForm.jsx'
 export default class PostPage extends React.Component {
 
   render() {
-    if(this.props.postsStore.fetched) {
-      const post = this.props.postsStore.getPost(this.props.id)
+    const store = this.props.postsStore;
+    if(store.fetched) {
+      const post = store.getPost(this.props.id)
+      const updatePost = (postData) => { store.updatePost(post.id, postData) }
       return (
         <div>
           <h1>Editing post: { post.title }</h1>
-          <PostForm post={ post } />
+          <PostForm post={ post } onSubmit={ updatePost } />
         </div>
       )
     } else {

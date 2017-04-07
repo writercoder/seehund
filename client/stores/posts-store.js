@@ -32,9 +32,9 @@ export class PostsStore {
       .get(`${config.apiUrl}/posts`)
       .use(popsicle.plugins.parse('json'))
       .then((res) => {
-        console.info(res)
         if(res.status == 200) {
           runInAction("Updating posts from server response" , () => {
+            this.posts = []
             res.body.map((post) => {
               this.posts.push(new Post(post.id, post.title, post.content, post.createdAt))
             })
@@ -74,9 +74,31 @@ export class PostsStore {
       })
   }
 
-  updatePost(id, fields) {
-    // Call API
-    // Update post on success
+  @action updatePost(id, fields) {
+    this.updating = true
+    popsicle
+      .put({
+        url: `${config.apiUrl}/posts/${id}`,
+        body: fields
+      })
+    .use(popsicle.plugins.parse('json'))
+    .then((res) => {
+      if(res.status == 200) {
+        const postRes = res.body
+        const post = new Post(postRes.id, postRes.title, postRes.content, postRes.createdAt);
+        const postIndex = this.posts.findIndex((p) => p.id == post.id)
+        runInAction(`Updating Post ${post.id}:: ${post.title} from server`, () => {
+          this.posts[postIndex] = post
+          this.updating = false
+          this.lastError = null
+        })
+      } else {
+        runInAction("Error creating post", () => {
+          this.lastError = "Error creating post"
+          this.updating = false
+        })
+      }
+    })
   }
 
   deletePost(id) {
