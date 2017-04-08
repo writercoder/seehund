@@ -34,11 +34,23 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
       Resource: "arn:aws:dynamodb:us-east-1:*:*"
+    - Effect: Allow
+      Action:
+        - "s3:PutObject"
+      Resource: "arn:aws:s3:::*:*"
 
 plugins:
   - serverless-webpack
 
 functions:
+
+  build_site:
+    handler: build.site
+    events:
+      - http:
+          path: build
+          method: post
+          cors: true
   create_post:
     handler: posts.create
     events:
@@ -95,7 +107,7 @@ resources:
               Effect: Allow
               Principal: "*"
               Action:
-              - s3:GetObject
+                - s3:GetObject
               Resource: arn:aws:s3:::${self:custom.webBucketName}/*
     PostsTable:
       Type: AWS::DynamoDB::Table
