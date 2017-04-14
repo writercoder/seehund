@@ -12,6 +12,10 @@ export class UserStore {
   @observable loggedInUser;
   @observable loginError;
 
+  constructor() {
+    this.loadUserFromSession();
+  }
+
   @action login(username, password) {
     const userPool = new CognitoUserPool({
       UserPoolId: config.cognito.userPoolId,
@@ -30,7 +34,6 @@ export class UserStore {
       onSuccess: (result) => {
         console.info(result)
         runInAction("Logged user in", () => {
-          this.loggedInUser = username;
           this.userToken = result.getIdToken().getJwtToken();
         })
       },
@@ -46,5 +49,25 @@ export class UserStore {
 
   @computed get loggedIn() {
     return !!this.userToken;
+  }
+
+  @action loadUserFromSession() {
+    const userPool = new CognitoUserPool({
+      UserPoolId: config.cognito.userPoolId,
+      ClientId: config.cognito.appClientId
+    });
+    const currentUser = userPool.getCurrentUser();
+
+    console.info(currentUser)
+
+    currentUser.getSession((err, session) => {
+      if(err) {
+        return;
+      }
+      runInAction("Logged user in from session", () => {
+        this.userToken = session.getIdToken().getJwtToken();
+      });
+
+    });
   }
 }
