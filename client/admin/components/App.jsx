@@ -6,8 +6,8 @@ import {
 } from 'react-router-dom'
 import {observer, inject} from "mobx-react";
 import DevTools from 'mobx-react-devtools'
-import PrivateRoute from './user/PrivateRoute.jsx'
 import LoginPage from './user/LoginPage.jsx'
+import UserWidget from './user/UserWidget.jsx'
 import PostsIndexPage from './posts/PostsIndexPage.jsx'
 import NewPostPage from './posts/NewPostPage.jsx'
 import PostPage from './posts/PostPage.jsx'
@@ -32,6 +32,8 @@ export default class App extends React.Component {
             <li><Link to="/posts">Posts</Link></li>
             <li><Link to="/posts/new">New Post</Link></li>
           </ul>
+
+          <UserWidget />
 
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/" component={Dashboard} />

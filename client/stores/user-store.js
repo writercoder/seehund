@@ -6,6 +6,7 @@ import {
 } from 'amazon-cognito-identity-js';
 import config from './../config.js'
 
+
 export class UserStore {
 
   @observable userToken;
@@ -44,7 +45,18 @@ export class UserStore {
   }
 
   @action logout() {
+    const userPool = new CognitoUserPool({
+      UserPoolId: config.cognito.userPoolId,
+      ClientId: config.cognito.appClientId
+    });
 
+    const currentUser = userPool.getCurrentUser();
+
+    if (currentUser !== null) {
+      currentUser.signOut();
+    }
+
+    this.userToken = null
   }
 
   @computed get loggedIn() {
