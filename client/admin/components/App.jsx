@@ -4,8 +4,9 @@ import {
   Route,
   Link
 } from 'react-router-dom'
-import {observer} from "mobx-react";
+import {observer, inject} from "mobx-react";
 import DevTools from 'mobx-react-devtools'
+import PrivateRoute from './user/PrivateRoute.jsx'
 import LoginPage from './user/LoginPage.jsx'
 import PostsIndexPage from './posts/PostsIndexPage.jsx'
 import NewPostPage from './posts/NewPostPage.jsx'
@@ -17,6 +18,7 @@ const Dashboard = () => (
     <p>Welcome to your blog</p>
   </div>
 )
+
 
 @observer
 export default class App extends React.Component {

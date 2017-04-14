@@ -12,6 +12,7 @@
     "deploy-dev": "serverless deploy && webpack --config webpack.admin.config.js && aws s3 sync dist s3://dev.cloudblog.1000mileweb.com"
   },
   "dependencies": {
+    "amazon-cognito-identity-js": "^1.16.0",
     "async": "^2.1.5",
     "aws-sdk": "^2.28.0",
     "babel-runtime": "^6.23.0",

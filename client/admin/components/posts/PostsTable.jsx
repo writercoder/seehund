@@ -1,5 +1,6 @@
 import React from 'react'
 import {observer, inject} from "mobx-react";
+import {Link} from 'react-router-dom'
 
 @observer
 class PostRow extends React.Component {
@@ -9,7 +10,7 @@ class PostRow extends React.Component {
       <td>{ post.id }</td>
       <td>{ post.title }</td>
       <td>{ post.content }</td>
-      <td><a href={ `posts/${post.id}` }>Edit</a></td>
+      <td><Link to={ `posts/${post.id}` }>Edit</Link></td>
     </tr>)
   }
 }
