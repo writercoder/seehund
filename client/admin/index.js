@@ -6,8 +6,9 @@ import App from './components/App.jsx';
 import {PostsStore} from '../stores/posts-store';
 import {UserStore} from '../stores/user-store'
 
-const postsStore = new PostsStore();
 const userStore = new UserStore();
+const postsStore = new PostsStore(userStore);
+
 
 ReactDOM.render(
   <Provider postsStore={postsStore} userStore={userStore}>

@@ -22,6 +22,10 @@ export class PostsStore {
   @observable fetched = false
   @observable updating = false
 
+  constructor(userStore) {
+    this.userStore = userStore;
+  }
+
   getPost(id) {
     return this.posts.find((p) => p.id == id)
   }
@@ -29,7 +33,9 @@ export class PostsStore {
   @action fetch() {
     this.fetched = false
     popsicle
-      .get(`${config.apiUrl}/posts`)
+      .get({
+        url: `${config.apiUrl}/posts`,
+        headers: this.authHeaders() })
       .use(popsicle.plugins.parse('json'))
       .then((res) => {
         if(res.status == 200) {
@@ -53,7 +59,8 @@ export class PostsStore {
     popsicle
       .post({
         url: `${config.apiUrl}/posts`,
-        body: fields })
+        body: fields,
+        headers: this.authHeaders() })
       .use(popsicle.plugins.parse('json'))
       .then((res) => {
         if(res.status == 200) {
@@ -79,7 +86,8 @@ export class PostsStore {
     popsicle
       .put({
         url: `${config.apiUrl}/posts/${id}`,
-        body: fields
+        body: fields,
+        headers: this.authHeaders()
       })
     .use(popsicle.plugins.parse('json'))
     .then((res) => {
@@ -104,6 +112,12 @@ export class PostsStore {
   deletePost(id) {
     // Call API
     // Update posts on success
+  }
+
+  authHeaders() {
+    return {
+      Authorization: this.userStore.userToken
+    };
   }
 
 }
