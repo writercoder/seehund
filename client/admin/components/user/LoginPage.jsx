@@ -1,6 +1,9 @@
 import React from 'react'
 import {observer, inject} from 'mobx-react'
 import LoginForm from './LoginForm.jsx'
+import LoggedOutLayout from '../layouts/LoggedOutLayout.jsx';
+
+import { Redirect } from 'react-router-dom'
 
 @inject("userStore") @observer
 export default class LoginPage extends React.Component {
@@ -10,9 +13,16 @@ export default class LoginPage extends React.Component {
   }
 
   render() {
+    return <LoggedOutLayout>{ this.renderContent() }</LoggedOutLayout>
+  }
+
+  renderContent() {
     if(this.props.userStore.loggedIn) {
-      // TODO: Redirect
-      return <p>You are already logged in</p>
+      // TODO: Redirect to referrer
+      return <Redirect to={{
+                pathname: '/',
+                state: { from: this.props.location }
+              }} />
     } else {
       return (
         <div>

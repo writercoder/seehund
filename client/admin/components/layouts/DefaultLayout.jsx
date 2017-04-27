@@ -16,9 +16,9 @@ export default class extends React.Component {
 
   render() {
     return (
-      <Split flex="left">
+      <Split flex="right" priority="right">
         <Sidebar colorIndex="brand" size="medium">
-          <Header pad='medium' justify='between'>
+          <Header pad="medium" justify="between">
             <Title>
               Cloud Blog Admin
             </Title>
@@ -36,9 +36,9 @@ export default class extends React.Component {
               </Anchor>
             </Menu>
           </Box>
-        </Sidebar>
-        <Box pad="large" align="center">
           <UserWidget />
+        </Sidebar>
+        <Box pad="large" >
           { this.props.children }
         </Box>
       </Split>
