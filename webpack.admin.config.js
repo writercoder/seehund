@@ -24,8 +24,30 @@ module.exports = {
     filename: 'admin_bundle.js'
   },
   module: {
-    loaders: [
-      { test: /\.jsx?$/, loader: 'babel-loader', exclude: /node_modules/ }
+    rules: [
+      {
+        test: /\.jsx?$/,
+        use: [{
+          loader: 'babel-loader'
+        }],
+        exclude: /node_modules/
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'sass-loader', options: {
+              includePaths: ['./node_modules', './node_modules/grommet/node_modules']
+            }
+          }
+        ]
+      },
     ]
   },
   devServer: {

@@ -3,6 +3,7 @@ import {observer, inject} from 'mobx-react'
 import { withRouter } from 'react-router'
 import RedirectToLogin from '../user/RedirectToLogin.jsx';
 import PostForm from './PostForm.jsx'
+import DefaultLayout from '../layouts/DefaultLayout.jsx';
 
 @inject("postsStore", "userStore") @observer @withRouter
 export default class NewPostsPage extends React.Component {
@@ -15,6 +16,10 @@ export default class NewPostsPage extends React.Component {
   }
 
   render() {
+    return <DefaultLayout>{ this.renderContent() }</DefaultLayout>
+  }
+
+  renderContent() {
     if(!this.props.userStore.loggedIn) {
       return <RedirectToLogin />
     } else {

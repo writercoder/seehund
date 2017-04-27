@@ -2,11 +2,16 @@ import React from 'react'
 import {observer, inject} from 'mobx-react'
 import PostForm from './PostForm.jsx'
 import RedirectToLogin from '../user/RedirectToLogin.jsx'
+import DefaultLayout from '../layouts/DefaultLayout.jsx';
 
 @inject("postsStore", "userStore") @observer
 export default class PostPage extends React.Component {
 
   render() {
+    return <DefaultLayout>{ this.renderContent() }</DefaultLayout>
+  }
+
+  renderContent() {
     const store = this.props.postsStore;
     if(!this.props.userStore.loggedIn) {
       return <RedirectToLogin />

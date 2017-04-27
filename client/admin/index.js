@@ -6,6 +6,8 @@ import App from './components/App.jsx';
 import {PostsStore} from '../stores/posts-store';
 import {UserStore} from '../stores/user-store'
 
+import 'grommet/scss/vanilla/index.scss';
+
 const userStore = new UserStore();
 const postsStore = new PostsStore(userStore);
 

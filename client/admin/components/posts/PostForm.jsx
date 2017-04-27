@@ -1,6 +1,9 @@
 import React from 'react';
 import { observable, extendObservable } from 'mobx';
 import {observer, inject} from "mobx-react";
+import Form from 'grommet/components/Form';
+import FormField from 'grommet/components/FormField';
+import TextInput from 'grommet/components/TextInput';
 
 @observer
 export default class PostForm extends React.Component {
@@ -28,26 +31,25 @@ export default class PostForm extends React.Component {
     const submitText = !!this.props.post ? 'Update Post' : 'Create Post'
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <p>
-          <label htmlFor="postTitle">Post Title</label>
-          <input type="text" id="postTitle"
-                 value={ this.title }
-                 onChange={ (e) => { this.title = e.target.value } } />
-        </p>
+      <Form onSubmit={this.onSubmit}>
+        <FormField label="Post Title">
+          <input type="text"
+            value={ this.title }
+            onChange={ (e) => { this.title = e.target.value } } />
+        </FormField>
 
-        <p>
-          <label htmlFor="postContent">Post Content</label>
+        <FormField label="Post Content">
           <textarea
-            id="postContent"
+            rows="15"
+            cols="50"
             value={ this.content }
             onChange={ (e) => this.content = e.target.value }></textarea>
-        </p>
+        </FormField>
 
         <p>
-          <button type="Submit">{submitText}</button>
+          <button type="submit">{submitText}</button>
         </p>
-      </form>
+      </Form>
     );
   }
 

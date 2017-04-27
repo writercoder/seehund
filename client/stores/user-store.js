@@ -70,16 +70,16 @@ export class UserStore {
     });
     const currentUser = userPool.getCurrentUser();
 
-    console.info(currentUser)
+    if(currentUser) {
+      currentUser.getSession((err, session) => {
+        if(err) {
+          return;
+        }
+        runInAction("Logged user in from session", () => {
+          this.userToken = session.getIdToken().getJwtToken();
+        });
 
-    currentUser.getSession((err, session) => {
-      if(err) {
-        return;
-      }
-      runInAction("Logged user in from session", () => {
-        this.userToken = session.getIdToken().getJwtToken();
       });
-
-    });
+    }
   }
 }
