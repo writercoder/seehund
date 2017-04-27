@@ -3,12 +3,16 @@ import {observer, inject} from 'mobx-react'
 import PostsTable from './PostsTable.jsx'
 import RedirectToLogin from '../user/RedirectToLogin.jsx'
 import DefaultLayout from '../layouts/DefaultLayout.jsx';
+import Heading from 'grommet/components/Heading';
 
 @inject("postsStore", "userStore") @observer
 export default class PostsIndexPage extends React.Component {
 
   render() {
-    return <DefaultLayout>{ this.renderContent() }</DefaultLayout>
+    return <DefaultLayout>
+      <Heading>Posts</Heading>
+      { this.renderContent() }
+    </DefaultLayout>
   }
 
   renderContent() {
