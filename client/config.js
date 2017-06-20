@@ -21,7 +21,7 @@ function config() {
   if(window.location.hostname == 'localhost') {
     return settings('dev');
   // S3 website in url means dev / staging
-  } else if(window.localhost.includes('s3-website')) {
+  } else if(window.location.includes('s3-website')) {
     return settings('dev')
   // None of these and we are in production
   } else {
