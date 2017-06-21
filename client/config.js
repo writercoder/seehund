@@ -6,7 +6,7 @@ function settings(environment) {
       apiUrl: 'http://localhost:8000'
     },
     dev: {
-      apiUrl: 'https://6f9q467z21.execute-api.us-east-1.amazonaws.com/dev',
+      apiUrl: 'https://3d9pqpc5xg.execute-api.us-east-1.amazonaws.com/dev/',
       cognito: {
         appClientId: '2lhpns8r4dmte76gthtgblibs6',
         userPoolId: 'us-east-1_Rtc8GTCeO'
