@@ -5,6 +5,10 @@ import { fail, succeed } from './../lib/respond'
 
 export function site(event, context, callback) {
   build((error) => {
-    succeed({success: true}, callback)
+    if(error) {
+      fail(error, callback)
+    } else {
+      succeed({success: true}, callback)
+    }
   })
 }

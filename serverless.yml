@@ -23,6 +23,7 @@ provider:
   runtime: nodejs4.3
   stage: 'dev'
   region: us-east-1
+  profile: cblog
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -36,14 +37,13 @@ provider:
       Resource: "arn:aws:dynamodb:us-east-1:*:*"
     - Effect: Allow
       Action:
-        - "s3:PutObject"
-      Resource: "arn:aws:s3:::*:*"
+        - "s3:*"
+      Resource: "arn:aws:s3:::*/*"
 
 plugins:
   - serverless-webpack
 
 functions:
-
   build_site:
     handler: build.site
     events:
@@ -134,7 +134,8 @@ resources:
               Action:
                 - dynamodb:GetItem
                 - dynamodb:PutItem
-              Resource: arn:aws:dynamodb:*:*:table/my-table
+                - dynamodb:Scan
+              Resource: arn:aws:dynamodb:*:*:table/postsTable
         Roles:
           - Ref: IamRoleLambdaExecution
 

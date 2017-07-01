@@ -14,12 +14,17 @@ export function build(callback) {
 
   dynamoDb.scan(params, async (error, data) => {
     if(error) {
+      error.message = "Couldn't scan dynamoDb"
       callback(error)
     } else {
-      await writePosts(data.Items)
-      await writeIndex(data.Items)
-      // await removeStalePosts(data.Items)
-      callback(null)
+      try {
+        await writePosts(data.Items)
+        await writeIndex(data.Items)
+        // await removeStalePosts(data.Items)
+        callback(null)
+      } catch(e) {
+        callback({ message: "Error writing posts", exception: e })
+      }
     }
   })
 }

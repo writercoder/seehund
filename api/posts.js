@@ -1,6 +1,7 @@
 import shortid from 'shortid'
 import AWS from 'aws-sdk'
 import { fail, succeed } from './../lib/respond'
+import { build } from './../engine/builder'
 
 AWS.config.update({region:'us-east-1'});
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
@@ -23,9 +24,15 @@ export function create(event, context, callback) {
 
   dynamoDb.put(params, (error, data) => {
     if (error) {
-      fail(callback);
+      fail(error, callback);
     } else {
-      succeed(params.Item, callback);
+      build((error) => {
+        if(error) {
+          fail(error, callback);
+        } else {
+          succeed(params.Item, callback);
+        }
+      })
     }
   })
 }

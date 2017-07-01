@@ -18,7 +18,7 @@ export default class extends React.Component {
             </Title>
           </Header>
         </Sidebar>
-        <Box pad="large" align="start" alignSelf="start" alignContent="start" full="true" justify="start">
+        <Box pad="large" align="start" alignSelf="start" alignContent="start" full={ true } justify="start">
           { this.props.children }
         </Box>
       </Split>
