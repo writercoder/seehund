@@ -1,0 +1,33 @@
+
+
+Parameters:
+  WebBucketName:
+    Type: String
+    Description: The name of the S3 bucket to create for webhosting
+
+Resources:
+  WebBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: PublicRead
+      BucketName: !Ref WebBucketName
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: error.html
+  BlogAdminUserPool:
+    Type: "AWS::Cognito::UserPool"
+    Properties:
+      UserPoolName: "Blog admin users"
+      UsernameAttributes:
+      - "email"
+  BlogAdminPoolClientApp:
+    Type: "AWS::Cognito::UserPoolClient"
+    Properties:
+      ClientName: BlogAdmin
+      UserPoolId: !Ref BlogAdminUserPool
+
+Outputs:
+  BlogAdminUserPoolId:
+    Value: !Ref BlogAdminUserPool
+  BlogAdminAppClientId:
+    Value: !Ref BlogAdminPoolClientApp

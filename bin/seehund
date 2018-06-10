@@ -1,0 +1,40 @@
+#!/usr/bin/env node
+
+const assert = require('assert');
+const program = require('caporal');
+const camelCase = require('camelcase');
+const createCommand = require('../commands/create');
+
+
+const CamelCase = (s) => camelcase(s, {pascalCase: true})
+
+program
+  .command('create', 'Create a new blog in the cloud.')
+  .argument('<title>', 'The title of the blog.')
+  .option('-b --bucket-name <bucketName>',
+          'S3 web bucket name',
+          undefined, undefined, true)
+  .option('-s --stack-name <stackName>',
+          'AWS Stack Name - defaults to "SeehundBlog-<TitleCamelCase>"')
+  .option('-r --region <region>',
+          'AWS Region', undefined, 'us-east-1')
+  .action((args, options, logger) => {
+    console.log(args, options);
+
+    const { title } = args;
+    const { bucketName, stackName, region } = options;
+
+    createCommand({
+      title,
+      bucketName,
+      region,
+      stackName: stackName || `SeehundBlog-${camelCase(title)}`
+    });
+  })
+
+program.parse(process.argv)
+
+// if (!process.argv.slice(2).length) {
+//   program.outputHelp();
+// }
+
