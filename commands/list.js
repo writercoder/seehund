@@ -1,22 +1,7 @@
 const AWS = require('aws-sdk');
 
-const getTag = (stack, key) => {
-  return stack.Tags.find(tag => tag.Key == key);
-}
+const { getSeeblogTags } = require('./stack-utils');
 
-const getSeeblogTags = (stack) => {
-  const seeblogTag = getTag(stack, 'seeblog');
-  if(!seeblogTag) {
-    return null;
-  }
-
-  const titleTag = getTag(stack, 'seeblog-title');
-
-  return {
-    seeblog: seeblogTag.Value,
-    seeblogTitle: titleTag.Value
-  }
-}
 
 const listStacks = ({region}) => {
   const cloudformation = new AWS.CloudFormation({region});
