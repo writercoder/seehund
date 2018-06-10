@@ -5,6 +5,7 @@ const program = require('caporal');
 const camelCase = require('camelcase');
 const createCommand = require('../commands/create');
 const destroyCommand = require('../commands/destroy');
+const listCommand = require('../commands/list');
 
 const CamelCase = (s) => camelcase(s, {pascalCase: true})
 
@@ -31,6 +32,16 @@ program
       stackName: stackName || `SeehundBlog-${camelCase(title)}`
     });
   })
+
+program
+  .command('list', 'List all Seehund blogs in AWS account and region')
+  .option('-r --region <region>',
+          'AWS Region', undefined, 'us-east-1')
+  .action((args, options, logger) => {
+    const { region } = options;
+    listCommand({region});
+  });
+
 
 program
   .command('destroy', 'Destroy all cloud resources')
