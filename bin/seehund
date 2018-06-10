@@ -6,6 +6,7 @@ const camelCase = require('camelcase');
 const createCommand = require('../commands/create');
 const destroyCommand = require('../commands/destroy');
 const listCommand = require('../commands/list');
+const installApiCommand = require('../commands/install-api');
 
 const CamelCase = (s) => camelcase(s, {pascalCase: true})
 
@@ -52,6 +53,17 @@ program
     const { stackName } = args;
     const { region } = options;
     destroyCommand({stackName, region});
+  });
+
+program
+  .command('install_api', 'Installs the API')
+  .argument('<blogName>', 'Blog name to install')
+  .option('-r --region <region>',
+          'AWS Region', undefined, 'us-east-1')
+  .action((args, options, logger) => {
+    const { blogName } = args;
+    const { region } = options;
+    installApiCommand({blogName, region});
   });
 
 program.parse(process.argv)
