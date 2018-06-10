@@ -11,13 +11,16 @@ const shortIdForS3 = () => {
 
 const createCoreStack = ({
   title,
+  blogName,
   bucketName,
   region
 }, callback) => {
   const cloudformation = new AWS.CloudFormation({region});
   const templateBody = fs.readFileSync(path.join(__dirname, '../cloudformation/seeblog.yml'), 'utf8')
 
-  const blogName = naming.blogNameFromTitle(title);
+  if (typeof blogName === 'undefined') {
+    blogName = naming.blogNameFromTitle(title);
+  }
   const stackName = naming.stackName(blogName);
 
   let webBucketName;
@@ -41,7 +44,19 @@ const createCoreStack = ({
       Key: 'seeblog-title',
       Value: title
     }]
-  }, callback)
+  }, (error, data) => {
+    if(error) callback(error);
+
+    const { StackId } = data;
+    console.log(`Creating stack with id ${StackId}`);
+    console.log('Waiting for completion');
+    cloudformation.waitFor('stackCreateComplete', { StackName: StackId }, (err, data) => {
+      if(error) callback(error);
+      console.log('Stack created!');
+      callback(null, data);
+    })
+
+  })
 };
 
 
