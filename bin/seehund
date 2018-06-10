@@ -8,6 +8,7 @@ const createCoreCommand = require('../commands/create-core-stack');
 const destroyCommand = require('../commands/destroy');
 const destroyCoreCommand = require('../commands/destroy-core-stack');
 const listCommand = require('../commands/list');
+const showCommand = require('../commands/show');
 const installApiCommand = require('../commands/install-api');
 
 program
@@ -82,6 +83,17 @@ program
   .action((args, options, logger) => {
     const { region } = options;
     listCommand({region});
+  });
+
+program
+  .command('show', 'Show information about a seehund blog')
+  .argument('<blogName>', 'Blog to show')
+  .option('-r --region <region>',
+          'AWS Region', undefined, 'us-east-1')
+  .action((args, options, logger) => {
+    const { blogName } = args;
+    const { region } = options;
+    showCommand({blogName, region});
   });
 
 
