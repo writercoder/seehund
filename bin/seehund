@@ -1,14 +1,43 @@
 #!/usr/bin/env node
 
 const assert = require('assert');
+const { camelize } = require('inflection')
 const program = require('caporal');
-const camelCase = require('camelcase');
 const createCommand = require('../commands/create');
+const createCoreCommand = require('../commands/create-core-stack');
 const destroyCommand = require('../commands/destroy');
 const listCommand = require('../commands/list');
 const installApiCommand = require('../commands/install-api');
 
-const CamelCase = (s) => camelcase(s, {pascalCase: true})
+program
+  .command('create_core', 'Create core resources for a new blog in the cloud.')
+  .argument('<title>', 'The title of the blog.')
+  .option('-n --name <name>',
+          'Logical name of the blog. Defaults to "<TitleCamelCase>"')
+  .option('-b --bucket-name <bucketName>',
+          'S3 web bucket name. Default to auto generated.')
+  .option('-r --region <region>',
+          'AWS Region', undefined, 'us-east-1')
+  .action((args, options, logger) => {
+    console.log(args, options);
+
+    const { title } = args;
+    const { bucketName, stackName, region } = options;
+
+    createCoreCommand({
+      title,
+      bucketName,
+      region,
+    }, (err, data) => {
+      if(err) {
+        console.log('Error creating stack');
+        console.info(err)
+      } else {
+        console.log(`Created stack with id ${data.StackId}`)
+      }
+    });
+  });
+
 
 program
   .command('create', 'Create a new blog in the cloud.')
@@ -30,7 +59,7 @@ program
       title,
       bucketName,
       region,
-      stackName: stackName || `SeehundBlog-${camelCase(title)}`
+      stackName: stackName || `SeehundBlog-${camelize(title)}`
     });
   })
 

@@ -10,7 +10,7 @@ const createStack = ({
   region
 }, callback) => {
   const cloudformation = new AWS.CloudFormation({region});
-  const templateBody = fs.readFileSync(path.join(__dirname, '../cloudformation/cloudblog.yml'), 'utf8')
+  const templateBody = fs.readFileSync(path.join(__dirname, '../cloudformation/seeblog.yml'), 'utf8')
 
   cloudformation.createStack({
     StackName: stackName,

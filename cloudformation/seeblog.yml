@@ -27,7 +27,7 @@ Resources:
       UserPoolId: !Ref BlogAdminUserPool
 
 Outputs:
-  BlogAdminUserPoolId:
+  SeeBlogAdminUserPoolId:
     Value: !Ref BlogAdminUserPool
-  BlogAdminAppClientId:
+  SeeBlogAdminAppClientId:
     Value: !Ref BlogAdminPoolClientApp
