@@ -6,6 +6,8 @@ import { build } from './../engine/builder'
 AWS.config.update({region:'us-east-1'});
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
+const postsTableName = process.env.POSTS_TABLE;
+
 export function create(event, context, callback) {
   const data = JSON.parse(event.body);
 
@@ -13,7 +15,7 @@ export function create(event, context, callback) {
   // await builder.buildPost(post)
 
   const params = {
-    TableName: 'postsTable',
+    TableName: postsTableName,
     Item: {
       id: shortid.generate(),
       title: data.title,
@@ -43,7 +45,7 @@ export function show(event, context, callback) {
   // succeed(post, callback);
 
   const params = {
-    TableName: 'postsTable',
+    TableName: postsTableName,
     Key: {
       id: event.pathParameters.id
     }
@@ -60,7 +62,7 @@ export function show(event, context, callback) {
 
 export function list(event, context, callback) {
   const params = {
-    TableName: 'postsTable',
+    TableName: postsTableName,
   }
 
   dynamoDb.scan(params, (error, data) => {
@@ -75,7 +77,7 @@ export function list(event, context, callback) {
 export function update(event, context, callback) {
   const data = JSON.parse(event.body);
   const params = {
-    TableName: 'postsTable',
+    TableName: postsTableName,
     Key: {
       id: event.pathParameters.id
     },
@@ -98,7 +100,7 @@ export function update(event, context, callback) {
 
 export function destroy(event, context, callback) {
   const params = {
-    TableName: 'postsTable',
+    TableName: postsTableName,
     Key: {
       id: event.pathParameters.id
     }
