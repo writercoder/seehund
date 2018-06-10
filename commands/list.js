@@ -1,12 +1,22 @@
 const AWS = require('aws-sdk');
 
-const getSeehundBlog = (stack) => {
-  const seehundTag = stack.Tags.find(tag => tag.Key === "SeehundBlog");
+const getTag = (stack, key) => {
+  return stack.Tags.find(tag => tag.Key == key);
+}
 
-  if(seehundTag) {
-    return seehundTag.Value;
+const getSeeblogTags = (stack) => {
+  const seeblogTag = getTag(stack, 'seeblog');
+  if(!seeblogTag) {
+    return null;
   }
-};
+
+  const titleTag = getTag(stack, 'seeblog-title');
+
+  return {
+    seeblog: seeblogTag.Value,
+    seeblogTitle: titleTag.Value
+  }
+}
 
 const listStacks = ({region}) => {
   const cloudformation = new AWS.CloudFormation({region});
@@ -17,14 +27,13 @@ const listStacks = ({region}) => {
       console.info(err)
     } else {
       data.Stacks.forEach(stack => {
-        const blog = getSeehundBlog(stack);
-        if(blog) {
-          console.log(blog);
+        const tags = getSeeblogTags(stack);
+        if(tags) {
+          console.log(`${tags.seeblog} ~~ ${tags.seeblogTitle}`)
         }
       });
     }
   })
 }
-
 
 module.exports = listStacks;
