@@ -6,6 +6,7 @@ const program = require('caporal');
 const createCommand = require('../commands/create');
 const createCoreCommand = require('../commands/create-core-stack');
 const destroyCommand = require('../commands/destroy');
+const destroyCoreCommand = require('../commands/destroy-core-stack');
 const listCommand = require('../commands/list');
 const installApiCommand = require('../commands/install-api');
 
@@ -36,6 +37,17 @@ program
         console.log(`Created stack with id ${data.StackId}`)
       }
     });
+  });
+
+program
+  .command('destroy_core', 'Destroy all cloud resources')
+  .argument('<blogName>', 'Blog to destroy')
+  .option('-r --region <region>',
+          'AWS Region', undefined, 'us-east-1')
+  .action((args, options, logger) => {
+    const { blogName } = args;
+    const { region } = options;
+    destroyCoreCommand({blogName, region});
   });
 
 
@@ -75,13 +87,13 @@ program
 
 program
   .command('destroy', 'Destroy all cloud resources')
-  .argument('<stackName>', 'Stack name to destroy')
+  .argument('<blogName>', 'Blog to destroy')
   .option('-r --region <region>',
           'AWS Region', undefined, 'us-east-1')
   .action((args, options, logger) => {
-    const { stackName } = args;
+    const { blogName } = args;
     const { region } = options;
-    destroyCommand({stackName, region});
+    destroyCommand({blogName, region});
   });
 
 program
