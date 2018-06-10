@@ -1,29 +1,17 @@
-# Welcome to Serverless!
-#
-# This file is the main config file for your service.
-# It's very minimal at this point and uses default values.
-# You can always add more config options for more control.
-# We've included some commented out config examples here.
-# Just uncomment any of them to get that config option.
-#
-# For full config options, check the docs:
-#    docs.serverless.com
-#
-# Happy Coding!
 
-service: blogengine # NOTE: update this with your service name
+service: seehund-blog-api-${env:SEEHUND_BLOG}
 
 custom:
-  webBucketName: "${opt:stage, self:provider.stage}.cloudblog.1000mileweb.com"
   webpack: './webpack.api.config.js'
   webpackIncludeModules: true
 
 provider:
   name: aws
-  runtime: nodejs4.3
+  runtime: nodejs6.10
   stage: 'dev'
-  region: us-east-1
-  profile: cblog
+  region: ${opt:region, 'us-east-1'}
+  environment:
+    POSTS_TABLE: ${env:SEEHUND_BLOG}-postsTable
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -34,7 +22,7 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:us-east-1:*:*"
+      Resource: "arn:aws:dynamodb:${opt:region, 'us-east-1'}:*:*"
     - Effect: Allow
       Action:
         - "s3:*"
@@ -88,31 +76,10 @@ functions:
 # you can add CloudFormation resource templates here
 resources:
   Resources:
-    WebHostBucket:
-      Type: AWS::S3::Bucket
-      Properties:
-        BucketName: ${self:custom.webBucketName}
-        AccessControl: PublicRead
-        WebsiteConfiguration:
-          IndexDocument: index.html
-          ErrorDocument: index.html
-    WebHostBucketPolicy:
-      Type: AWS::S3::BucketPolicy
-      Properties:
-        Bucket:
-          Ref: WebHostBucket
-        PolicyDocument:
-          Statement:
-            - Sid: PublicReadGetObject
-              Effect: Allow
-              Principal: "*"
-              Action:
-                - s3:GetObject
-              Resource: arn:aws:s3:::${self:custom.webBucketName}/*
     PostsTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: postsTable
+        TableName: ${env:SEEHUND_BLOG}-postsTable
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
@@ -135,7 +102,7 @@ resources:
                 - dynamodb:GetItem
                 - dynamodb:PutItem
                 - dynamodb:Scan
-              Resource: arn:aws:dynamodb:*:*:table/postsTable
+              Resource: arn:aws:dynamodb:*:*:table/${env:SEEHUND_BLOG}-postsTable
         Roles:
           - Ref: IamRoleLambdaExecution
 
