@@ -6,12 +6,11 @@ const AWS = require('aws-sdk');
 const createStack = ({
   stackName,
   bucketName,
+  title,
   region
 }, callback) => {
   const cloudformation = new AWS.CloudFormation({region});
   const templateBody = fs.readFileSync(path.join(__dirname, '../cloudformation/cloudblog.yml'), 'utf8')
-
-  console.info(templateBody)
 
   cloudformation.createStack({
     StackName: stackName,
@@ -19,6 +18,10 @@ const createStack = ({
     Parameters: [{
       ParameterKey: "WebBucketName",
       ParameterValue: bucketName
+    }],
+    Tags: [{
+      Key: 'SeehundBlog',
+      Value: title
     }]
   }, callback)
 };
@@ -33,6 +36,7 @@ const create = ({
   createStack({
     stackName,
     bucketName,
+    title,
     region
   }, (err, data) => {
     if(err) {
