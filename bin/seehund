@@ -4,7 +4,7 @@ const assert = require('assert');
 const program = require('caporal');
 const camelCase = require('camelcase');
 const createCommand = require('../commands/create');
-
+const destroyCommand = require('../commands/destroy');
 
 const CamelCase = (s) => camelcase(s, {pascalCase: true})
 
@@ -32,9 +32,17 @@ program
     });
   })
 
+program
+  .command('destroy', 'Destroy all cloud resources')
+  .argument('<stackName>', 'Stack name to destroy')
+  .option('-r --region <region>',
+          'AWS Region', undefined, 'us-east-1')
+  .action((args, options, logger) => {
+    const { stackName } = args;
+    const { region } = options;
+    destroyCommand({stackName, region});
+  });
+
 program.parse(process.argv)
 
-// if (!process.argv.slice(2).length) {
-//   program.outputHelp();
-// }
 
