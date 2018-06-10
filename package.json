@@ -9,7 +9,7 @@
     "start": "webpack-dev-server --config webpack.admin.config.js --port 8088",
     "test": "jest",
     "build-client": "webpack --config webpack.admin.config.js -p",
-    "deploy-dev": "serverless deploy && webpack --config webpack.admin.config.js && aws s3 sync dist s3://dev.cloudblog.1000mileweb.com"
+    "deploy-dev": "serverless deploy && webpack --config webpack.admin.config.js && aws --profile cblog s3 sync dist s3://dev.cloudblog.1000mileweb.com"
   },
   "dependencies": {
     "amazon-cognito-identity-js": "^1.16.0",
