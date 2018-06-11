@@ -31,3 +31,5 @@ Outputs:
     Value: !Ref BlogAdminUserPool
   SeeBlogAdminAppClientId:
     Value: !Ref BlogAdminPoolClientApp
+  SeeBlogWebBucketName: 
+    Value: !Ref WebBucketName

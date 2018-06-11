@@ -7,7 +7,7 @@ const buildAdmin = ({
   blogName,
   appClientId,
   userPoolId
-}) => {
+}, callback) => {
 
   const DefinePluginConfig = new webpack.DefinePlugin({
     seeblog: {
@@ -28,11 +28,9 @@ const buildAdmin = ({
 
   compiler.run((err, stats) => {
     if(err || stats.hasErrors()) {
-      console.log('Error compiling')
-      console.log(err)
+      callback(err)
     } else {
-      console.log('Compilation suceeded')
-      console.log(stats.toString())
+      callback(null, stats)
     }
   })
 }

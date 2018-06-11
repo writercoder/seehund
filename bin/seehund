@@ -11,6 +11,9 @@ const listCommand = require('../commands/list');
 const showCommand = require('../commands/show');
 const installApiCommand = require('../commands/install-api');
 const buildAdminCommand = require('../commands/build-admin');
+const uploadAdminCommand = require('../commands/upload-admin');
+
+const { getApiUrl } = require('../commands/get-config');
 
 program
   .command('create_core', 'Create core resources for a new blog in the cloud.')
@@ -56,24 +59,15 @@ program
 program
   .command('create', 'Create a new blog in the cloud.')
   .argument('<title>', 'The title of the blog.')
-  .option('-b --bucket-name <bucketName>',
-          'S3 web bucket name',
-          undefined, undefined, true)
-  .option('-s --stack-name <stackName>',
-          'AWS Stack Name - defaults to "SeehundBlog-<TitleCamelCase>"')
   .option('-r --region <region>',
           'AWS Region', undefined, 'us-east-1')
   .action((args, options, logger) => {
-    console.log(args, options);
-
     const { title } = args;
-    const { bucketName, stackName, region } = options;
+    const { region } = options;
 
     createCommand({
       title,
-      bucketName,
-      region,
-      stackName: stackName || `SeehundBlog-${camelize(title)}`
+      region
     });
   })
 
@@ -95,6 +89,24 @@ program
     const { blogName } = args;
     const { region } = options;
     showCommand({blogName, region});
+  });
+
+program
+  .command('show_api_url', 'Show information about a seehund blog')
+  .argument('<blogName>', 'Blog to show')
+  .option('-r --region <region>',
+          'AWS Region', undefined, 'us-east-1')
+  .action((args, options, logger) => {
+    const { blogName } = args;
+    const { region } = options;
+    getApiUrl({blogName, region}, (err, apiUrl) => {
+      if(err) {
+        console.log('error getting api url')
+        console.info(err);
+      } else {
+        console.log(`API URL: ${apiUrl}`)
+      }
+    });
   });
 
 
@@ -132,6 +144,19 @@ program
     const userPoolId = 'us-east-1_V9cE8RZWG';
     buildAdminCommand({blogName, appClientId, userPoolId});
   });
+
+program
+  .command('upload_admin', 'Uploads the admin system to the web bucket')
+  .argument('<blogName>', 'Blog name to upload admin for')
+  .option('-r --region <region>',
+          'AWS Region', undefined, 'us-east-1')
+  .action((args, options, logger) => {
+    const { blogName } = args;
+    const { region } = options;
+    const bucketName = 'this-is-the-future-fk4g3m2j5';
+    uploadAdminCommand({blogName, bucketName});
+  });
+
 
 program.parse(process.argv)
 

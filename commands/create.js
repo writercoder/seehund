@@ -2,51 +2,68 @@ const fs = require('fs');
 const path = require('path');
 const AWS = require('aws-sdk');
 
+const naming = require('./naming');
+const { getCoreStackConfig, getApiUrl } = require('./get-config');
 
-const createStack = ({
-  stackName,
-  bucketName,
-  title,
-  region
-}, callback) => {
-  const cloudformation = new AWS.CloudFormation({region});
-  const templateBody = fs.readFileSync(path.join(__dirname, '../cloudformation/seeblog.yml'), 'utf8')
-
-  cloudformation.createStack({
-    StackName: stackName,
-    TemplateBody: templateBody,
-    Parameters: [{
-      ParameterKey: "WebBucketName",
-      ParameterValue: bucketName
-    }],
-    Tags: [{
-      Key: 'SeehundBlog',
-      Value: title
-    }]
-  }, callback)
-};
+const createCore = require('./create-core-stack');
+const installApi = require('./install-api');
+const buildAdmin = require('./build-admin');
+const uploadAdmin = require('./upload-admin');
 
 
 const create = ({
   title,
-  stackName,
-  bucketName,
   region
-}) => {
-  createStack({
-    stackName,
-    bucketName,
-    title,
-    region
-  }, (err, data) => {
-    if(err) {
-      console.log('Error creating stack');
-      console.info(err)
-    } else {
-      console.log(`Created stack with id ${data.StackId}`)
-    }
-  });
-};
+}, callback) => {
+  if (typeof blogName === 'undefined') {
+    blogName = naming.blogNameFromTitle(title);
+  }
 
+  createCore({title, blogName, region}, (err, data) => {
+    if(err) return callback(err);
+
+    console.log('CREATED CORE STACK');
+
+    getCoreStackConfig({blogName, region}, (err, config) => {
+      if(err) return callback(err);
+
+      console.log('GOT STACK CONFIG');
+      console.info(config)
+
+      installApi({blogName, region}, (err) => {
+        if(err) return callback(err);
+
+        console.log('INSTALLED API');
+
+        getApiUrl({blogName, region}, (err, apiUrl) => {
+          if(err) return callback(err);
+
+          console.log('GOT API URL');
+          console.info(apiUrl)
+
+          const buildAdminConfig = {
+            blogName,
+            region,
+            apiUrl,
+            bucketName: config.SeeBlogWebBucketName,
+            appClientId: config.SeeBlogAdminAppClientId,
+            userPoolId: config.SeeBlogAdminUserPoolId
+          }
+
+          buildAdmin(buildAdminConfig, (err, data) => {
+            if(err) return callback(err);
+            console.log('BUILT ADMIN');
+            uploadAdmin({
+              blogName,
+              bucketName: config.SeeBlogWebBucketName}, (err) => {
+                if(err) return callback(err);
+                console.log('UPLOADED ADMIN')
+              })
+          })
+        })
+      })
+    })
+  })
+}
 
 module.exports = create;

@@ -12,9 +12,21 @@ const getSeeblogTags = (stack) => {
 
   return {
     seeblog: seeblogTag.Value,
-    seeblogTitle: titleTag.Value
+    seeblogTitle: titleTag && titleTag.Value
   }
 };
+
+const getOutput = (stack, key) => {
+  return stack.Outputs.find(output => output.OutputKey == key)
+}
+
+const getOutputValue = (stack, key) => {
+  const output = getOutput(stack, key);
+
+  if(output) {
+    return output.OutputValue;
+  }
+}
 
 const getOutputs = (stack) => {
   const outputs = {};
@@ -24,8 +36,15 @@ const getOutputs = (stack) => {
   return outputs;
 }
 
+const getSeeblogInfo = (stack) => {
+  return Object.assign(getOutputs(stack), getSeeblogTags(stack));
+}
+
 module.exports = {
   getTag,
   getSeeblogTags,
-  getOutputs
+  getOutput,
+  getOutputValue,
+  getOutputs,
+  getSeeblogInfo
 };
