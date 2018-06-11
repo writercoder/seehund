@@ -19,7 +19,7 @@ const DefinePluginConfig = new webpack.DefinePlugin({
 module.exports = {
   entry: './client/admin/index.js',
   output: {
-    path: path.resolve('dist/admin'),
+    path: path.resolve('dist/dev/admin'),
     publicPath: '/admin',
     filename: 'admin_bundle.js'
   },

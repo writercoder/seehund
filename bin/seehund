@@ -130,7 +130,7 @@ program
     const { region } = options;
     const appClientId = '6fj9o9lt8j4hqn9ed46s3vheth';
     const userPoolId = 'us-east-1_V9cE8RZWG';
-    buildAdminCommand({appClientId, userPoolId});
+    buildAdminCommand({blogName, appClientId, userPoolId});
   });
 
 program.parse(process.argv)
