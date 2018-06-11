@@ -1,5 +1,5 @@
 
-service: seehund-blog-api-${env:SEEHUND_BLOG}
+service: seeblog-api-${env:SEEHUND_BLOG}
 
 custom:
   webpack: './webpack.api.config.js'
@@ -13,8 +13,7 @@ provider:
   environment:
     POSTS_TABLE: ${env:SEEHUND_BLOG}-postsTable
   stackTags:
-    seeblog: ${env:SEEHUND_BLOG}
-    seeblogRole: 'api'
+    seeblogApi: ${env:SEEHUND_BLOG}
   iamRoleStatements:
     - Effect: Allow
       Action:
