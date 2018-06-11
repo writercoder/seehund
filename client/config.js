@@ -8,8 +8,8 @@ function settings(environment) {
     dev: {
       apiUrl: 'https://3d9pqpc5xg.execute-api.us-east-1.amazonaws.com/dev/',
       cognito: {
-        appClientId: '2lhpns8r4dmte76gthtgblibs6',
-        userPoolId: 'us-east-1_Rtc8GTCeO'
+        appClientId: seeblog.adminAppClientId,
+        userPoolId: seeblog.adminUserPoolId
       }
     }
   }

@@ -10,6 +10,7 @@ const destroyCoreCommand = require('../commands/destroy-core-stack');
 const listCommand = require('../commands/list');
 const showCommand = require('../commands/show');
 const installApiCommand = require('../commands/install-api');
+const buildAdminCommand = require('../commands/build-admin');
 
 program
   .command('create_core', 'Create core resources for a new blog in the cloud.')
@@ -117,6 +118,19 @@ program
     const { blogName } = args;
     const { region } = options;
     installApiCommand({blogName, region});
+  });
+
+program
+  .command('build_admin', 'Builds the admin system with webpack, supplying cloud resource configuration')
+  .argument('<blogName>', 'Blog name to build admin for')
+  .option('-r --region <region>',
+          'AWS Region', undefined, 'us-east-1')
+  .action((args, options, logger) => {
+    const { blogName } = args;
+    const { region } = options;
+    const appClientId = '6fj9o9lt8j4hqn9ed46s3vheth';
+    const userPoolId = 'us-east-1_V9cE8RZWG';
+    buildAdminCommand({appClientId, userPoolId});
   });
 
 program.parse(process.argv)
