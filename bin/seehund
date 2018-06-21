@@ -53,7 +53,13 @@ program
   .action((args, options, logger) => {
     const { blogName } = args;
     const { region } = options;
-    destroyCoreCommand({blogName, region});
+    destroyCoreCommand({blogName, region}, (err) => {
+      if(err) {
+        console.log('Error deleting stack')
+      } else {
+        console.log('Deleted stack')
+      }
+    });
   });
 
 

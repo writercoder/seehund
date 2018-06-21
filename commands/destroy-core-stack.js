@@ -2,7 +2,7 @@ const AWS = require('aws-sdk');
 
 const naming = require('./naming');
 
-const destroyCoreStack = ({blogName, region}) => {
+const destroyCoreStack = ({blogName, region}, callback) => {
   const cloudformation = new AWS.CloudFormation({region});
 
   const stackName = naming.stackName(blogName);
@@ -12,9 +12,12 @@ const destroyCoreStack = ({blogName, region}) => {
   }, (err, data) => {
     if(err) {
       console.log('Error deleting stack');
-      console.info(err)
+      callback(err)
     } else {
-      console.log('Successfully deleted stack');
+      cloudformation.waitFor('stackDeleteComplete', {StackName: stackName}, (err, data) => {
+        if(err) callback(err);
+        callback(null, data);
+      })
     }
   });
 };
