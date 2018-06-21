@@ -6,6 +6,7 @@ const program = require('caporal');
 const createCommand = require('../commands/create');
 const createCoreCommand = require('../commands/create-core-stack');
 const destroyCommand = require('../commands/destroy');
+const deleteBucketCommand = require('../commands/delete-bucket');
 const destroyCoreCommand = require('../commands/destroy-core-stack');
 const listCommand = require('../commands/list');
 const showCommand = require('../commands/show');
@@ -105,6 +106,24 @@ program
         console.info(err);
       } else {
         console.log(`API URL: ${apiUrl}`)
+      }
+    });
+  });
+
+
+program
+  .command('destroy_bucket', 'Destroy the web bucket')
+  .argument('<blogName>', 'Blog to destroy')
+  .option('-r --region <region>',
+          'AWS Region', undefined, 'us-east-1')
+  .action((args, options, logger) => {
+    const { blogName } = args;
+    const { region } = options;
+    deleteBucketCommand({blogName, region}, (err) => {
+      if(err) {
+        console.log('Error deleting bucket')
+      } else {
+        console.log('Deleted bucket')
       }
     });
   });
