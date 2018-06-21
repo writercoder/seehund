@@ -1,18 +1,27 @@
 const AWS = require('aws-sdk');
 
-const destroy = ({stackName, region}) => {
-  const cloudformation = new AWS.CloudFormation({region});
+const deleteBucket = require('./delete-bucket');
+const destroyCoreStack = require('./destroy-core-stack');
+const destroyApi = require('./destroy-api');
 
-  cloudformation.deleteStack({
-    StackName: stackName
-  }, (err, data) => {
-    if(err) {
-      console.log('Error deleting stack');
-      console.info(err)
-    } else {
-      console.log('Successfully deleted stack');
-    }
-  });
+const destroy = ({blogName, region}, callback) => {
+
+  deleteBucket({blogName, region}, (err) => {
+    if(err) return callback(err);
+    destroyCoreStack(
+      {blogName, region},
+      (err) => {
+        if(err) return callback(err);
+
+        destroyApi({blogName, region}, (err) => {
+          if(err) return callback(err);
+
+          callback(null)
+        })
+      }
+    )
+  })
+
 };
 
 module.exports = destroy;

@@ -161,7 +161,13 @@ program
   .action((args, options, logger) => {
     const { blogName } = args;
     const { region } = options;
-    destroyCommand({blogName, region});
+    destroyCommand({blogName, region}, (err) => {
+      if(err) {
+        console.log('Error destroying blog')
+      } else {
+        console.log('Destroyed blog')
+      }
+    });
   });
 
 program
