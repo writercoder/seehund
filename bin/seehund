@@ -8,6 +8,7 @@ const createCoreCommand = require('../commands/create-core-stack');
 const destroyCommand = require('../commands/destroy');
 const deleteBucketCommand = require('../commands/delete-bucket');
 const destroyCoreCommand = require('../commands/destroy-core-stack');
+const destroyApiCommand = require('../commands/destroy-api');
 const listCommand = require('../commands/list');
 const showCommand = require('../commands/show');
 const installApiCommand = require('../commands/install-api');
@@ -54,6 +55,23 @@ program
     const { blogName } = args;
     const { region } = options;
     destroyCoreCommand({blogName, region}, (err) => {
+      if(err) {
+        console.log('Error deleting stack')
+      } else {
+        console.log('Deleted stack')
+      }
+    });
+  });
+
+program
+  .command('destroy_api', 'Destroy all cloud resources')
+  .argument('<blogName>', 'Blog to destroy')
+  .option('-r --region <region>',
+          'AWS Region', undefined, 'us-east-1')
+  .action((args, options, logger) => {
+    const { blogName } = args;
+    const { region } = options;
+    destroyApiCommand({blogName, region}, (err) => {
       if(err) {
         console.log('Error deleting stack')
       } else {
