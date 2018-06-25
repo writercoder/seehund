@@ -31,12 +31,20 @@ const create = ({
       console.log('GOT STACK CONFIG');
       console.info(config)
 
-      installApi({blogName, region}, (err) => {
+      installApi({
+        blogName,
+        region,
+        webBucketName: config.SeeBlogWebBucketName
+      }, (err) => {
         if(err) return callback(err);
 
         console.log('INSTALLED API');
 
-        getApiUrl({blogName, region}, (err, blogApiUrl) => {
+        getApiUrl({
+          blogName,
+          region,
+          webBucketName: config.SeeBlogWebBucketName
+        }, (err, blogApiUrl) => {
           if(err) return callback(err);
 
           console.log('GOT API URL');

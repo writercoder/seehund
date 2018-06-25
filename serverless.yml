@@ -12,6 +12,7 @@ provider:
   region: ${opt:region, 'us-east-1'}
   environment:
     POSTS_TABLE: ${env:SEEHUND_BLOG}-postsTable
+    WEB_BUCKET: ${env:SEEHUND_WEB_BUCKET}
   stackTags:
     seeblogApi: ${env:SEEHUND_BLOG}
   iamRoleStatements:
