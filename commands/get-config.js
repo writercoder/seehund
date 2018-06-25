@@ -28,7 +28,7 @@ const getApiUrl = ({blogName, region}, callback) => {
   cloudformation.describeStacks({
     StackName: stackName
   }, (err, data) => {
-      if(err) callback(err);
+      if(err) return callback(err);
 
       const stack = data.Stacks[0];
 
