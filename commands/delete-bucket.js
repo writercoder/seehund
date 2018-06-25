@@ -15,8 +15,8 @@ const deleteBucket = ({blogName, region}, callback) => {
       `s3://${bucketName}`
     ];
 
-  console.log(execFileSync('aws', args).toString());
-  callback(null)
+    console.log(execFileSync('aws', args).toString());
+    callback(null)
   });
 }
 
