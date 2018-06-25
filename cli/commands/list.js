@@ -1,6 +1,6 @@
 const AWS = require('aws-sdk');
 
-const { getSeeblogTags } = require('./stack-utils');
+const { getSeeblogTags } = require('../lib/stack-utils');
 
 
 const listStacks = ({region}) => {

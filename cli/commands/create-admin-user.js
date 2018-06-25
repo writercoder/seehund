@@ -1,5 +1,5 @@
 const inquirer = require('inquirer');
-const { getCoreStackConfig } = require('./get-config');
+const { getCoreStackConfig } = require('../lib/get-config');
 const { execFileSync } = require('child_process');
 
 const createAdminUser = (({blogName, region}, callback) => {

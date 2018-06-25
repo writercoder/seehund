@@ -1,8 +1,8 @@
 const AWS = require('aws-sdk');
 
-const naming = require('./naming');
+const naming = require('../lib/naming');
 
-const { getSeeblogTags, getOutputs } = require('./stack-utils');
+const { getSeeblogTags, getOutputs } = require('../lib/stack-utils');
 
 const showStack = ({blogName, region}) => {
   const cloudformation = new AWS.CloudFormation({region});

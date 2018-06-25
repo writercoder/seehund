@@ -6,7 +6,7 @@ const uploadAdmin = ({blogName, bucketName}, callback) =>  {
   const args = [
     's3',
     'sync',
-    path.resolve(__dirname, `../dist/${blogName}`),
+    path.resolve(__dirname, `../../dist/${blogName}`),
     `s3://${bucketName}`
   ];
 

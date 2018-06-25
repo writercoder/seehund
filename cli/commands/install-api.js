@@ -4,7 +4,7 @@ const { execFileSync } = require('child_process');
 const installApi = ({blogName, region, webBucketName}, callback) => {
 
   const serverlessBin = path.join(
-    __dirname, '../node_modules/serverless/bin/serverless')
+    __dirname, '../../node_modules/serverless/bin/serverless')
 
   const args = ['deploy', '--region', region];
   const env = Object.assign(

@@ -3,20 +3,20 @@
 const assert = require('assert');
 const { camelize } = require('inflection')
 const program = require('caporal');
-const createCommand = require('../commands/create');
-const createCoreCommand = require('../commands/create-core-stack');
-const destroyCommand = require('../commands/destroy');
-const deleteBucketCommand = require('../commands/delete-bucket');
-const destroyCoreCommand = require('../commands/destroy-core-stack');
-const destroyApiCommand = require('../commands/destroy-api');
-const listCommand = require('../commands/list');
-const showCommand = require('../commands/show');
-const installApiCommand = require('../commands/install-api');
-const buildAdminCommand = require('../commands/build-admin');
-const uploadAdminCommand = require('../commands/upload-admin');
-const createAdminUserCommand = require('../commands/create-admin-user');
+const createCommand = require('../cli/commands/create');
+const createCoreCommand = require('../cli/commands/create-core-stack');
+const destroyCommand = require('../cli/commands/destroy');
+const deleteBucketCommand = require('../cli/commands/delete-bucket');
+const destroyCoreCommand = require('../cli/commands/destroy-core-stack');
+const destroyApiCommand = require('../cli/commands/destroy-api');
+const listCommand = require('../cli/commands/list');
+const showCommand = require('../cli/commands/show');
+const installApiCommand = require('../cli/commands/install-api');
+const buildAdminCommand = require('../cli/commands/build-admin');
+const uploadAdminCommand = require('../cli/commands/upload-admin');
+const createAdminUserCommand = require('../cli/commands/create-admin-user');
 
-const { getApiUrl } = require('../commands/get-config');
+const { getApiUrl } = require('../cli/lib/get-config');
 
 program
   .command('create_core', 'Create core resources for a new blog in the cloud.')
@@ -197,9 +197,7 @@ program
   .action((args, options, logger) => {
     const { blogName } = args;
     const { region } = options;
-    const appClientId = '6fj9o9lt8j4hqn9ed46s3vheth';
-    const userPoolId = 'us-east-1_V9cE8RZWG';
-    buildAdminCommand({blogName, appClientId, userPoolId});
+    buildAdminCommand({blogName,region});
   });
 
 program

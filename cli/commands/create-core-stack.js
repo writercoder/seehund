@@ -3,7 +3,7 @@ const path = require('path');
 const AWS = require('aws-sdk');
 
 
-const naming = require('./naming');
+const naming = require('../lib/naming');
 
 const shortIdForS3 = () => {
   return shortid.generate().toLowerCase()
@@ -16,7 +16,7 @@ const createCoreStack = ({
   region
 }, callback) => {
   const cloudformation = new AWS.CloudFormation({region});
-  const templateBody = fs.readFileSync(path.join(__dirname, '../cloudformation/seeblog.yml'), 'utf8')
+  const templateBody = fs.readFileSync(path.join(__dirname, '../../cloudformation/seeblog.yml'), 'utf8')
 
   if (typeof blogName === 'undefined') {
     blogName = naming.blogNameFromTitle(title);

@@ -2,8 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const AWS = require('aws-sdk');
 
-const naming = require('./naming');
-const { getCoreStackConfig, getApiUrl } = require('./get-config');
+const naming = require('../lib/naming');
+const { getCoreStackConfig, getApiUrl } = require('../lib/get-config');
 
 const createCore = require('./create-core-stack');
 const installApi = require('./install-api');
