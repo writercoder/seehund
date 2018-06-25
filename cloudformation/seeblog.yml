@@ -4,6 +4,9 @@ Parameters:
   WebBucketName:
     Type: String
     Description: The name of the S3 bucket to create for webhosting
+  UserPoolName:
+    Type: String
+    Description: The name of the Cognito User Pool
 
 Resources:
   WebBucket:
@@ -17,7 +20,7 @@ Resources:
   BlogAdminUserPool:
     Type: "AWS::Cognito::UserPool"
     Properties:
-      UserPoolName: "Blog admin users"
+      UserPoolName: !Ref UserPoolName
       UsernameAttributes:
       - "email"
   BlogAdminPoolClientApp:

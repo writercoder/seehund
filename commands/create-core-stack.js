@@ -33,10 +33,16 @@ const createCoreStack = ({
   cloudformation.createStack({
     StackName: stackName,
     TemplateBody: templateBody,
-    Parameters: [{
-      ParameterKey: "WebBucketName",
-      ParameterValue: webBucketName
-    }],
+    Parameters: [
+      {
+        ParameterKey: "WebBucketName",
+        ParameterValue: webBucketName
+      },
+      {
+        ParameterKey: "UserPoolName",
+        ParameterValue: `${blogName}-admins`
+      }
+    ],
     Tags: [{
       Key: 'seeblog',
       Value: blogName
