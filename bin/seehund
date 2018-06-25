@@ -14,6 +14,7 @@ const showCommand = require('../commands/show');
 const installApiCommand = require('../commands/install-api');
 const buildAdminCommand = require('../commands/build-admin');
 const uploadAdminCommand = require('../commands/upload-admin');
+const createAdminUserCommand = require('../commands/create-admin-user');
 
 const { getApiUrl } = require('../commands/get-config');
 
@@ -204,6 +205,23 @@ program
     const { region } = options;
     const bucketName = 'this-is-the-future-fk4g3m2j5';
     uploadAdminCommand({blogName, bucketName});
+  });
+
+program
+  .command('create_admin_user', 'Uploads the admin system to the web bucket')
+  .argument('<blogName>', 'Blog name to create admin user for')
+  .option('-r --region <region>',
+          'AWS Region', undefined, 'us-east-1')
+  .action((args, options, logger) => {
+    const { blogName } = args;
+    const { region } = options;
+    createAdminUserCommand({blogName, region}, (err, data) => {
+      if(err) {
+        console.log('Error creating admin user')
+      } else {
+        console.log('Created admin user')
+      }
+    });
   });
 
 

@@ -9,6 +9,7 @@ const createCore = require('./create-core-stack');
 const installApi = require('./install-api');
 const buildAdmin = require('./build-admin');
 const uploadAdmin = require('./upload-admin');
+const createAdminUser = require('./create-admin-user');
 
 
 const create = ({
@@ -58,6 +59,11 @@ const create = ({
               bucketName: config.SeeBlogWebBucketName}, (err) => {
                 if(err) return callback(err);
                 console.log('UPLOADED ADMIN')
+                createAdminUser({blogName, region}, (err) => {
+                  if(err) return callback(err);
+
+                  console.log('CREATED ADMIN USER');
+                })
               })
           })
         })
