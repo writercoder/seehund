@@ -107,5 +107,8 @@ resources:
               Resource: arn:aws:dynamodb:*:*:table/${env:SEEHUND_BLOG}-postsTable
         Roles:
           - Ref: IamRoleLambdaExecution
-
+  Outputs:
+    SeeblogApiPostsTable:
+      Value:
+        Ref: PostsTable
 
