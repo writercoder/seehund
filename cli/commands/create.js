@@ -4,6 +4,7 @@ const AWS = require('aws-sdk');
 
 const naming = require('../lib/naming');
 const { getCoreStackConfig, getApiUrl } = require('../lib/get-config');
+const { Blog } = require('../lib/blog');
 
 const createCore = require('./create-core-stack');
 const installApi = require('./install-api');
@@ -20,43 +21,37 @@ const create = ({
     blogName = naming.blogNameFromTitle(title);
   }
 
+  const blog = new Blog({name: blogName, region});
+
   createCore({title, blogName, region}, (err, data) => {
     if(err) return callback(err);
 
-    console.log('CREATED CORE STACK');
-
-    getCoreStackConfig({blogName, region}, (err, config) => {
+    blog.fetchCoreStackConfig((err) => {
       if(err) return callback(err);
 
       console.log('GOT STACK CONFIG');
-      console.info(config)
+      console.info(blog.config());
 
       installApi({
         blogName,
         region,
-        webBucketName: config.SeeBlogWebBucketName
+        webBucketName: blog.webBucketName
       }, (err) => {
         if(err) return callback(err);
 
-        console.log('INSTALLED API');
-
-        getApiUrl({
-          blogName,
-          region,
-          webBucketName: config.SeeBlogWebBucketName
-        }, (err, blogApiUrl) => {
+        blog.fetchApiStackConfig((err) => {
           if(err) return callback(err);
 
-          console.log('GOT API URL');
-          console.info(blogApiUrl)
+          console.log('GOT API CONFIG');
+          console.info(blog.blogApiUrl)
 
           const buildAdminConfig = {
             blogName,
             region,
-            blogApiUrl,
-            bucketName: config.SeeBlogWebBucketName,
-            appClientId: config.SeeBlogAdminAppClientId,
-            userPoolId: config.SeeBlogAdminUserPoolId
+            blogApiUrl: blog.blogApiUrl,
+            bucketName: blog.webBucketName,
+            appClientId: blog.adminAppClientId,
+            userPoolId: blog.adminUserPoolId
           }
 
           buildAdmin(buildAdminConfig, (err, data) => {
@@ -64,7 +59,8 @@ const create = ({
             console.log('BUILT ADMIN');
             uploadAdmin({
               blogName,
-              bucketName: config.SeeBlogWebBucketName}, (err) => {
+              bucketName: blog.webBucketName
+            }, (err) => {
                 if(err) return callback(err);
                 console.log('UPLOADED ADMIN')
                 createAdminUser({blogName, region}, (err) => {
