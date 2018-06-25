@@ -1,24 +1,13 @@
-const AWS = require('aws-sdk');
+const { loadBlog } = require('../lib/blog');
 
-const naming = require('../lib/naming');
-
-const { getSeeblogTags, getOutputs } = require('../lib/stack-utils');
 
 const showStack = ({blogName, region}) => {
-  const cloudformation = new AWS.CloudFormation({region});
 
-  const stackName = naming.stackName(blogName);
+  loadBlog({name: blogName, region}, (err, blog) => {
+    if(err) return console.log(err);
+    console.log(blog.config())
+  });
 
-  cloudformation.describeStacks({
-    StackName: stackName
-  }, (err, data) => {
-      const stack = data.Stacks[0];
-      const info = {};
-      info.tags = getSeeblogTags(stack);
-      info.outputs = getOutputs(stack);
-      console.info(info);
-    }
-  )
-}
+};
 
 module.exports = showStack;
