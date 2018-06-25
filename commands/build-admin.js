@@ -6,13 +6,15 @@ const webpackConfig = require('../webpack.admin.config.js');
 const buildAdmin = ({
   blogName,
   appClientId,
-  userPoolId
+  userPoolId,
+  blogApiUrl
 }, callback) => {
 
   const DefinePluginConfig = new webpack.DefinePlugin({
     seeblog: {
       adminAppClientId: JSON.stringify(appClientId),
-      adminUserPoolId: JSON.stringify(userPoolId)
+      adminUserPoolId: JSON.stringify(userPoolId),
+      blogApiUrl: JSON.stringify(blogApiUrl),
     }
   });
 

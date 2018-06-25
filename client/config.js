@@ -6,7 +6,7 @@ function settings(environment) {
       apiUrl: 'http://localhost:8000'
     },
     dev: {
-      apiUrl: 'https://3d9pqpc5xg.execute-api.us-east-1.amazonaws.com/dev/',
+      apiUrl: seeblog.blogApiUrl,
       cognito: {
         appClientId: seeblog.adminAppClientId,
         userPoolId: seeblog.adminUserPoolId

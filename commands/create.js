@@ -36,16 +36,16 @@ const create = ({
 
         console.log('INSTALLED API');
 
-        getApiUrl({blogName, region}, (err, apiUrl) => {
+        getApiUrl({blogName, region}, (err, blogApiUrl) => {
           if(err) return callback(err);
 
           console.log('GOT API URL');
-          console.info(apiUrl)
+          console.info(blogApiUrl)
 
           const buildAdminConfig = {
             blogName,
             region,
-            apiUrl,
+            blogApiUrl,
             bucketName: config.SeeBlogWebBucketName,
             appClientId: config.SeeBlogAdminAppClientId,
             userPoolId: config.SeeBlogAdminUserPoolId
