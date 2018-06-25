@@ -94,6 +94,13 @@ program
     createCommand({
       title,
       region
+    }, (err, data) => {
+      if(err) {
+        console.log('Error creating blog');
+        console.log(err)
+      } else {
+        console.log('Error')
+      }
     });
   })
 
@@ -203,7 +210,6 @@ program
   .action((args, options, logger) => {
     const { blogName } = args;
     const { region } = options;
-    const bucketName = 'this-is-the-future-fk4g3m2j5';
     uploadAdminCommand({blogName, bucketName});
   });
 
