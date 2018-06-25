@@ -5,11 +5,13 @@ import {renderPost, renderIndexPage} from './theme.js'
 AWS.config.update({region:'us-east-1'});
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 const s3 = new AWS.S3();
-const bucket = 'dev.cloudblog.1000mileweb.com'
+
+const bucket = process.env.WEB_BUCKET;
+const postsTableName = process.env.POSTS_TABLE;
 
 export function build(callback) {
   const params = {
-    TableName: 'postsTable',
+    TableName: postsTableName
   }
 
   dynamoDb.scan(params, async (error, data) => {

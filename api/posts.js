@@ -3,7 +3,7 @@ import AWS from 'aws-sdk'
 import { fail, succeed } from './../lib/respond'
 import { build } from './../engine/builder'
 
-AWS.config.update({region:'us-east-1'});
+AWS.config.update({region: process.env.AWS_REGION});
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 const postsTableName = process.env.POSTS_TABLE;
