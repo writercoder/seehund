@@ -5,13 +5,14 @@ import RedirectToLogin from '../user/RedirectToLogin.jsx';
 import PostForm from './PostForm.jsx'
 import DefaultLayout from '../layouts/DefaultLayout.jsx';
 
-@inject("postsStore", "userStore") @observer @withRouter
+@inject("postsStore", "userStore", "messagesStore") @observer @withRouter
 export default class NewPostsPage extends React.Component {
 
   createPost = (postFields) => {
     this.props.postsStore.createPost(postFields, (post) => {
       // TODO: <Redirect /> in render method based on some state here?
       this.props.history.push(`${post.id}`)
+      this.props.messagesStore.okay("Post created")
     });
   }
 
