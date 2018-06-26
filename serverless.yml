@@ -42,6 +42,8 @@ functions:
           path: build
           method: post
           cors: true
+          authorizer:
+            arn: ${env:SEEHUND_USER_POOL_ARN}
   create_post:
     handler: posts.create
     events:
@@ -49,24 +51,33 @@ functions:
           path: posts
           method: post
           cors: true
+          authorizer:
+            arn: ${env:SEEHUND_USER_POOL_ARN}
   show_post:
     handler: posts.show
     events:
       - http:
           path: posts/{id}
           method: get
+          authorizer:
+            arn: ${env:SEEHUND_USER_POOL_ARN}
   list_posts:
     handler: posts.list
     events:
       - http:
           path: posts
           method: get
+          authorizer:
+            arn: ${env:SEEHUND_USER_POOL_ARN}
+
   update_post:
     handler: posts.update
     events:
       - http:
           path: posts/{id}
           method: put
+          authorizer:
+            arn: ${env:SEEHUND_USER_POOL_ARN}
           cors: true
   delete_post:
     handler: posts.destroy
@@ -74,6 +85,8 @@ functions:
       - http:
           path: posts/{id}
           method: delete
+          authorizer:
+            arn: ${env:SEEHUND_USER_POOL_ARN}
           cors: true
 
 # you can add CloudFormation resource templates here
