@@ -1,6 +1,6 @@
 import {build} from '../engine/builder.js'
 
-import { fail, succeed } from './../lib/respond'
+import { fail, succeed } from './lib/respond'
 
 
 export function site(event, context, callback) {

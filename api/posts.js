@@ -1,6 +1,6 @@
 import shortid from 'shortid'
 import AWS from 'aws-sdk'
-import { fail, succeed } from './../lib/respond'
+import { fail, succeed } from './lib/respond'
 import { build } from './../engine/builder'
 
 AWS.config.update({region: process.env.AWS_REGION});
