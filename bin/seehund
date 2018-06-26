@@ -11,6 +11,7 @@ const destroyCoreCommand = require('../cli/commands/destroy-core-stack');
 const destroyApiCommand = require('../cli/commands/destroy-api');
 const listCommand = require('../cli/commands/list');
 const showCommand = require('../cli/commands/show');
+const envCommand = require('../cli/commands/env');
 const installApiCommand = require('../cli/commands/install-api');
 const buildAdminCommand = require('../cli/commands/build-admin');
 const uploadAdminCommand = require('../cli/commands/upload-admin');
@@ -122,6 +123,17 @@ program
     const { blogName } = args;
     const { region } = options;
     showCommand({blogName, region});
+  });
+
+program
+  .command('env', 'Output env variables for a blog')
+  .argument('<blogName>', 'Blog to use')
+  .option('-r --region <region>',
+          'AWS Region', undefined, 'us-east-1')
+  .action((args, options, logger) => {
+    const { blogName } = args;
+    const { region } = options;
+    envCommand({blogName, region});
   });
 
 program
