@@ -11,6 +11,7 @@ import Article from 'grommet/components/Anchor';
 import Menu from 'grommet/components/Menu';
 
 import UserWidget from '../user/UserWidget.jsx'
+import MessageBox from '../messages/MessageBox.jsx'
 
 export default class extends React.Component {
 
@@ -20,7 +21,7 @@ export default class extends React.Component {
         <Sidebar colorIndex="brand" size="medium">
           <Header pad="medium" justify="between">
             <Title>
-              Cloud Blog Admin
+              Seehund Blog Admin
             </Title>
           </Header>
           <Box flex="grow" justify="start">
@@ -39,6 +40,7 @@ export default class extends React.Component {
           <UserWidget />
         </Sidebar>
         <Box pad="large" >
+          <MessageBox />
           { this.props.children }
         </Box>
       </Split>

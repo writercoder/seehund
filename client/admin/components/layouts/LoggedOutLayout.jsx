@@ -14,7 +14,7 @@ export default class extends React.Component {
         <Sidebar colorIndex="brand" size="medium">
           <Header pad='medium' justify='between'>
             <Title>
-              Cloud Blog Admin
+              Seehund Blog Admin
             </Title>
           </Header>
         </Sidebar>
