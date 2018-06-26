@@ -8,11 +8,12 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   inject: 'body'
 })
 
-const env = process.env.NODE_ENV
 
 const DefinePluginConfig = new webpack.DefinePlugin({
-  ENV: {
-    awsConfig: 'dev'
+  seeblog: {
+    adminAppClientId: JSON.stringify(process.env.SEEHUND_APP_CLIENT_ID),
+    adminUserPoolId: JSON.stringify(process.env.SEEHUND_USER_POOL_ID),
+    blogApiUrl: JSON.stringify(process.env.SEEHUND_BLOG_API),
   }
 })
 
