@@ -81,7 +81,7 @@ export class PostsStore {
       })
   }
 
-  @action updatePost(id, fields) {
+  @action updatePost(id, fields, callback) {
     this.updating = true
     popsicle
       .put({
@@ -100,6 +100,7 @@ export class PostsStore {
           this.updating = false
           this.lastError = null
         })
+        if(!!callback) callback();
       } else {
         runInAction("Error creating post", () => {
           this.lastError = "Error creating post"

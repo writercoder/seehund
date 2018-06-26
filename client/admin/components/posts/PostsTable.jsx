@@ -30,7 +30,6 @@ class PostRow extends React.Component {
 @inject("postsStore") @observer
 export default class PostsTable extends React.Component  {
   render() {
-    console.log('rendering')
     const store = this.props.postsStore;
     const deletePost = (id) => { store.deletePost(id) }
     return (

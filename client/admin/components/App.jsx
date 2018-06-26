@@ -2,7 +2,8 @@ import React from 'react';
 import {
   BrowserRouter as Router,
   Route,
-  Link
+  Link,
+  withRouter
 } from 'react-router-dom'
 
 import App from 'grommet/components/App';
@@ -15,13 +16,35 @@ import NewPostPage from './posts/NewPostPage.jsx'
 import PostPage from './posts/PostPage.jsx'
 
 
+@inject("messagesStore")
+@withRouter
+class AppWrapper extends React.Component {
+  componentWillReceiveProps(nextProps) {
+    if (this.props.location !== nextProps.location) {
+      this.onRouteChanged();
+    }
+  }
+
+  onRouteChanged() {
+    this.props.messagesStore.clear();
+  }
+
+  render() {
+    return <App centered={false}>
+      {this.props.children}
+    </App>
+  }
+}
+
+
 @observer
 export default class extends React.Component {
+
   render() {
 
     return (
       <Router basename="/admin">
-        <App centered={false}>
+        <AppWrapper>
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/" component={Dashboard} />
           <Route exact path="/posts/:id" render={(props) => {
@@ -34,7 +57,7 @@ export default class extends React.Component {
           <Route exact path="/posts"
                  render={(props) => <PostsIndexPage {...props} /> } />
           <DevTools />
-        </App>
+        </AppWrapper>
       </Router>
     )
   }
