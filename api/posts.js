@@ -97,7 +97,7 @@ export function update(event, context, callback) {
         if(error) {
           fail(error, callback);
         } else {
-          succeed(params.Item, callback);
+          succeed(data.Attributes, callback);
         }
       })
     }
