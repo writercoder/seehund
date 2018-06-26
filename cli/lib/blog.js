@@ -18,7 +18,8 @@ class Blog {
       Object.assign(config, {
         webBucketName: this.webBucketName,
         adminUserPoolId: this.adminUserPoolId,
-        adminAppClientId: this.adminAppClientId
+        adminAppClientId: this.adminAppClientId,
+        adminUserPoolArn: this.adminUserPoolArn
       })
     }
     if(this.fetchedApiStackConfig) {
@@ -45,6 +46,7 @@ class Blog {
       this.fetchedCoreStackConfig = true;
       this.webBucketName = data.SeeBlogWebBucketName;
       this.adminUserPoolId = data.SeeBlogAdminUserPoolId;
+      this.adminUserPoolArn = data.SeeBlogAdminUserPoolArn;
       this.adminAppClientId = data.SeeBlogAdminAppClientId;
 
       callback(null);
@@ -64,7 +66,7 @@ class Blog {
     getApiUrl(args, (err, data) => {
       if(err) return callback(err);
 
-      this.fetchApiStackConfig = true;
+      this.fetchedApiStackConfig = true;
       this.blogApiUrl = data;
       callback(null);
     });
@@ -73,7 +75,6 @@ class Blog {
   fetchConfig(callback) {
     this.fetchCoreStackConfig((err) => {
       if(err) return callback(err);
-
       this.fetchApiStackConfig(callback);
     })
   }

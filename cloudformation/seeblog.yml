@@ -44,7 +44,9 @@ Resources:
 Outputs:
   SeeBlogAdminUserPoolId:
     Value: !Ref BlogAdminUserPool
+  SeeBlogAdminUserPoolArn:
+    Value: !GetAtt BlogAdminUserPool.Arn
   SeeBlogAdminAppClientId:
     Value: !Ref BlogAdminPoolClientApp
-  SeeBlogWebBucketName: 
+  SeeBlogWebBucketName:
     Value: !Ref WebBucketName
