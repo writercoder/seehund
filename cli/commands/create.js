@@ -33,9 +33,7 @@ const create = ({
       console.info(blog.config());
 
       installApi({
-        blogName,
-        region,
-        webBucketName: blog.webBucketName
+        blog
       }, (err) => {
         if(err) return callback(err);
 

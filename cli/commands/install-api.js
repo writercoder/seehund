@@ -1,7 +1,8 @@
 const path = require('path');
 const { execFileSync } = require('child_process');
+const { loadBlog } = require('../lib/blog');
 
-const installApi = ({blogName, region, webBucketName}, callback) => {
+const doInstallApi = ({blogName, region, webBucketName}, callback) => {
 
   const serverlessBin = path.join(
     __dirname, '../../node_modules/serverless/bin/serverless')
@@ -16,5 +17,22 @@ const installApi = ({blogName, region, webBucketName}, callback) => {
   callback(null);
 };
 
+
+const installApi = ({blogName, blog, region}, callback) => {
+  if(!!blog) {
+    doInstallApi({
+      blogName: blog.name,
+      webBucketName: blog.webBucketName,
+      region: blog.region }, callback)
+  } else {
+    loadBlog({blogName, region}, (err, blog) => {
+      if(err) return callback(err);
+      doInstallApi({
+        blogName: blog.name,
+        webBucketName: blog.webBucketName,
+        region }, callback)
+    })
+  }
+}
 
 module.exports = installApi;
