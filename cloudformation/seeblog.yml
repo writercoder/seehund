@@ -16,7 +16,7 @@ Resources:
       BucketName: !Ref WebBucketName
       WebsiteConfiguration:
         IndexDocument: index.html
-        ErrorDocument: error.html
+        ErrorDocument: index.html
   WebHostBucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
