@@ -109,9 +109,30 @@ export class PostsStore {
     })
   }
 
-  deletePost(id) {
-    // Call API
-    // Update posts on success
+  @action deletePost(id) {
+    this.updating = true
+    popsicle
+      .del({
+        url: `${config.apiUrl}/posts/${id}`,
+        headers: this.authHeaders()
+      })
+    .use(popsicle.plugins.parse('json'))
+    .then((res) => {
+      if(res.status == 200) {
+        const post = this.posts.find(p => p.id == id);
+        runInAction(`Deleting Post ${id}`, () => {
+          this.posts.remove(post);
+          console.info(this.posts);
+          this.updating = false
+          this.lastError = null
+        })
+      } else {
+        runInAction("Error creating post", () => {
+          this.lastError = "Error deleting post"
+          this.updating = false
+        })
+      }
+    })
   }
 
   authHeaders() {

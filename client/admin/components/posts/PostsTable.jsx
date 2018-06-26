@@ -3,16 +3,25 @@ import {observer, inject} from "mobx-react";
 import {Link} from 'react-router-dom'
 import Table from 'grommet/components/Table';
 import TableRow from 'grommet/components/TableRow';
+import Anchor from 'grommet/components/Anchor'
 
 @observer
 class PostRow extends React.Component {
+
   render() {
-    const post = this.props.post;
+    const { post, onDeletePost } = this.props;
+
+    const deletePost = (e) => {
+      e.preventDefault()
+      onDeletePost(post.id)
+    }
+
     return (<TableRow>
       <td>{ post.id }</td>
       <td>{ post.title }</td>
       <td>{ post.content }</td>
       <td><Link to={ `posts/${post.id}` }>Edit</Link></td>
+      <td><Anchor onClick={ deletePost }>Delete</Anchor></td>
     </TableRow>)
   }
 }
@@ -21,7 +30,9 @@ class PostRow extends React.Component {
 @inject("postsStore") @observer
 export default class PostsTable extends React.Component  {
   render() {
-    const posts = this.props.postsStore.posts
+    console.log('rendering')
+    const store = this.props.postsStore;
+    const deletePost = (id) => { store.deletePost(id) }
     return (
       <Table>
         <thead>
@@ -30,10 +41,14 @@ export default class PostsTable extends React.Component  {
             <th>Title</th>
             <th>Content</th>
             <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          { posts.map((post) => <PostRow key={post.id} post={post} /> ) }
+          { store.posts.map((post) => <PostRow 
+            key={post.id}
+            post={post}
+            onDeletePost={ deletePost } /> ) }
         </tbody>
       </Table>
     )
