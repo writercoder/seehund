@@ -9,14 +9,6 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 })
 
 
-const DefinePluginConfig = new webpack.DefinePlugin({
-  seeblog: {
-    adminAppClientId: JSON.stringify(process.env.SEEHUND_APP_CLIENT_ID),
-    adminUserPoolId: JSON.stringify(process.env.SEEHUND_USER_POOL_ID),
-    blogApiUrl: JSON.stringify(process.env.SEEHUND_BLOG_API),
-  }
-})
-
 module.exports = {
   entry: './client/admin/index.js',
   output: {
@@ -56,5 +48,5 @@ module.exports = {
       index: '/admin/'
     }
   },
-  plugins: [HtmlWebpackPluginConfig, DefinePluginConfig, new webpack.SourceMapDevToolPlugin]
+  plugins: [HtmlWebpackPluginConfig, new webpack.SourceMapDevToolPlugin]
 }

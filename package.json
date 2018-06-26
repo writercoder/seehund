@@ -6,7 +6,7 @@
   "author": "richard@1000mileweb.com",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --config webpack.admin.config.js --port 8088",
+    "start": "webpack-dev-server --config webpack.admin.dev.config.js --port 8088",
     "test": "jest",
     "build-client": "webpack --config webpack.admin.config.js -p",
     "deploy-dev": "serverless deploy && webpack --config webpack.admin.config.js && aws --profile cblog s3 sync dist s3://dev.cloudblog.1000mileweb.com"
