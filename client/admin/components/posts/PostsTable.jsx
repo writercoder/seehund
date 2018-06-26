@@ -27,11 +27,14 @@ class PostRow extends React.Component {
 }
 
 
-@inject("postsStore") @observer
+@inject("postsStore", "messagesStore") @observer
 export default class PostsTable extends React.Component  {
   render() {
     const store = this.props.postsStore;
-    const deletePost = (id) => { store.deletePost(id) }
+    const deletePost = (id) => {
+      store.deletePost(id);
+      this.props.messagesStore.okay("Deleted post")
+    }
     return (
       <Table>
         <thead>
@@ -44,7 +47,7 @@ export default class PostsTable extends React.Component  {
           </tr>
         </thead>
         <tbody>
-          { store.posts.map((post) => <PostRow 
+          { store.posts.map((post) => <PostRow
             key={post.id}
             post={post}
             onDeletePost={ deletePost } /> ) }

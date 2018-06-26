@@ -110,7 +110,7 @@ export class PostsStore {
     })
   }
 
-  @action deletePost(id) {
+  @action deletePost(id, callback) {
     this.updating = true
     popsicle
       .del({
@@ -127,6 +127,7 @@ export class PostsStore {
           this.updating = false
           this.lastError = null
         })
+        if(!!callback) callback();
       } else {
         runInAction("Error creating post", () => {
           this.lastError = "Error deleting post"
