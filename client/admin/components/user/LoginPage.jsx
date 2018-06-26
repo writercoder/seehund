@@ -2,6 +2,7 @@ import React from 'react'
 import {observer, inject} from 'mobx-react'
 import LoginForm from './LoginForm.jsx'
 import LoggedOutLayout from '../layouts/LoggedOutLayout.jsx';
+import LoginError from './LoginError.jsx';
 
 import { Redirect } from 'react-router-dom'
 
@@ -27,6 +28,7 @@ export default class LoginPage extends React.Component {
       return (
         <div>
           <h1>Log in to the blog</h1>
+          <LoginError />
           <LoginForm onSubmit={ this.logUserIn } />
         </div>
       );
