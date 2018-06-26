@@ -56,6 +56,7 @@ export class UserStore {
       currentUser.signOut();
     }
 
+    this.loggedInUser = null
     this.userToken = null
   }
 
