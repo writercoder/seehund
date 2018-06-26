@@ -17,6 +17,8 @@ class Blog {
     if(this.fetchedCoreStackConfig) {
       Object.assign(config, {
         webBucketName: this.webBucketName,
+        webUrl: this.webUrl,
+        adminUrl: this.adminUrl,
         adminUserPoolId: this.adminUserPoolId,
         adminAppClientId: this.adminAppClientId,
         adminUserPoolArn: this.adminUserPoolArn
@@ -45,6 +47,8 @@ class Blog {
 
       this.fetchedCoreStackConfig = true;
       this.webBucketName = data.SeeBlogWebBucketName;
+      this.webUrl = data.SeeBlogWebBucketUrl;
+      this.adminUrl = `${data.SeeBlogWebBucketUrl}/admin/`;
       this.adminUserPoolId = data.SeeBlogAdminUserPoolId;
       this.adminUserPoolArn = data.SeeBlogAdminUserPoolArn;
       this.adminAppClientId = data.SeeBlogAdminAppClientId;

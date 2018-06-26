@@ -50,3 +50,5 @@ Outputs:
     Value: !Ref BlogAdminPoolClientApp
   SeeBlogWebBucketName:
     Value: !Ref WebBucketName
+  SeeBlogWebBucketUrl:
+    Value: !GetAtt WebBucket.WebsiteURL
