@@ -93,7 +93,13 @@ export function update(event, context, callback) {
     if(error) {
       fail(callback);
     } else {
-      succeed(data.Attributes, callback);
+      build((error) => {
+        if(error) {
+          fail(error, callback);
+        } else {
+          succeed(params.Item, callback);
+        }
+      })
     }
   })
 }
@@ -109,7 +115,13 @@ export function destroy(event, context, callback) {
     if(error) {
       fail(callback);
     } else {
-      succeed({status: true},  callback);
+      build((error) => {
+        if(error) {
+          fail(error, callback);
+        } else {
+          succeed(params.Item, callback);
+        }
+      })
     }
   })
 }
