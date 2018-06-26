@@ -40,7 +40,7 @@ export default class PostForm extends React.Component {
 
         <FormField label="Post Content">
           <textarea
-            rows="15"
+            rows="10"
             cols="50"
             value={ this.content }
             onChange={ (e) => this.content = e.target.value }></textarea>
