@@ -33,5 +33,4 @@ const buildAdmin = (blog, callback) => {
   });
 };
 
-
-module.exports = buildAdminNew;
+module.exports = buildAdmin;
