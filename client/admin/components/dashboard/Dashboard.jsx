@@ -1,9 +1,10 @@
 import React from 'react';
-import {observer, inject} from 'mobx-react'
+import {observer, inject} from 'mobx-react';
+import Anchor from 'grommet/components/Anchor'
 import DefaultLayout from '../layouts/DefaultLayout.jsx';
 import RedirectToLogin from '../user/RedirectToLogin.jsx'
 
-@inject("userStore") @observer
+@inject("userStore", "blogStore") @observer
 export default class extends React.Component {
 
   render() {
@@ -15,10 +16,24 @@ export default class extends React.Component {
   }
 
   renderContent() {
+    const frontendUrl = this.props.blogStore.frontendUrl();
+
     if(!this.props.userStore.loggedIn) {
-      return <RedirectToLogin />
+      return <RedirectToLogin  />
     } else {
-      return <p>Welcome to your blog</p>
+      return (
+        <div>
+          <h2>Welcome to your seehund blog</h2>
+          <h3>Frontend</h3>
+          <p>
+            <Anchor
+              href={ frontendUrl }
+              target="_blank"
+            >{ frontendUrl }
+            </Anchor>
+          </p>
+        </div>
+      )
     }
   }
 }
