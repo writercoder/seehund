@@ -41,18 +41,8 @@ const create = ({
           if(err) return callback(err);
 
           console.log('GOT API CONFIG');
-          console.info(blog.blogApiUrl)
 
-          const buildAdminConfig = {
-            blogName,
-            region,
-            blogApiUrl: blog.blogApiUrl,
-            bucketName: blog.webBucketName,
-            appClientId: blog.adminAppClientId,
-            userPoolId: blog.adminUserPoolId
-          }
-
-          buildAdmin(buildAdminConfig, (err, data) => {
+          buildAdmin(blog, (err, data) => {
             if(err) return callback(err);
             console.log('BUILT ADMIN');
             uploadAdmin({

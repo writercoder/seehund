@@ -3,26 +3,21 @@ const webpack = require('webpack');
 
 const webpackConfig = require('../../webpack.admin.config.js');
 
-const buildAdmin = ({
-  blogName,
-  appClientId,
-  userPoolId,
-  blogApiUrl
-}, callback) => {
-
+const buildAdmin = (blog, callback) => {
   const DefinePluginConfig = new webpack.DefinePlugin({
     seeblog: {
-      adminAppClientId: JSON.stringify(appClientId),
-      adminUserPoolId: JSON.stringify(userPoolId),
-      blogApiUrl: JSON.stringify(blogApiUrl),
+      adminAppClientId: JSON.stringify(blog.adminAppClientId),
+      adminUserPoolId: JSON.stringify(blog.adminUserPoolId),
+      blogApiUrl: JSON.stringify(blog.blogApiUrl),
       frontendUrl: JSON.stringify(blog.webUrl)
     }
   });
 
+
   webpackConfig.plugins.push(DefinePluginConfig);
 
   webpackConfig.output = {
-    path: path.resolve(`dist/${blogName}/admin`),
+    path: path.resolve(`dist/${blog.name}/admin`),
     publicPath: '/admin',
     filename: 'admin_bundle.js'
   }
@@ -35,7 +30,8 @@ const buildAdmin = ({
     } else {
       callback(null, stats)
     }
-  })
-}
+  });
+};
 
-module.exports = buildAdmin;
+
+module.exports = buildAdminNew;

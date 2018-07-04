@@ -18,6 +18,7 @@ const uploadAdminCommand = require('../cli/commands/upload-admin');
 const createAdminUserCommand = require('../cli/commands/create-admin-user');
 
 const { getApiUrl } = require('../cli/lib/get-config');
+const { loadBlog } = require('../cli/lib/blog')
 
 program
   .command('create_core', 'Create core resources for a new blog in the cloud.')
@@ -209,7 +210,22 @@ program
   .action((args, options, logger) => {
     const { blogName } = args;
     const { region } = options;
-    buildAdminCommand({blogName,region});
+    loadBlog({name: blogName, region}, (err, blog) => {
+      if(err) {
+        console.log(`Error loading blog: ${blogName}`);
+        console.log(err);
+        return;
+      }
+      console.info(blog);
+      buildAdminCommand(blog, (err, stats) => {
+        if(err) {
+          console.log('Error building admin')
+          console.log(err);
+        } else {
+          console.log('Built blog');
+        }
+      });
+    });
   });
 
 program
