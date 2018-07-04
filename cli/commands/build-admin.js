@@ -15,6 +15,7 @@ const buildAdmin = ({
       adminAppClientId: JSON.stringify(appClientId),
       adminUserPoolId: JSON.stringify(userPoolId),
       blogApiUrl: JSON.stringify(blogApiUrl),
+      frontendUrl: JSON.stringify(blog.webUrl)
     }
   });
 
