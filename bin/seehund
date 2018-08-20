@@ -16,6 +16,7 @@ const installApiCommand = require('../cli/commands/install-api');
 const buildAdminCommand = require('../cli/commands/build-admin');
 const uploadAdminCommand = require('../cli/commands/upload-admin');
 const createAdminUserCommand = require('../cli/commands/create-admin-user');
+const setTitleCommand = require('../cli/commands/set-title');
 
 const { getApiUrl } = require('../cli/lib/get-config');
 const { loadBlog } = require('../cli/lib/blog')
@@ -252,6 +253,24 @@ program
         console.log('Error creating admin user')
       } else {
         console.log('Created admin user')
+      }
+    });
+  });
+
+program
+  .command('set_title', 'Sets the blog title')
+  .argument('<blogName>', 'Blog name to create admin user for')
+  .argument('<title>', 'Sets the title "Please quote spaces"')
+  .option('-r --region <region>',
+          'AWS Region', undefined, 'us-east-1')
+  .action((args, options, logger) => {
+    const { blogName, title } = args;
+    const { region } = options;
+    setTitleCommand({blogName, title, region}, (err, data) => {
+      if(err) {
+        console.log('Error setting title')
+      } else {
+        console.log(`Set title to "${title}"`)
       }
     });
   });
