@@ -1,4 +1,5 @@
-const { getCoreStackConfig, getApiUrl } = require('./get-config');
+const { getCoreStackConfig, getApiUrl } = require('../../lib/stack/config');
+const { getMetadata } = require('../../lib/blog/metadata');
 
 class Blog {
 
@@ -12,7 +13,8 @@ class Blog {
   config() {
     const config = {
       name: this.name,
-      region: this.region
+      region: this.region,
+      title: this.title
     };
     if(this.fetchedCoreStackConfig) {
       Object.assign(config, {
@@ -32,9 +34,9 @@ class Blog {
     return config;
   }
 
-  fetchCoreStackConfig(callback) {
+  async fetchCoreStackConfig() {
     if(this.fetchedCoreStackConfig) {
-      return callback(null);
+      return;
     }
 
     const args = {
@@ -42,57 +44,44 @@ class Blog {
       region: this.region
     };
 
-    getCoreStackConfig(args, (err, data) => {
-      if(err) return callback(err);
+    const config = await getCoreStackConfig({blogName: this.name});
 
-      this.fetchedCoreStackConfig = true;
-      this.webBucketName = data.SeeBlogWebBucketName;
-      this.webUrl = data.SeeBlogWebBucketUrl;
-      this.adminUrl = `${data.SeeBlogWebBucketUrl}/admin/`;
-      this.adminUserPoolId = data.SeeBlogAdminUserPoolId;
-      this.adminUserPoolArn = data.SeeBlogAdminUserPoolArn;
-      this.adminAppClientId = data.SeeBlogAdminAppClientId;
-
-      callback(null);
-    })
+    this.fetchedCoreStackConfig = true;
+    this.webBucketName = config.SeeBlogWebBucketName;
+    this.webUrl = config.SeeBlogWebBucketUrl;
+    this.adminUrl = `${config.SeeBlogWebBucketUrl}/admin/`;
+    this.adminUserPoolId = config.SeeBlogAdminUserPoolId;
+    this.adminUserPoolArn = config.SeeBlogAdminUserPoolArn;
+    this.adminAppClientId = config.SeeBlogAdminAppClientId;
   }
 
-  fetchApiStackConfig(callback) {
+  async fetchApiStackConfig() {
     if(this.fetchedApiStackConfig) {
-      return callback(null);
+      return;
     }
 
-    const args = {
-      blogName: this.name,
-      region: this.region
-    };
+    this.blogApiUrl = await getApiUrl({blogName: this.name});
+    this.fetchedApiStackConfig = true;
+  }
 
-    getApiUrl(args, (err, data) => {
-      if(err) return callback(err);
-
-      this.fetchedApiStackConfig = true;
-      this.blogApiUrl = data;
-      callback(null);
+  async fetchMetadata() {
+    this.title = await getMetadata({
+      bucketName: this.webBucketName,
+      key: 'title'
     });
   }
 
-  fetchConfig(callback) {
-    this.fetchCoreStackConfig((err) => {
-      if(err) return callback(err);
-      this.fetchApiStackConfig(callback);
-    })
+  async fetchConfig() {
+    await this.fetchCoreStackConfig();
+    await this.fetchApiStackConfig();
+    await this.fetchMetadata();
   }
 }
 
-const loadBlog = ({name, region}, callback) => {
+const loadBlog = async ({name, region}, callback) => {
   const blog = new Blog({name, region});
-  blog.fetchConfig((err) => {
-    if(err) {
-      callback(err);
-    } else {
-      callback(null, blog)
-    }
-  })
+  await blog.fetchConfig();
+  callback(null, blog);
 };
 
 module.exports = {
