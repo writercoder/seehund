@@ -1,8 +1,7 @@
 const AWS = require('aws-sdk');
 
 const naming = require('../../lib/utils/naming');
-
-const { getSeeblogInfo, getOutputValue } = require('./stack-utils');
+const { getSeeblogInfo, getOutputValue } = require('../../lib/utils/cloudformation');
 
 const getCoreStackConfig = ({blogName, region}, callback) => {
 
