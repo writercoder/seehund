@@ -1,6 +1,6 @@
 const AWS = require('aws-sdk');
 
-const naming = require('../lib/naming');
+const naming = require('../../lib/utils/naming');
 
 const destroyCoreStack = ({blogName, region}, callback) => {
   const cloudformation = new AWS.CloudFormation({region});

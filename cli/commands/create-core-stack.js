@@ -2,8 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const AWS = require('aws-sdk');
 
-
-const naming = require('../lib/naming');
+const naming = require('../../lib/utils/naming');
 
 const shortIdForS3 = () => {
   return shortid.generate().toLowerCase()

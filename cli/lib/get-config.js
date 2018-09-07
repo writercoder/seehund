@@ -1,5 +1,6 @@
 const AWS = require('aws-sdk');
-const naming = require('./naming');
+
+const naming = require('../../lib/utils/naming');
 
 const { getSeeblogInfo, getOutputValue } = require('./stack-utils');
 
