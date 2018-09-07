@@ -5,6 +5,7 @@ const AWS = require('aws-sdk');
 const naming = require('../lib/naming');
 const { getCoreStackConfig, getApiUrl } = require('../lib/get-config');
 const { Blog } = require('../lib/blog');
+const { setMetadata } = require('../../lib/blog/metadata');
 
 const createCore = require('./create-core-stack');
 const installApi = require('./install-api');
@@ -13,7 +14,7 @@ const uploadAdmin = require('./upload-admin');
 const createAdminUser = require('./create-admin-user');
 
 
-const create = ({
+const create = async ({
   title,
   region
 }, callback) => {
@@ -23,44 +24,47 @@ const create = ({
 
   const blog = new Blog({name: blogName, region});
 
-  createCore({title, blogName, region}, (err, data) => {
+  createCore({title, blogName, region}, async (err, data) => {
     if(err) return callback(err);
 
-    blog.fetchCoreStackConfig((err) => {
+    await blog.fetchCoreStackConfig();
+
+    console.log('GOT STACK CONFIG');
+    console.info(blog.config());
+
+    await setMetadata({
+      bucketName: blog.webBucketName,
+      key: 'title',
+      value: title
+    });
+
+    installApi({
+      blog
+    }, async (err) => {
       if(err) return callback(err);
 
-      console.log('GOT STACK CONFIG');
-      console.info(blog.config());
+      await blog.fetchApiStackConfig();
 
-      installApi({
-        blog
-      }, (err) => {
+      console.log('GOT API CONFIG');
+
+      buildAdmin(blog, (err, data) => {
         if(err) return callback(err);
-
-        blog.fetchApiStackConfig((err) => {
-          if(err) return callback(err);
-
-          console.log('GOT API CONFIG');
-
-          buildAdmin(blog, (err, data) => {
+        console.log('BUILT ADMIN');
+        uploadAdmin({
+          blogName,
+          bucketName: blog.webBucketName
+        }, (err) => {
             if(err) return callback(err);
-            console.log('BUILT ADMIN');
-            uploadAdmin({
-              blogName,
-              bucketName: blog.webBucketName
-            }, (err) => {
-                if(err) return callback(err);
-                console.log('UPLOADED ADMIN')
-                createAdminUser({blogName, region}, (err) => {
-                  if(err) return callback(err);
+            console.log('UPLOADED ADMIN')
+            createAdminUser({blogName, region}, (err) => {
+              if(err) return callback(err);
 
-                  console.log('CREATED ADMIN USER');
-                })
-              })
+              console.log('CREATED ADMIN USER');
+            })
           })
-        })
       })
     })
+
   })
 }
 
