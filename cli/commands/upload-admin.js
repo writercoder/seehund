@@ -6,7 +6,7 @@ const { loadBlog } = require ('../lib/blog');
 const uploadAdmin = async ({blogName, blog}) =>  {
 
   if(!blog) {
-    blog = await loadBlog({blogName});
+    blog = await loadBlog({name: blogName});
   }
 
   const bucketName = blog.webBucketName;
