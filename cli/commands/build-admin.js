@@ -2,8 +2,16 @@ const path = require('path');
 const webpack = require('webpack');
 
 const webpackConfig = require('../../webpack.admin.config.js');
+const { loadBlog } = require ('../lib/blog');
 
-const buildAdmin = (blog, callback) => {
+const buildAdmin = async ({blog, blogName}) => {
+
+  if(!blog) {
+    blog = await loadBlog({name: blogName});
+  } else {
+    blogName = blog.name;
+  }
+
   const DefinePluginConfig = new webpack.DefinePlugin({
     seeblog: {
       adminAppClientId: JSON.stringify(blog.adminAppClientId),
@@ -24,12 +32,14 @@ const buildAdmin = (blog, callback) => {
 
   const compiler = webpack(webpackConfig);
 
-  compiler.run((err, stats) => {
-    if(err || stats.hasErrors()) {
-      callback(err)
-    } else {
-      callback(null, stats)
-    }
+  return new Promise((resolve, reject) => {
+    compiler.run((err, stats) => {
+      if(err || stats.hasErrors()) {
+        reject(err)
+      } else {
+        resolve(stats);
+      }
+    });
   });
 };
 

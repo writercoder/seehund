@@ -188,25 +188,16 @@ program
   .argument('<blogName>', 'Blog name to build admin for')
   .option('-r --region <region>',
           'AWS Region', undefined, 'us-east-1')
-  .action((args, options, logger) => {
+  .action(async (args, options, logger) => {
     const { blogName } = args;
     const { region } = options;
-    loadBlog({name: blogName, region}, (err, blog) => {
-      if(err) {
-        console.log(`Error loading blog: ${blogName}`);
-        console.log(err);
-        return;
-      }
-      console.info(blog);
-      buildAdminCommand(blog, (err, stats) => {
-        if(err) {
-          console.log('Error building admin')
-          console.log(err);
-        } else {
-          console.log('Built blog');
-        }
-      });
-    });
+    try {
+      await buildAdminCommand({blogName});
+      console.log('Built admin');
+    } catch(e) {
+      console.log('Error building admin')
+      console.log(e);
+    }
   });
 
 program

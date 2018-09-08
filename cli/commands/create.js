@@ -46,17 +46,13 @@ const create = async ({
 
       console.log('GOT API CONFIG');
 
-      buildAdmin(blog, async (err, data) => {
+      await buildAdmin({blog});
+      await uploadAdmin({blog});
+
+      createAdminUser({blogName, region}, (err) => {
         if(err) return callback(err);
-        console.log('BUILT ADMIN');
 
-        await uploadAdmin({blog});
-
-        createAdminUser({blogName, region}, (err) => {
-          if(err) return callback(err);
-
-          console.log('CREATED ADMIN USER');
-        })
+        console.log('CREATED ADMIN USER');
       })
     })
 
