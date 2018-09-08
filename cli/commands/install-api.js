@@ -28,7 +28,7 @@ const installApi = ({blogName, blog, region}, callback) => {
       userPoolArn: blog.adminUserPoolArn,
       region: blog.region }, callback)
   } else {
-    loadBlog({blogName, region}, (err, blog) => {
+    loadBlog({name: blogName, region}, (err, blog) => {
       if(err) return callback(err);
       doInstallApi({
         blogName: blog.name,
