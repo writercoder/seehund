@@ -1,23 +1,20 @@
-const { getCoreStackConfig } = require('../lib/get-config');
+const { getCoreStackConfig } = require('../../lib/stack/config');
 const { execFileSync } = require('child_process');
 
 
-const deleteBucket = ({blogName, region}, callback) => {
-  getCoreStackConfig({blogName, region}, (err, data) => {
-    if(err) return callback(err);
+const deleteBucket = async ({blogName}) => {
 
-    const bucketName = data.SeeBlogWebBucketName;
+  const data = await getCoreStackConfig({blogName});
+  const bucketName = data.SeeBlogWebBucketName;
 
-    const args = [
-      's3',
-      'rb',
-      '--force',
-      `s3://${bucketName}`
-    ];
+  const args = [
+    's3',
+    'rb',
+    '--force',
+    `s3://${bucketName}`
+  ];
 
-    console.log(execFileSync('aws', args).toString());
-    callback(null)
-  });
+  console.log(execFileSync('aws', args).toString());
 }
 
 
