@@ -217,7 +217,7 @@ program
   .action((args, options, logger) => {
     const { blogName } = args;
     const { region } = options;
-    uploadAdminCommand({blogName, bucketName});
+    uploadAdminCommand({blogName});
   });
 
 program

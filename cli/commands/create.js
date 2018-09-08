@@ -46,21 +46,17 @@ const create = async ({
 
       console.log('GOT API CONFIG');
 
-      buildAdmin(blog, (err, data) => {
+      buildAdmin(blog, async (err, data) => {
         if(err) return callback(err);
         console.log('BUILT ADMIN');
-        uploadAdmin({
-          blogName,
-          bucketName: blog.webBucketName
-        }, (err) => {
-            if(err) return callback(err);
-            console.log('UPLOADED ADMIN')
-            createAdminUser({blogName, region}, (err) => {
-              if(err) return callback(err);
 
-              console.log('CREATED ADMIN USER');
-            })
-          })
+        await uploadAdmin({blog});
+
+        createAdminUser({blogName, region}, (err) => {
+          if(err) return callback(err);
+
+          console.log('CREATED ADMIN USER');
+        })
       })
     })
 
