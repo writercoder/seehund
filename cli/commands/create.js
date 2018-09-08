@@ -3,7 +3,6 @@ const path = require('path');
 const AWS = require('aws-sdk');
 
 const naming = require('../../lib/utils/naming');
-const { getCoreStackConfig, getApiUrl } = require('../lib/get-config');
 const { Blog } = require('../lib/blog');
 const { setMetadata } = require('../../lib/blog/metadata');
 
