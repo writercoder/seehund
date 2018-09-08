@@ -18,7 +18,6 @@ const uploadAdminCommand = require('../cli/commands/upload-admin');
 const createAdminUserCommand = require('../cli/commands/create-admin-user');
 const setTitleCommand = require('../cli/commands/set-title');
 
-const { getApiUrl } = require('../cli/lib/get-config');
 const { loadBlog } = require('../cli/lib/blog')
 
 program
@@ -137,25 +136,6 @@ program
     const { region } = options;
     envCommand({blogName, region});
   });
-
-program
-  .command('show_api_url', 'Show information about a seehund blog')
-  .argument('<blogName>', 'Blog to show')
-  .option('-r --region <region>',
-          'AWS Region', undefined, 'us-east-1')
-  .action((args, options, logger) => {
-    const { blogName } = args;
-    const { region } = options;
-    getApiUrl({blogName, region}, (err, apiUrl) => {
-      if(err) {
-        console.log('error getting api url')
-        console.info(err);
-      } else {
-        console.log(`API URL: ${apiUrl}`)
-      }
-    });
-  });
-
 
 program
   .command('destroy_bucket', 'Destroy the web bucket')
