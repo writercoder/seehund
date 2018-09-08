@@ -1,8 +1,8 @@
 const inquirer = require('inquirer');
-const { getCoreStackConfig } = require('../lib/get-config');
+const { getCoreStackConfig } = require('../../lib/stack/config');
 const { execFileSync } = require('child_process');
 
-const createAdminUser = (({blogName, region}, callback) => {
+const createAdminUser = (async ({blogName, region}, callback) => {
 
   const questions = [
     {
@@ -20,36 +20,35 @@ const createAdminUser = (({blogName, region}, callback) => {
       message: "Please confirm the password"
     }
   ];
-  inquirer.prompt(questions).then(answers => {
+  inquirer.prompt(questions).then(async answers => {
 
-    getCoreStackConfig({blogName, region}, (err, data) => {
+    const data = await getCoreStackConfig({blogName});
 
-      const userPoolId = data.SeeBlogAdminUserPoolId;
-      const clientId = data.SeeBlogAdminAppClientId;
+    const userPoolId = data.SeeBlogAdminUserPoolId;
+    const clientId = data.SeeBlogAdminAppClientId;
 
-      const createArgs = [
-        'cognito-idp',
-        'sign-up',
-        '--region', region,
-        '--client-id', clientId,
-        '--username', answers.email,
-        '--password', answers.password
-      ];
+    const createArgs = [
+      'cognito-idp',
+      'sign-up',
+      '--region', region,
+      '--client-id', clientId,
+      '--username', answers.email,
+      '--password', answers.password
+    ];
 
-      console.log(execFileSync('aws', createArgs).toString());
+    console.log(execFileSync('aws', createArgs).toString());
 
-      const confirmArgs = [
-        'cognito-idp',
-        'admin-confirm-sign-up',
-        '--region', region,
-        '--user-pool-id', userPoolId,
-        '--username', answers.email,
-      ];
+    const confirmArgs = [
+      'cognito-idp',
+      'admin-confirm-sign-up',
+      '--region', region,
+      '--user-pool-id', userPoolId,
+      '--username', answers.email,
+    ];
 
-      console.log(execFileSync('aws', confirmArgs).toString());
+    console.log(execFileSync('aws', confirmArgs).toString());
 
-      callback(null)
-    });
+    callback(null)
 
   });
 
