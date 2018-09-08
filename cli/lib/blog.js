@@ -81,7 +81,11 @@ class Blog {
 const loadBlog = async ({name, region}, callback) => {
   const blog = new Blog({name, region});
   await blog.fetchConfig();
-  callback(null, blog);
+  if(callback) {
+    callback(null, blog);
+  } else {
+    return blog;
+  }
 };
 
 module.exports = {
