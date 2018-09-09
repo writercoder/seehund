@@ -1,8 +1,9 @@
 import AWS from 'aws-sdk'
 import each from 'async/each';
-import {renderPost, renderIndexPage} from './theme.js'
+import {renderPost, renderIndexPage} from './theme.js';
+import { getMetadata } from '../lib/blog/metadata';
 
-AWS.config.update({region:'us-east-1'});
+AWS.config.update({region: 'us-east-1'});
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 const s3 = new AWS.S3();
 
@@ -20,8 +21,11 @@ export function build(callback) {
       callback(error)
     } else {
       try {
-        await writePosts(data.Items)
-        await writeIndex(data.Items)
+        const blog = {
+          title: await getMetadata({bucketName: bucket, key: 'title'})
+        };
+        await writePosts(data.Items, blog)
+        await writeIndex(data.Items, blog)
         // await removeStalePosts(data.Items)
         callback(null)
       } catch(e) {
@@ -31,18 +35,18 @@ export function build(callback) {
   })
 }
 
-export async function buildPost(post) {
+export async function buildPost(post, blog) {
   await writePost(post)
   return writeIndex()
 }
 
-export async function removePost(post) {
+export async function removePost(post, blog) {
   await deletePost(post)
   return writeIndex()
 }
 
-async function writeIndex(posts) {
-  const html = renderIndexPage(posts)
+async function writeIndex(posts, blog) {
+  const html = renderIndexPage(posts, blog)
 
   const params = {
     Bucket: bucket,
@@ -55,8 +59,8 @@ async function writeIndex(posts) {
 }
 
 
-async function writePost(postData) {
-  const html = renderPost(postData)
+async function writePost(postData, blog) {
+  const html = renderPost(postData, blog)
 
   const params = {
     Bucket: bucket,
@@ -68,8 +72,8 @@ async function writePost(postData) {
   return s3Put(params);
 }
 
-async function writePosts(posts) {
-  return Promise.all(posts.map((post) => { writePost(post) }))
+async function writePosts(posts, blog) {
+  return Promise.all(posts.map((post) => { writePost(post, blog) }))
 }
 
 async function removeStalePosts(posts) {
