@@ -4,10 +4,12 @@ import {action, observable} from 'mobx';
 export class MessagesStore {
   @observable messages = [];
 
+  // IDs for react unique keys
+  counter = 0;
+
 
   @action push({message, status}) {
-    console.log('pushing a message ' + message);
-    this.messages.push({message, status})
+    this.messages.push({message, status, id: this.counter++ })
   }
 
   okay(message) {

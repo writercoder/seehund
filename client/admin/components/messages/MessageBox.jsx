@@ -12,8 +12,8 @@ export default class MessageBox extends React.Component {
 
     return (
       <Box>
-        { messagesStore.messages.map(({message, status}) => {
-          return <Notification message={message} status={status} />
+        { messagesStore.messages.map(({id, message, status}) => {
+          return <Notification key={id} message={message} status={status} />
         })}
       </Box>
     );
