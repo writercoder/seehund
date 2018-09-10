@@ -26,9 +26,4 @@ export default class PostsIndexPage extends React.Component {
       );
     }
   }
-
-  componentWillMount() {
-    this.props.postsStore.fetch()
-  }
-
 }

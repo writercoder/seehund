@@ -1,4 +1,4 @@
-import {action, observable, runInAction} from "mobx"
+import {action, observable, observe, runInAction} from "mobx"
 // For some reason popsicle doesn't work with ES6 import syntax
 // Tempted to use something else like fetch.
 const popsicle = require('popsicle')
@@ -26,6 +26,9 @@ export class PostsStore {
 
   constructor(userStore) {
     this.userStore = userStore;
+    observe(this.userStore, 'userToken', () => {
+      this.fetch()
+    }, true);
   }
 
   getPost(id) {

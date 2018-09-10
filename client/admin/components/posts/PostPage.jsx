@@ -35,8 +35,4 @@ export default class PostPage extends React.Component {
       );
     }
   }
-
-  componentWillMount() {
-    this.props.postsStore.fetch()
-  }
 }
