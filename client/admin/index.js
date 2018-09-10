@@ -7,11 +7,14 @@ import { PostsStore } from '../stores/posts-store';
 import { UserStore } from '../stores/user-store';
 import { MessagesStore } from '../stores/messages-store';
 import { BlogStore } from '../stores/blog-store';
+import { MetadataStore } from '../stores/metadata-store';
 
 import 'grommet/scss/vanilla/index.scss';
 
 const userStore = new UserStore();
 const postsStore = new PostsStore(userStore);
+const metadataStore = new MetadataStore(userStore);
+
 const messagesStore = new MessagesStore();
 const blogStore = new BlogStore();
 
@@ -20,7 +23,8 @@ ReactDOM.render(
     postsStore={postsStore}
     userStore={userStore}
     messagesStore={messagesStore}
-    blogStore={blogStore}>
+    blogStore={blogStore}
+    metadataStore={metadataStore}>
     <App />
   </Provider>,
   document.getElementById('root'));

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import {observer, inject} from 'mobx-react'
 
 import Split from 'grommet/components/Split';
 import Sidebar from 'grommet/components/Sidebar';
@@ -13,6 +14,7 @@ import Menu from 'grommet/components/Menu';
 import UserWidget from '../user/UserWidget.jsx'
 import MessageBox from '../messages/MessageBox.jsx'
 
+@inject("metadataStore") @observer
 export default class extends React.Component {
 
   render() {
@@ -21,7 +23,7 @@ export default class extends React.Component {
         <Sidebar colorIndex="brand" size="medium">
           <Header pad="medium" justify="between">
             <Title>
-              Seehund Blog Admin
+              { this.renderTitle() }
             </Title>
           </Header>
           <Box flex="grow" justify="start">
@@ -45,5 +47,13 @@ export default class extends React.Component {
         </Box>
       </Split>
     );
+  }
+
+  renderTitle() {
+    if(this.props.metadataStore.fetched) {
+      return `${ this.props.metadataStore.metadata.title } - Admin`;
+    } else {
+      return 'Seehund Blog Admin'
+    }
   }
 }
