@@ -1,5 +1,5 @@
 const { getCoreStackConfig, getApiUrl } = require('../../lib/stack/config');
-const { getMetadata } = require('../../lib/blog/metadata');
+const metadata = require('../../lib/blog/metadata');
 
 class Blog {
 
@@ -65,7 +65,7 @@ class Blog {
   }
 
   async fetchMetadata() {
-    this.title = await getMetadata({
+    this.title = await metadata.getValue({
       bucketName: this.webBucketName,
       key: 'title'
     });

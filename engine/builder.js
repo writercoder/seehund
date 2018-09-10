@@ -1,7 +1,7 @@
 import AWS from 'aws-sdk'
 import each from 'async/each';
 import {renderPost, renderIndexPage} from './theme.js';
-import { getMetadata } from '../lib/blog/metadata';
+import metadata from '../lib/blog/metadata';
 
 AWS.config.update({region: 'us-east-1'});
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
@@ -22,7 +22,7 @@ export function build(callback) {
     } else {
       try {
         const blog = {
-          title: await getMetadata({bucketName: bucket, key: 'title'})
+          title: await metadata.getValue({bucketName: bucket, key: 'title'})
         };
         await writePosts(data.Items, blog)
         await writeIndex(data.Items, blog)

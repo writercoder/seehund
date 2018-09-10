@@ -4,7 +4,7 @@ const AWS = require('aws-sdk');
 
 const naming = require('../../lib/utils/naming');
 const { Blog } = require('../lib/blog');
-const { setMetadata } = require('../../lib/blog/metadata');
+const metadata = require('../../lib/blog/metadata');
 
 const createCore = require('./create-core-stack');
 const installApi = require('./install-api');
@@ -31,7 +31,7 @@ const create = async ({
     console.log('GOT STACK CONFIG');
     console.info(blog.config());
 
-    await setMetadata({
+    await metadata.setValue({
       bucketName: blog.webBucketName,
       key: 'title',
       value: title
