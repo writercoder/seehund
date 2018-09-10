@@ -5,7 +5,8 @@ const path = require('path')
 module.exports = {
   entry: {
     posts: './api/posts.js',
-    build: './api/build.js'
+    build: './api/build.js',
+    metadata: './api/metadata.js'
   },
   target: 'node',
   // because 'aws-sdk' is not compatible with webpack,

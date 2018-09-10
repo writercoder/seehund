@@ -88,6 +88,22 @@ functions:
           authorizer:
             arn: ${env:SEEHUND_USER_POOL_ARN}
           cors: true
+  get_metadata:
+    handler: metadata.get
+    events:
+      - http:
+        path: metadata
+        method: get
+        authorizer:
+          arn: ${env:SEEHUND_USER_POOL_ARN}
+  set_metadata:
+    handler: metadata.set
+    events:
+      - http:
+        path: metadata
+        method: put
+        authorizer:
+          arn: ${env:SEEHUND_USER_POOL_ARN}
 
 # you can add CloudFormation resource templates here
 resources:
