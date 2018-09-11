@@ -37,6 +37,9 @@ export default class extends React.Component {
               <Anchor path="/posts/new">
                 New Post
               </Anchor>
+              <Anchor path="/settings">
+                Settings
+              </Anchor>
             </Menu>
           </Box>
           <UserWidget />

@@ -5,6 +5,8 @@ import config from './../config.js';
 
 export class MetadataStore {
   @observable metadata = null;
+  @observable fetched = false
+  @observable updating = false
 
   constructor(userStore) {
     this.userStore = userStore;
@@ -33,6 +35,31 @@ export class MetadataStore {
           });
         }
       });
+  }
+
+  @action setMetadata(metadata, success) {
+    this.updating = true;
+    popsicle
+      .put({
+        url: `${config.apiUrl}/metadata`,
+        body: metadata,
+        headers: this.authHeaders() })
+      .use(popsicle.plugins.parse('json'))
+      .then((res) => {
+        if(res.status == 200) {
+          runInAction("Updating metadata with the server response", () => {
+            this.metadata = res.body
+            this.updating = false;
+            this.lastError = null;
+          })
+          success(this.metadata);
+        } else {
+          runInAction("Error creating metadata", () => {
+            this.lastError = "Error creating metadata"
+            this.updating = false
+          })
+        }
+      })
   }
 
   authHeaders() {

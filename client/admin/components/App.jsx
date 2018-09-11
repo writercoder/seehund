@@ -14,6 +14,7 @@ import LoginPage from './user/LoginPage.jsx'
 import PostsIndexPage from './posts/PostsIndexPage.jsx'
 import NewPostPage from './posts/NewPostPage.jsx'
 import PostPage from './posts/PostPage.jsx'
+import SettingsPage from './settings/SettingsPage.jsx'
 
 
 @inject("messagesStore")
@@ -56,6 +57,7 @@ export default class extends React.Component {
           }} />
           <Route exact path="/posts"
                  render={(props) => <PostsIndexPage {...props} /> } />
+          <Route exact path="/settings" component={SettingsPage} />
           <DevTools />
         </AppWrapper>
       </Router>
