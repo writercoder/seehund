@@ -180,7 +180,9 @@ program
   .action((args, options, logger) => {
     const { blogName } = args;
     const { region } = options;
-    installApiCommand({blogName, region});
+    installApiCommand({blogName, region}, () => {
+      console.log("Install API complete");
+    });
   });
 
 program
