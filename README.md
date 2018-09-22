@@ -1,6 +1,6 @@
-# Seehund - Control Your Digital Self
+# Seehund - Own Your Digital Self
 
-Seehund is a graceful seal who swims through clouds giving you:
+Seehund is a graceful and elegant seal swimming through the clouds. She lives to provide you with these blessings.
 
 * Data autonomy. Your stories, photos and contact list live in storage space you have paid for.
 
