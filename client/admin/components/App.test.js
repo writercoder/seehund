@@ -5,5 +5,5 @@ import App from './App';
 
 test("We can shallow render the app", () => {
   const wrapper = shallow(<App/>);
-  expect(wrapper.exists('BrowserRouter')).toBe(true)
+  expect(wrapper.exists('BrowserRouterrr')).toBe(true)
 });
