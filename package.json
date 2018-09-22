@@ -53,12 +53,18 @@
     "babel-preset-react": "^6.23.0",
     "babel-preset-stage-1": "^6.22.0",
     "css-loader": "^0.28.0",
-    "jest": "^19.0.2",
+    "enzyme": "^3.6.0",
+    "enzyme-adapter-react-15": "^1.1.0",
+    "jest": "^23.0.0",
     "mobx-react-devtools": "^4.2.11",
     "node-sass": "^4.5.2",
+    "react-test-renderer": "15",
     "sass-loader": "^6.0.3",
     "sinon": "^6.1.5",
     "style-loader": "^0.16.1",
     "webpack-node-externals": "^1.5.4"
+  },
+  "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>/test/setupTests.js"
   }
 }
