@@ -1,7 +1,7 @@
 {
-  "name": "cloudblog",
+  "name": "seehund",
   "version": "1.0.0",
-  "description": "Serverless Blog Engine",
+  "description": "Own your digital self",
   "main": "index.js",
   "author": "richard@1000mileweb.com",
   "license": "MIT",
