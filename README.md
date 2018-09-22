@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/writercoder/seehund.svg?style=svg&circle-token=1c1dbfad74138205048971ae8e323e8f1c316b19)](https://circleci.com/gh/writercoder/seehund)
+
 # Seehund - Own Your Digital Self
 
 Seehund is a graceful and elegant seal swimming through the clouds. She lives to provide you with these blessings.
