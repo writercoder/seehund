@@ -1,13 +1,14 @@
+import AWS from 'aws-sdk';
 
-function config() {
-  return {
-    apiUrl: seeblog.blogApiUrl,
-    frontendUrl: seeblog.frontendUrl,
-    cognito: {
-      appClientId: seeblog.adminAppClientId,
-      userPoolId: seeblog.adminUserPoolId
-    }
+const config = {
+  apiUrl: seeblog.blogApiUrl,
+  frontendUrl: seeblog.frontendUrl,
+  webBucket: seeblog.webBucketName,
+  cognito: {
+    appClientId: seeblog.adminAppClientId,
+    userPoolId: seeblog.adminUserPoolId,
+    idPoolId: seeblog.adminIdPoolId
   }
 }
 
-export default config();
+export default config;

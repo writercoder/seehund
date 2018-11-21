@@ -16,11 +16,12 @@ const buildAdmin = async ({blog, blogName}) => {
     seeblog: {
       adminAppClientId: JSON.stringify(blog.adminAppClientId),
       adminUserPoolId: JSON.stringify(blog.adminUserPoolId),
+      adminIdPoolId: JSON.stringify(blog.adminIdPoolId),
       blogApiUrl: JSON.stringify(blog.blogApiUrl),
-      frontendUrl: JSON.stringify(blog.webUrl)
+      frontendUrl: JSON.stringify(blog.webUrl),
+      webBucketName: JSON.stringify(blog.webBucketName)
     }
   });
-
 
   webpackConfig.plugins.push(DefinePluginConfig);
 

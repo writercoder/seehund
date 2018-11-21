@@ -23,7 +23,8 @@ class Blog {
         adminUrl: this.adminUrl,
         adminUserPoolId: this.adminUserPoolId,
         adminAppClientId: this.adminAppClientId,
-        adminUserPoolArn: this.adminUserPoolArn
+        adminUserPoolArn: this.adminUserPoolArn,
+        adminIdPoolId: this.adminIdPoolId
       })
     }
     if(this.fetchedApiStackConfig) {
@@ -52,6 +53,7 @@ class Blog {
     this.adminUrl = `${config.SeeBlogWebBucketUrl}/admin/`;
     this.adminUserPoolId = config.SeeBlogAdminUserPoolId;
     this.adminUserPoolArn = config.SeeBlogAdminUserPoolArn;
+    this.adminIdPoolId = config.SeeBlogIdentityPoolId;
     this.adminAppClientId = config.SeeBlogAdminAppClientId;
   }
 
