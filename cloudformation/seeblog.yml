@@ -7,6 +7,9 @@ Parameters:
   UserPoolName:
     Type: String
     Description: The name of the Cognito User Pool
+  IdentityPoolName:
+    Type: String
+    Description: The name of the Cognito Identity Pool
 
 Resources:
   WebBucket:
@@ -40,12 +43,64 @@ Resources:
     Properties:
       ClientName: BlogAdmin
       UserPoolId: !Ref BlogAdminUserPool
+  BlogAdminIdentityPool:
+    Type: AWS::Cognito::IdentityPool
+    Properties:
+      IdentityPoolName: !Ref IdentityPoolName
+      AllowUnauthenticatedIdentities: false
+      CognitoIdentityProviders:
+        - ClientId: !Ref BlogAdminPoolClientApp
+          ProviderName: !GetAtt BlogAdminUserPool.ProviderName
+  # IAM roles
+  BlogAdminIdentityPoolRoles:
+    Type: AWS::Cognito::IdentityPoolRoleAttachment
+    Properties:
+      IdentityPoolId: !Ref BlogAdminIdentityPool
+      Roles:
+        authenticated: !GetAtt BlogAdminAuthRole.Arn
+
+  BlogAdminAuthRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Path: /
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: 'Allow'
+            Principal:
+              Federated: 'cognito-identity.amazonaws.com'
+            Action:
+              - 'sts:AssumeRoleWithWebIdentity'
+            Condition:
+              StringEquals:
+                'cognito-identity.amazonaws.com:aud':
+                  Ref: BlogAdminIdentityPool
+              'ForAnyValue:StringLike':
+                'cognito-identity.amazonaws.com:amr': authenticated
+      Policies:
+        - PolicyName: 'CognitoAuthorizedPolicy'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              # Allow users to upload attachments to their
+              # folder inside our S3 bucket
+              - Effect: 'Allow'
+                Action:
+                  - 's3:*'
+                Resource:
+                  - Fn::Join:
+                    - ''
+                    -
+                      - !GetAtt WebBucket.Arn
+                      - '/content/*'
 
 Outputs:
   SeeBlogAdminUserPoolId:
     Value: !Ref BlogAdminUserPool
   SeeBlogAdminUserPoolArn:
     Value: !GetAtt BlogAdminUserPool.Arn
+  SeeBlogIdentityPoolId:
+    Value: !Ref BlogAdminIdentityPool
   SeeBlogAdminAppClientId:
     Value: !Ref BlogAdminPoolClientApp
   SeeBlogWebBucketName:
