@@ -15,6 +15,7 @@ import PostsIndexPage from './posts/PostsIndexPage.jsx'
 import NewPostPage from './posts/NewPostPage.jsx'
 import PostPage from './posts/PostPage.jsx'
 import SettingsPage from './settings/SettingsPage.jsx'
+import ImagesPage from './images/ImagesPage.jsx'
 
 
 @inject("messagesStore")
@@ -47,6 +48,7 @@ export default class extends React.Component {
       <Router basename="/admin">
         <AppWrapper>
           <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/images" component={ImagesPage} />
           <Route exact path="/" component={Dashboard} />
           <Route exact path="/posts/:id" render={(props) => {
             if(props.match.params.id == 'new') {
