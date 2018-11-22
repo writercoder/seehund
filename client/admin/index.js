@@ -18,7 +18,7 @@ const metadataStore = new MetadataStore(userStore);
 
 const messagesStore = new MessagesStore();
 const blogStore = new BlogStore();
-const imagesStore = new ImagesStore();
+const imagesStore = new ImagesStore(userStore);
 
 ReactDOM.render(
   <Provider
