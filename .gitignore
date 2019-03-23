@@ -1,3 +1,4 @@
 dist
 .serverless
 .webpack
+tsconfig.json
