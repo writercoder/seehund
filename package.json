@@ -55,6 +55,7 @@
     "css-loader": "^0.28.0",
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-15": "^1.1.0",
+    "eslint": "^5.15.3",
     "jest": "^23.0.0",
     "mobx-react-devtools": "^4.2.11",
     "node-sass": "^4.5.2",
