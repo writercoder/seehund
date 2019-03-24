@@ -17,6 +17,7 @@ const buildAdminCommand = require('../cli/commands/build-admin');
 const uploadAdminCommand = require('../cli/commands/upload-admin');
 const createAdminUserCommand = require('../cli/commands/create-admin-user');
 const setTitleCommand = require('../cli/commands/set-title');
+const loadSampleContentCommand = require('../cli/commands/load-sample-content');
 
 const { loadBlog } = require('../cli/lib/blog')
 
@@ -232,7 +233,7 @@ program
 
 program
   .command('set_title', 'Sets the blog title')
-  .argument('<blogName>', 'Blog name to create admin user for')
+  .argument('<blogName>', 'Blog name to set title for for')
   .argument('<title>', 'Sets the title "Please quote spaces"')
   .option('-r --region <region>',
           'AWS Region', undefined, 'us-east-1')
@@ -246,6 +247,23 @@ program
         console.log(`Set title to "${title}"`)
       }
     });
+  });
+
+program
+  .command('load_sample_content', 'Inserts sample content')
+  .argument('<blogName>', 'Blog name to insert content for')
+  .option('-r --region <region>',
+          'AWS Region', undefined, 'us-east-1')
+  .action(async (args, options, logger) => {
+    const { blogName, title } = args;
+    const { region } = options;
+    try {
+      await loadSampleContentCommand({blogName, region});
+      console.log('Loaded sample content');
+    } catch(e) {
+      console.log('Error loading content');
+      throw(e);
+    }
   });
 
 
