@@ -1,4 +1,3 @@
-const AWS = require('aws-sdk');
 const { getCoreStackConfig } = require('../../lib/stack/config');
 const metadata = require('../../lib/blog/metadata');
 
