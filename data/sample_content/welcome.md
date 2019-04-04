@@ -6,7 +6,7 @@ Congratulations! You've just installed a Seehund blog to the cloud. You can now 
 
 Seehund is a cloud native blogging platform that's easy to install and cheap to run.
 
-And that's just the start. Our ambition is to create a complete home for your digital self online.
+It's intended as the first of many [personal microservices](/p/personal-microservices)
 
 ## Next Steps
 
