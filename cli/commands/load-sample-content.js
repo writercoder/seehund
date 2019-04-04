@@ -26,9 +26,15 @@ async function loadSampleContent({blogName, region}) {
   });
   await insertSampleFile({
     postsTableName,
+    title: 'Personal Microservices',
+    fileName: 'personal-microservices.md'
+  });
+  await insertSampleFile({
+    postsTableName,
     title: 'Seehund Credits',
     fileName: 'credits.md'
   });
+  
 }
 
 module.exports = loadSampleContent;
