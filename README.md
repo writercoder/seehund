@@ -1,31 +1,20 @@
-[![CircleCI](https://circleci.com/gh/writercoder/seehund.svg?style=svg&circle-token=1c1dbfad74138205048971ae8e323e8f1c316b19)](https://circleci.com/gh/writercoder/seehund)
 
-# Seehund - Own Your Digital Self
+Seehund. Create an blog in the Cloud
 
-Seehund is a graceful and elegant seal swimming through the clouds. She lives to provide you with these blessings.
+Create a blog in AWS with a single command. Publish to your own domain. Pay a small amount based on the cloud resources you use. Scale effortlessly.
 
-* Data autonomy. Your stories, photos and contact list live in storage space you have paid for.
+## Getting started
 
-* Data reliablity. Never lose a photo or contact.
+[Create an AWS account](https://aws.amazon.com/console/)
 
-* Great value. Public clouds make it possible to be as performant and efficient as Facebook.
+[Install the AWS CLI](https://aws.amazon.com/cli/)
 
-## Features
-
-* Publish a blog on the web
-* Interact with friends - COMING SOON
-* Share content with other networks - COMING  SOON
-* Manage photos and contacts - COMING SOON
-* Multi Cloud Support - COMING SOON
-* Simple installer - COMING SOON
-* Mobile apps - COMING SOON
-
-## Installation - COMING SOON
-
-```sh
-yarn install seehund --global
-seehund create "My lovely blog"
 ```
+npm install -g seehund
+seehund create "My awesome blog" myawesome.blog
+```
+
+Visit https://myawesome.blog/admin and start posting.
 
 ## Developing
 
@@ -49,11 +38,4 @@ yarn start
 ```
 * Browse the admin interface at http://localhost:8088/admin
 
-### Working on the API
 
-* Running lambda functions locally - TO DOCUMENT
-* Testing the API - TO DOCUMENT
-
-### Working on the CLI
-
-* TO DOCUMENT
