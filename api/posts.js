@@ -1,48 +1,32 @@
 import shortid from 'shortid'
 import AWS from 'aws-sdk'
 import { fail, succeed } from './lib/respond'
-import { build } from './../engine/builder'
+import { build, asyncBuild } from './../engine/builder'
+import libposts from '../lib/blog/posts'
 
 AWS.config.update({region: process.env.AWS_REGION});
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 const postsTableName = process.env.POSTS_TABLE;
 
-export function create(event, context, callback) {
+export async function create(event, context, callback) {
   const data = JSON.parse(event.body);
 
-  // const post = await db.createPost(data);
-  // await builder.buildPost(post)
-
-  const params = {
-    TableName: postsTableName,
-    Item: {
-      id: shortid.generate(),
+  try {
+    const post = await libposts.create({
+      postsTableName,
       title: data.title,
-      content: data.content,
-      createdAt: new Date().getTime()
-    }
+      slug: data.slug,
+      content: data.content
+    })
+    await asyncBuild();
+    succeed(post, callback);
+  } catch(e) {
+    fail(e, callback);
   }
-
-  dynamoDb.put(params, (error, data) => {
-    if (error) {
-      fail(error, callback);
-    } else {
-      build((error) => {
-        if(error) {
-          fail(error, callback);
-        } else {
-          succeed(params.Item, callback);
-        }
-      })
-    }
-  })
 }
 
 export function show(event, context, callback) {
-
-  // const post = await db.find(even.pathParameters.id);
-  // succeed(post, callback);
 
   const params = {
     TableName: postsTableName,
