@@ -67,6 +67,7 @@
     "node-sass": "^4.5.2",
     "react-test-renderer": "15",
     "sass-loader": "^6.0.3",
+    "serverless-jest-plugin": "^0.2.1",
     "sinon": "^6.1.5",
     "style-loader": "^0.16.1",
     "webpack-node-externals": "^1.5.4"
