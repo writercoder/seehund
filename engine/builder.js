@@ -2,21 +2,43 @@ import AWS from 'aws-sdk'
 import each from 'async/each';
 import {renderPost, renderIndexPage} from './theme.js';
 import metadata from '../lib/blog/metadata';
+import postDb from '../lib/blog/posts';
 
 AWS.config.update({region: 'us-east-1'});
-const dynamoDb = new AWS.DynamoDB.DocumentClient();
+
 const s3 = new AWS.S3();
 
 const bucket = process.env.WEB_BUCKET;
 const postsTableName = process.env.POSTS_TABLE;
 
+export async function asyncBuild() {
+  const posts = await postDb.all({postsTableName})
+  const blog = {
+    title: await metadata.getValue({bucketName: bucket, key: 'title'})
+  };
+  return new Promise(async (resolve, reject) => {
+    try {
+      await writePosts(posts, blog);
+      await writeIndex(posts, blog);
+      resolve()
+    } catch(e) {
+      reject(e);
+    }
+  })
+}
+
 export function build(callback) {
+
+  const dynamoDb = new AWS.DynamoDB.DocumentClient();
+
   const params = {
     TableName: postsTableName
   }
 
   dynamoDb.scan(params, async (error, data) => {
+    console.log('in scan callback')
     if(error) {
+      console.log('scan error')
       error.message = "Couldn't scan dynamoDb"
       callback(error)
     } else {
