@@ -18,6 +18,7 @@ class PostRow extends React.Component {
 
     return (<TableRow>
       <td>{ post.id }</td>
+      <td>{ post.slug }</td>
       <td>{ post.title }</td>
       <td>{ post.content }</td>
       <td><Link to={ `posts/${post.id}` }>Edit</Link></td>
@@ -40,6 +41,7 @@ export default class PostsTable extends React.Component  {
         <thead>
           <tr>
             <th>ID</th>
+            <th>Slug</th>
             <th>Title</th>
             <th>Content</th>
             <th></th>

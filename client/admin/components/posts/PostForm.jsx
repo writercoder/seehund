@@ -9,12 +9,14 @@ import TextInput from 'grommet/components/TextInput';
 export default class PostForm extends React.Component {
 
   @observable title = '';
+  @observable slug = '';
   @observable content = '';
 
   constructor(props) {
     super(props);
     if(!!props.post) {
       this.title = props.post.title;
+      this.slug = props.post.slug;
       this.content = props.post.content;
     }
   }
@@ -22,6 +24,7 @@ export default class PostForm extends React.Component {
   onSubmit = (e) => {
     this.props.onSubmit({
       title: this.title,
+      slug: this.slug,
       content: this.content
     })
     e.preventDefault()
@@ -36,6 +39,12 @@ export default class PostForm extends React.Component {
           <input type="text"
             value={ this.title }
             onChange={ (e) => { this.title = e.target.value } } />
+        </FormField>
+
+        <FormField label="Post Slug">
+          <input type="text"
+            value={ this.slug }
+            onChange={ (e) => { this.slug = e.target.value } } />
         </FormField>
 
         <FormField label="Post Content">

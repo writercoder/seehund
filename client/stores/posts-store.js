@@ -7,12 +7,14 @@ import config from './../config.js'
 export class Post {
   id = null
   @observable title;
+  @observable slug;
   @observable content;
   @observable createdAt;
 
-  constructor(id, title, content, createdAt) {
+  constructor(id, title, slug, content, createdAt) {
     this.id = id;
     this.title = title;
+    this.slug = slug;
     this.content = content;
     this.createdAt = createdAt;
   }
@@ -47,7 +49,7 @@ export class PostsStore {
           runInAction("Updating posts from server response" , () => {
             this.posts = []
             res.body.map((post) => {
-              this.posts.push(new Post(post.id, post.title, post.content, post.createdAt))
+              this.posts.push(new Post(post.id, post.title, post.slug, post.content, post.createdAt))
             })
             this.fetched = true;
             this.lastError = null;
@@ -60,6 +62,7 @@ export class PostsStore {
       })
   }
   @action createPost(fields, success) {
+    console.log('creating posts with', fields);
     this.updating = true
     popsicle
       .post({
@@ -70,7 +73,7 @@ export class PostsStore {
       .then((res) => {
         if(res.status == 200) {
           const post = res.body
-          const newPost = new Post(post.id, post.title, post.content, post.createdAt);
+          const newPost = new Post(post.id, post.title, post.slug, post.content, post.createdAt);
           runInAction("Adding newly created post to collection", () => {
             this.posts.push(newPost);
             this.updating = false;
