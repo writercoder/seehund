@@ -58,6 +58,7 @@ functions:
     events:
       - http:
           path: posts/{id}
+          cors: true
           method: get
           authorizer:
             arn: ${env:SEEHUND_USER_POOL_ARN}
@@ -67,6 +68,7 @@ functions:
       - http:
           path: posts
           method: get
+          cors: true
           authorizer:
             arn: ${env:SEEHUND_USER_POOL_ARN}
 
