@@ -15,7 +15,12 @@ const doInstallApi = ({blogName, region, webBucketName, userPoolArn}, callback) 
       SEEHUND_WEB_BUCKET: webBucketName,
       SEEHUND_USER_POOL_ARN: userPoolArn })
 
-  console.log(execFileSync(serverlessBin, args, { env }).toString());
+  // console.log(serverlessBin, args, env)
+  try {
+    console.log(execFileSync(serverlessBin, args, { env }).toString());
+  } catch (e) {
+    callback(e)
+  }
   callback(null);
 };
 
