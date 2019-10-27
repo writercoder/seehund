@@ -2,7 +2,7 @@ import shortid from 'shortid'
 import AWS from 'aws-sdk'
 import { fail, succeed } from './lib/respond'
 import { build, asyncBuild } from './../engine/builder'
-import libposts from '../lib/blog/posts'
+import postsRepository from '../lib/blog/posts'
 
 AWS.config.update({region: process.env.AWS_REGION});
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
@@ -13,7 +13,7 @@ export async function create(event, context, callback) {
   const data = JSON.parse(event.body);
 
   try {
-    const post = await libposts.create({
+    const post = await postsRepository.create({
       postsTableName,
       title: data.title,
       slug: data.slug,
@@ -26,36 +26,23 @@ export async function create(event, context, callback) {
   }
 }
 
-export function show(event, context, callback) {
-
-  const params = {
-    TableName: postsTableName,
-    Key: {
-      id: event.pathParameters.id
-    }
+export async function show(event, context, callback) {
+  try {
+    const id = event.pathParameters.id;
+    const post = await postsRepository.find({postsTableName, id})
+    succeed(post, callback);
+  } catch(e) {
+    fail(e, callback);
   }
-
-  dynamoDb.get(params, (error, data) => {
-    if(error) {
-      fail(callback);
-    } else {
-      succeed(data.Item, callback);
-    }
-  })
 }
 
-export function list(event, context, callback) {
-  const params = {
-    TableName: postsTableName,
+export async function list(event, context, callback) {
+  try {
+    const posts = await postsRepository.all({postsTableName})
+    succeed(posts, callback)
+  } catch(e) {
+    fail(e, callback)
   }
-
-  dynamoDb.scan(params, (error, data) => {
-    if(error) {
-      fail(callback);
-    } else {
-      succeed(data.Items, callback);
-    }
-  })
 }
 
 export function update(event, context, callback) {
@@ -86,6 +73,10 @@ export function update(event, context, callback) {
       })
     }
   })
+}
+
+export async function updateNew(event, context, callback) {
+  const data = JSON.parse(event.body);
 }
 
 export function destroy(event, context, callback) {
