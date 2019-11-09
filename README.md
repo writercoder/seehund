@@ -1,7 +1,7 @@
 
-Seehund. Create an blog in the Cloud
+Seehund. Create an blog in the Cloud.
 
-Create a blog in AWS with a single command. Publish to your own domain. Pay a small amount based on the cloud resources you use. Scale effortlessly.
+Create a serverless blog in AWS. Publish it on your own domain. Pay a small amount based on the cloud resources you use. Scale effortlessly.
 
 ## Getting started
 
@@ -38,4 +38,12 @@ yarn start
 ```
 * Browse the admin interface at http://localhost:8088/admin
 
+### Development principles
 
+* State lives in the Cloud. There is no local configuration or git repository for a blog. All its state lives in the cloud account.
+
+### Running tests
+
+```sh
+yarn test
+```
