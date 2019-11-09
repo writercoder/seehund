@@ -18,8 +18,20 @@ const uploadAdminCommand = require('../cli/commands/upload-admin');
 const createAdminUserCommand = require('../cli/commands/create-admin-user');
 const setTitleCommand = require('../cli/commands/set-title');
 const loadSampleContentCommand = require('../cli/commands/load-sample-content');
+const openAdminCommand = require('../cli/commands/open-admin');
 
 const { loadBlog } = require('../cli/lib/blog')
+
+function commandWithBlog(prog, command, description) {
+  return prog
+    .command(command, description)
+    .option('-b --blog <blogName>',
+            'Target Blog. Defaults to $SEEHUND_BLOG if set',
+            undefined,
+            process.env.SEEHUND_BLOG)
+    .option('-r --region <region>',
+            'AWS Region', undefined, 'us-east-1')
+}
 
 program
   .command('create_core', 'Create core resources for a new blog in the cloud.')
@@ -46,40 +58,6 @@ program
         console.info(err)
       } else {
         console.log(`Created stack with id ${data.StackId}`)
-      }
-    });
-  });
-
-program
-  .command('destroy_core', 'Destroy all cloud resources')
-  .argument('<blogName>', 'Blog to destroy')
-  .option('-r --region <region>',
-          'AWS Region', undefined, 'us-east-1')
-  .action((args, options, logger) => {
-    const { blogName } = args;
-    const { region } = options;
-    destroyCoreCommand({blogName, region}, (err) => {
-      if(err) {
-        console.log('Error deleting stack')
-      } else {
-        console.log('Deleted stack')
-      }
-    });
-  });
-
-program
-  .command('destroy_api', 'Destroy all cloud resources')
-  .argument('<blogName>', 'Blog to destroy')
-  .option('-r --region <region>',
-          'AWS Region', undefined, 'us-east-1')
-  .action((args, options, logger) => {
-    const { blogName } = args;
-    const { region } = options;
-    destroyApiCommand({blogName, region}, (err) => {
-      if(err) {
-        console.log('Error deleting stack')
-      } else {
-        console.log('Deleted stack')
       }
     });
   });
@@ -116,37 +94,47 @@ program
     listCommand({region});
   });
 
-program
-  .command('show', 'Show information about a seehund blog')
-  .argument('<blogName>', 'Blog to show')
-  .option('-r --region <region>',
-          'AWS Region', undefined, 'us-east-1')
+commandWithBlog(program, 'show', 'Show information about a seehund blog')
   .action((args, options, logger) => {
-    const { blogName } = args;
-    const { region } = options;
-    showCommand({blogName, region});
+    const { blog, region } = options;
+    showCommand({blogName: blog, region});
   });
 
-program
-  .command('env', 'Output env variables for a blog')
-  .argument('<blogName>', 'Blog to use')
-  .option('-r --region <region>',
-          'AWS Region', undefined, 'us-east-1')
+commandWithBlog(program, 'env', 'Output env variables for a blog')
   .action((args, options, logger) => {
-    const { blogName } = args;
-    const { region } = options;
-    envCommand({blogName, region});
+    const { blog, region } = options;
+    envCommand({blogName: blog, region});
   });
 
-program
-  .command('destroy_bucket', 'Destroy the web bucket')
-  .argument('<blogName>', 'Blog to destroy')
-  .option('-r --region <region>',
-          'AWS Region', undefined, 'us-east-1')
+
+commandWithBlog(program, 'destroy_core', 'Destroy all cloud resources')
   .action((args, options, logger) => {
-    const { blogName } = args;
-    const { region } = options;
-    deleteBucketCommand({blogName, region}, (err) => {
+    const { blog, region } = options;
+    destroyCoreCommand({blogName: blog, region}, (err) => {
+      if(err) {
+        console.log('Error deleting stack')
+      } else {
+        console.log('Deleted stack')
+      }
+    });
+  });
+
+commandWithBlog(program ,'destroy_api', 'Destroy all cloud resources')
+  .action((args, options, logger) => {
+    const { blog, region } = options;
+    destroyApiCommand({blogName: blog, region}, (err) => {
+      if(err) {
+        console.log('Error deleting stack')
+      } else {
+        console.log('Deleted stack')
+      }
+    });
+  });
+
+commandWithBlog(program, 'destroy_bucket', 'Destroy the web bucket')
+  .action((args, options, logger) => {
+    const { blog, region } = options;
+    deleteBucketCommand({blogName: blog, region}, (err) => {
       if(err) {
         console.log('Error deleting bucket')
       } else {
@@ -155,16 +143,10 @@ program
     });
   });
 
-
-program
-  .command('destroy', 'Destroy all cloud resources')
-  .argument('<blogName>', 'Blog to destroy')
-  .option('-r --region <region>',
-          'AWS Region', undefined, 'us-east-1')
+commandWithBlog(program, 'destroy', 'Destroy all cloud resources')
   .action((args, options, logger) => {
-    const { blogName } = args;
-    const { region } = options;
-    destroyCommand({blogName, region}, (err) => {
+    const { blog, region } = options;
+    destroyCommand({blogName: blog, region}, (err) => {
       if(err) {
         console.log('Error destroying blog')
       } else {
@@ -173,29 +155,20 @@ program
     });
   });
 
-program
-  .command('install_api', 'Installs the API')
-  .argument('<blogName>', 'Blog name to install')
-  .option('-r --region <region>',
-          'AWS Region', undefined, 'us-east-1')
+commandWithBlog(program, 'install_api', 'Installs the API')
   .action((args, options, logger) => {
-    const { blogName } = args;
-    const { region } = options;
-    installApiCommand({blogName, region}, () => {
+    const { blog, region } = options;
+    installApiCommand({blogName: blog, region}, () => {
       console.log("Install API complete");
     });
   });
 
-program
-  .command('build_admin', 'Builds the admin system with webpack, supplying cloud resource configuration')
-  .argument('<blogName>', 'Blog name to build admin for')
-  .option('-r --region <region>',
-          'AWS Region', undefined, 'us-east-1')
+commandWithBlog(program, 'build_admin',
+                'Builds the admin system with webpack, supplying cloud resource configuration')
   .action(async (args, options, logger) => {
-    const { blogName } = args;
-    const { region } = options;
+    const { blog, region } = options;
     try {
-      await buildAdminCommand({blogName});
+      await buildAdminCommand({blogName: blog});
       console.log('Built admin');
     } catch(e) {
       console.log('Error building admin')
@@ -203,26 +176,16 @@ program
     }
   });
 
-program
-  .command('upload_admin', 'Uploads the admin system to the web bucket')
-  .argument('<blogName>', 'Blog name to upload admin for')
-  .option('-r --region <region>',
-          'AWS Region', undefined, 'us-east-1')
+commandWithBlog(program, 'upload_admin', 'Uploads the admin system to the web bucket')
   .action((args, options, logger) => {
-    const { blogName } = args;
-    const { region } = options;
-    uploadAdminCommand({blogName});
+    const { blog, region } = options;
+    uploadAdminCommand({blogName: blog});
   });
 
-program
-  .command('create_admin_user', 'Uploads the admin system to the web bucket')
-  .argument('<blogName>', 'Blog name to create admin user for')
-  .option('-r --region <region>',
-          'AWS Region', undefined, 'us-east-1')
+commandWithBlog(program, 'create_admin_user', 'Creates an admin user')
   .action((args, options, logger) => {
-    const { blogName } = args;
-    const { region } = options;
-    createAdminUserCommand({blogName, region}, (err, data) => {
+    const { blog, region } = options;
+    createAdminUserCommand({blogName: blog, region}, (err, data) => {
       if(err) {
         console.log('Error creating admin user')
       } else {
@@ -231,16 +194,12 @@ program
     });
   });
 
-program
-  .command('set_title', 'Sets the blog title')
-  .argument('<blogName>', 'Blog name to set title for for')
+commandWithBlog(program, 'set_title', 'Sets the blog title')
   .argument('<title>', 'Sets the title "Please quote spaces"')
-  .option('-r --region <region>',
-          'AWS Region', undefined, 'us-east-1')
   .action((args, options, logger) => {
-    const { blogName, title } = args;
-    const { region } = options;
-    setTitleCommand({blogName, title, region}, (err, data) => {
+    const { title } = args;
+    const { blog, region } = options;
+    setTitleCommand({blogName: blog, title, region}, (err, data) => {
       if(err) {
         console.log('Error setting title')
       } else {
@@ -249,16 +208,11 @@ program
     });
   });
 
-program
-  .command('load_sample_content', 'Inserts sample content')
-  .argument('<blogName>', 'Blog name to insert content for')
-  .option('-r --region <region>',
-          'AWS Region', undefined, 'us-east-1')
+commandWithBlog(program, 'load_sample_content', 'Inserts sample content')
   .action(async (args, options, logger) => {
-    const { blogName, title } = args;
-    const { region } = options;
+    const { blog, region } = options;
     try {
-      await loadSampleContentCommand({blogName, region});
+      await loadSampleContentCommand({blogName: blog, region});
       console.log('Loaded sample content');
     } catch(e) {
       console.log('Error loading content');
@@ -266,6 +220,16 @@ program
     }
   });
 
+commandWithBlog(program, 'admin', 'Opens admin panel')
+  .action(async (args, options, logger) => {
+    const { blog, region } = options;
+    try {
+      await openAdminCommand({blogName: blog, region})
+    } catch(e) {
+      console.log('Error opening admin');
+      throw(e);
+    }
+  });
 
 program.parse(process.argv)
 
