@@ -1,5 +1,6 @@
+# Seehund
 
-Seehund. Create an blog in the Cloud.
+Seehund creates serverless blogs in AWS.
 
 Create a serverless blog in AWS. Publish it on your own domain. Pay a small amount based on the cloud resources you use. Scale effortlessly.
 
