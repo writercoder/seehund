@@ -1,8 +1,7 @@
-import AWS from 'aws-sdk'
-import each from 'async/each';
-import {renderPost, renderIndexPage} from './theme.js';
-import metadata from '../lib/blog/metadata';
-import postDb from '../lib/blog/posts';
+const AWS = require('aws-sdk')
+const {renderPost, renderIndexPage} = require('./theme.js')
+const metadata = require('../lib/blog/metadata')
+const postsDb = require('../lib/blog/posts')
 
 AWS.config.update({region: 'us-east-1'});
 
@@ -11,8 +10,8 @@ const s3 = new AWS.S3();
 const bucket = process.env.WEB_BUCKET;
 const postsTableName = process.env.POSTS_TABLE;
 
-export async function asyncBuild() {
-  const posts = await postDb.all({postsTableName})
+async function asyncBuild() {
+  const posts = await postsDb.all({postsTableName})
   const blog = {
     title: await metadata.getValue({bucketName: bucket, key: 'title'})
   };
@@ -27,7 +26,7 @@ export async function asyncBuild() {
   })
 }
 
-export function build(callback) {
+function build(callback) {
 
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
@@ -57,12 +56,12 @@ export function build(callback) {
   })
 }
 
-export async function buildPost(post, blog) {
+async function buildPost(post, blog) {
   await writePost(post)
   return writeIndex()
 }
 
-export async function removePost(post, blog) {
+async function removePost(post, blog) {
   await deletePost(post)
   return writeIndex()
 }
@@ -86,7 +85,7 @@ async function writePost(postData, blog) {
 
   const params = {
     Bucket: bucket,
-    Key: `posts/${postData.id}.html`,
+    Key: `posts/${postData.slug}-${postData.id}.html`,
     Body: html,
     ContentType: 'text/html'
   }
@@ -157,3 +156,5 @@ async function destroyPosts(postIds) {
 //   }
 //   return promise;
 // }
+
+module.exports = {asyncBuild, build, buildPost, removePost}

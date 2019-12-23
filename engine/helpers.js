@@ -1,4 +1,6 @@
 
-export function postUrl(post) {
-  return `posts/${post.id}.html`
+function postUrl(post) {
+  return `posts/${post.slug}-${post.id}.html`
 }
+
+module.exports = { postUrl }
