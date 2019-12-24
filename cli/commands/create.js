@@ -26,10 +26,9 @@ const create = async ({
   createCore({title, blogName, region}, async (err, data) => {
     if(err) return callback(err);
 
-    await blog.fetchCoreStackConfig();
+    console.log('Created core stack')
 
-    console.log('GOT STACK CONFIG');
-    console.info(blog.config());
+    await blog.fetchCoreStackConfig();
 
     await metadata.setValue({
       bucketName: blog.webBucketName,
@@ -42,9 +41,10 @@ const create = async ({
     }, async (err) => {
       if(err) return callback(err);
 
+      console.log('Installed API');
+
       await blog.fetchApiStackConfig();
 
-      console.log('GOT API CONFIG');
 
       await buildAdmin({blog});
       await uploadAdmin({blog});
@@ -52,10 +52,9 @@ const create = async ({
       createAdminUser({blogName, region}, (err) => {
         if(err) return callback(err);
 
-        console.log('CREATED ADMIN USER');
+        console.log('Created admin user');
       })
     })
-
   })
 }
 

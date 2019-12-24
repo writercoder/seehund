@@ -36,7 +36,7 @@ const buildAdmin = async ({blog, blogName}) => {
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
       if(err || stats.hasErrors()) {
-        reject(err)
+        reject(err || stats.toJson().errors)
       } else {
         resolve(stats);
       }
