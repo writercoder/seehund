@@ -65,7 +65,7 @@
     "eslint": "^5.15.3",
     "jest": "^23.0.0",
     "mobx-react-devtools": "^4.2.11",
-    "node-sass": "^4.5.2",
+    "node-sass": "^4.12.0",
     "react-test-renderer": "15",
     "sass-loader": "^6.0.3",
     "serverless-jest-plugin": "^0.2.1",
