@@ -33,4 +33,4 @@ function renderIndexPage(posts, blog) {
   `);
 }
 
-module.exports = { page, renderIndexPage }
+module.exports = { renderPost, page, renderIndexPage }
