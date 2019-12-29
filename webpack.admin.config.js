@@ -13,7 +13,7 @@ module.exports = {
   entry: './client/admin/index.js',
   output: {
     path: path.resolve('dist/dev/admin'),
-    publicPath: '/admin',
+    publicPath: '/',
     filename: 'admin_bundle.js'
   },
   module: {
@@ -21,7 +21,7 @@ module.exports = {
       {
         test: /\.jsx?$/,
         use: [{
-          loader: 'babel-loader'  
+          loader: 'babel-loader'
         }],
         exclude: /node_modules/
       },
@@ -45,7 +45,7 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: {
-      index: '/admin/'
+      index: '/'
     }
   },
   plugins: [HtmlWebpackPluginConfig, new webpack.SourceMapDevToolPlugin]

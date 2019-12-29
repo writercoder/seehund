@@ -30,11 +30,17 @@ const create = async ({
 
     await blog.fetchCoreStackConfig();
 
+    console.log('fetched core stack config')
+
+    console.info(blog)
+
     await metadata.setValue({
       bucketName: blog.webBucketName,
       key: 'title',
       value: title
     });
+
+    console.log('set metadata')
 
     installApi({
       blog
@@ -45,9 +51,15 @@ const create = async ({
 
       await blog.fetchApiStackConfig();
 
+      console.info(blog.config())
 
       await buildAdmin({blog});
+
+      console.log('Built admin API');
+
       await uploadAdmin({blog});
+
+      console.log('Uploaded admin');
 
       createAdminUser({blogName, region}, (err) => {
         if(err) return callback(err);

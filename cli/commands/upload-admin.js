@@ -9,13 +9,11 @@ const uploadAdmin = async ({blogName, blog}) =>  {
     blog = await loadBlog({name: blogName});
   }
 
-  const bucketName = blog.webBucketName;
-
   const args = [
     's3',
     'sync',
     path.resolve(__dirname, `../../dist/${blog.name}`),
-    `s3://${bucketName}`
+    `s3://${blog.adminBucketName}`
   ];
 
   console.log(execFileSync('aws', args).toString());

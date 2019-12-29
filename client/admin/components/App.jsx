@@ -45,7 +45,7 @@ export default class extends React.Component {
   render() {
 
     return (
-      <Router basename="/admin">
+      <Router basename="/">
         <AppWrapper>
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/images" component={ImagesPage} />

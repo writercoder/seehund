@@ -29,6 +29,8 @@ const createCoreStack = ({
     webBucketName = naming.genBucketName(blogName);
   }
 
+  const adminBucketName = naming.adminBucketName(webBucketName)
+
   cloudformation.createStack({
     StackName: stackName,
     TemplateBody: templateBody,
@@ -37,6 +39,10 @@ const createCoreStack = ({
       {
         ParameterKey: "WebBucketName",
         ParameterValue: webBucketName
+      },
+      {
+        ParameterKey: "AdminBucketName",
+        ParameterValue: adminBucketName
       },
       {
         ParameterKey: "UserPoolName",
@@ -61,13 +67,12 @@ const createCoreStack = ({
     console.log(`Creating stack with id ${StackId}`);
     console.log('Waiting for completion');
     cloudformation.waitFor('stackCreateComplete', { StackName: StackId }, (err, data) => {
-      if(error) callback(error);
+      // if(err) callback(err);
       console.log('Stack created!');
-      callback(null, data);
+      callback(null, { StackId });
     })
 
   })
 };
-
 
 module.exports = createCoreStack;
