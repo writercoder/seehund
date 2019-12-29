@@ -3,7 +3,10 @@
 Parameters:
   WebBucketName:
     Type: String
-    Description: The name of the S3 bucket to create for webhosting
+    Description: The name of the S3 bucket to create for hosting the frontend
+  AdminBucketName:
+    Type: String
+    Description: The name of the S3 bucket to create for hosting the admin
   UserPoolName:
     Type: String
     Description: The name of the Cognito User Pool
@@ -17,6 +20,14 @@ Resources:
     Properties:
       AccessControl: PublicRead
       BucketName: !Ref WebBucketName
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: index.html
+  AdminBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: PublicRead
+      BucketName: !Ref AdminBucketName
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: index.html
@@ -46,6 +57,18 @@ Resources:
             Action:
               - s3:GetObject
             Resource: !Sub arn:aws:s3:::${WebBucketName}/*
+  AdminWebHostBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref AdminBucketName
+      PolicyDocument:
+        Statement:
+          - Sid: PublicReadGetObject
+            Effect: Allow
+            Principal: "*"
+            Action:
+              - s3:GetObject
+            Resource: !Sub arn:aws:s3:::${AdminBucketName}/*
   BlogAdminUserPool:
     Type: "AWS::Cognito::UserPool"
     Properties:
@@ -121,3 +144,7 @@ Outputs:
     Value: !Ref WebBucketName
   SeeBlogWebBucketUrl:
     Value: !GetAtt WebBucket.WebsiteURL
+  SeeBlogAdminBucketName:
+    Value: !Ref AdminBucketName
+  SeeBlogAdminBucketUrl:
+    Value: !GetAtt AdminBucket.WebsiteURL

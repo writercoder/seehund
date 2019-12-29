@@ -20,6 +20,7 @@ class Blog {
       Object.assign(config, {
         webBucketName: this.webBucketName,
         webUrl: this.webUrl,
+        adminBucketName: this.adminBucketName,
         adminUrl: this.adminUrl,
         adminUserPoolId: this.adminUserPoolId,
         adminAppClientId: this.adminAppClientId,
@@ -40,17 +41,13 @@ class Blog {
       return;
     }
 
-    const args = {
-      blogName: this.name,
-      region: this.region
-    };
-
     const config = await getCoreStackConfig({blogName: this.name});
 
     this.fetchedCoreStackConfig = true;
     this.webBucketName = config.SeeBlogWebBucketName;
     this.webUrl = config.SeeBlogWebBucketUrl;
-    this.adminUrl = `${config.SeeBlogWebBucketUrl}/admin/`;
+    this.adminBucketName = config.SeeBlogAdminBucketName;
+    this.adminUrl = config.SeeBlogAdminBucketUrl;
     this.adminUserPoolId = config.SeeBlogAdminUserPoolId;
     this.adminUserPoolArn = config.SeeBlogAdminUserPoolArn;
     this.adminIdPoolId = config.SeeBlogIdentityPoolId;
