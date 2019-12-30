@@ -22,7 +22,6 @@ Resources:
       BucketName: !Ref WebBucketName
       WebsiteConfiguration:
         IndexDocument: index.html
-        ErrorDocument: index.html
   AdminBucket:
     Type: AWS::S3::Bucket
     Properties:
