@@ -26,8 +26,8 @@ const buildAdmin = async ({blog, blogName}) => {
   webpackConfig.plugins.push(DefinePluginConfig);
 
   webpackConfig.output = {
-    path: path.resolve(`dist/${blog.name}`),
-    publicPath: '/',
+    path: path.resolve(`dist/${blog.name}/admin`),
+    publicPath: '/admin',
     filename: 'admin_bundle.js'
   }
 
