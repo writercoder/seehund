@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-const assert = require('assert');
-const { camelize } = require('inflection')
 const program = require('caporal');
 const createCommand = require('../cli/commands/create');
 const createCoreCommand = require('../cli/commands/create-core-stack');
@@ -20,8 +18,6 @@ const createAdminUserCommand = require('../cli/commands/create-admin-user');
 const setTitleCommand = require('../cli/commands/set-title');
 const loadSampleContentCommand = require('../cli/commands/load-sample-content');
 const openAdminCommand = require('../cli/commands/open-admin');
-
-const { loadBlog } = require('../cli/lib/blog')
 
 function commandWithBlog(prog, command, description) {
   return prog
