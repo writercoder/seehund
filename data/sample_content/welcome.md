@@ -1,5 +1,3 @@
-# Welcome to your Seehund blog
-
 Congratulations! You've just installed a Seehund blog to the cloud. You can now publish freely on your own domain. Thank your for taking back control of a small part of the web. Your digital self is too important to leave in the hands of gigantic corporations ruthlessly seeking profit by manipulating your behaviour.
 
 ## About Seehund
