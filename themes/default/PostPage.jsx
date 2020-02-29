@@ -1,7 +1,7 @@
 const React = require('react')
 const { Helmet } = require('react-helmet')
 const { markdown } = require('markdown')
-const { formatTimestamp } = require('../../engine/helpers')
+const { formatTimestamp } = require('../../lib/helpers')
 const Layout = require('./Layout')
 
 

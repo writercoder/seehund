@@ -2,7 +2,7 @@ const React = require('react')
 const { Helmet } = require('react-helmet')
 
 const Layout = require('./Layout')
-const { postUrl, excerpt, formatTimestamp } = require('../../engine/helpers')
+const { postUrl, excerpt, formatTimestamp } = require('../../lib/helpers')
 
 function PostListItem({post}) {
   return (
