@@ -4,10 +4,6 @@ const AWS = require('aws-sdk');
 
 const naming = require('../../lib/utils/naming');
 
-const shortIdForS3 = () => {
-  return shortid.generate().toLowerCase()
-}
-
 const createCoreStack = ({
   title,
   blogName,
