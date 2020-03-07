@@ -7,6 +7,7 @@ const createCommand = require('../cli/commands/create');
 const createCoreCommand = require('../cli/commands/create-core-stack');
 const destroyCommand = require('../cli/commands/destroy');
 const deleteBucketCommand = require('../cli/commands/delete-bucket');
+const deleteAdminBucketCommand = require('../cli/commands/delete-admin-bucket');
 const destroyCoreCommand = require('../cli/commands/destroy-core-stack');
 const destroyApiCommand = require('../cli/commands/destroy-api');
 const listCommand = require('../cli/commands/list');
@@ -135,6 +136,18 @@ commandWithBlog(program, 'destroy_bucket', 'Destroy the web bucket')
   .action((args, options, logger) => {
     const { blog, region } = options;
     deleteBucketCommand({blogName: blog, region}, (err) => {
+      if(err) {
+        console.log('Error deleting bucket')
+      } else {
+        console.log('Deleted bucket')
+      }
+    });
+  });
+
+commandWithBlog(program, 'destroy_admin_bucket', 'Destroy the admin bucket')
+  .action((args, options, logger) => {
+    const { blog, region } = options;
+    deleteAdminBucketCommand({blogName: blog, region}, (err) => {
       if(err) {
         console.log('Error deleting bucket')
       } else {

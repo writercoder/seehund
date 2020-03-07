@@ -1,12 +1,22 @@
 const AWS = require('aws-sdk');
 
 const deleteBucket = require('./delete-bucket');
+const deleteAdminBucket = require('./delete-admin-bucket')
 const destroyCoreStack = require('./destroy-core-stack');
 const destroyApi = require('./destroy-api');
 
 const destroy = async ({blogName, region}, callback) => {
 
-  await deleteBucket({blogName});
+  try {
+    await deleteBucket({blogName});
+  } catch(e) {
+    console.log(`Failed to delete frontend bucket ${e.message}`)
+  }
+  try {
+    await deleteAdminBucket({blogName});
+  } catch(e) {
+    console.log(`Failed to delete admin bucket ${e.message}`)
+  }
 
   destroyCoreStack(
     {blogName, region},
