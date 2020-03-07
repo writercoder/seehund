@@ -1,5 +1,5 @@
 const AWS = require('aws-sdk')
-const {renderPost, renderIndexPage} = require('./theme.js')
+const {renderPost, renderIndexPage} = require('./react-theme.js')
 const metadata = require('../lib/blog/metadata')
 const postsDb = require('../lib/blog/posts')
 
@@ -78,7 +78,6 @@ async function writeIndex(posts, blog) {
 
   return s3Put(params)
 }
-
 
 async function writePost(postData, blog) {
   const html = renderPost(postData, blog)
