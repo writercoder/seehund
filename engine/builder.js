@@ -2,6 +2,7 @@ const AWS = require('aws-sdk')
 const {renderPost, renderIndexPage} = require('./react-theme.js')
 const metadata = require('../lib/blog/metadata')
 const postsDb = require('../lib/blog/posts')
+const { uploadAssets } = require('./assets')
 
 AWS.config.update({region: 'us-east-1'});
 
@@ -19,6 +20,7 @@ async function asyncBuild() {
     try {
       await writePosts(posts, blog);
       await writeIndex(posts, blog);
+      await uploadAssets()
       resolve()
     } catch(e) {
       reject(e);
