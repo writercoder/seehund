@@ -9,6 +9,9 @@ module.exports = {
     metadata: './api/metadata.js'
   },
   target: 'node',
+  node: {
+    __dirname: true,
+  },
   // because 'aws-sdk' is not compatible with webpack,
   // we exclude all node dependencies
   externals: [nodeExternals()],
