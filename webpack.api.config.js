@@ -15,7 +15,7 @@ module.exports = {
   // run babel on all .js files and skip those in node_modules
   module: {
     loaders: [{
-      test: /\.js$/,
+      test: /\.jsx?$/,
       loaders: ['babel'],
       include: __dirname,
       exclude: /node_modules/,
