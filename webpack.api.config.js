@@ -9,13 +9,16 @@ module.exports = {
     metadata: './api/metadata.js'
   },
   target: 'node',
+  node: {
+    __dirname: true,
+  },
   // because 'aws-sdk' is not compatible with webpack,
   // we exclude all node dependencies
   externals: [nodeExternals()],
   // run babel on all .js files and skip those in node_modules
   module: {
     loaders: [{
-      test: /\.js$/,
+      test: /\.jsx?$/,
       loaders: ['babel'],
       include: __dirname,
       exclude: /node_modules/,

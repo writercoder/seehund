@@ -1,6 +1,4 @@
-# Personal Microservices
-
-Like modern day servants, personal microservices are always ready to answer to your call. They place the power, availablity, and scalbility of online computing at your command. 
+Like modern day servants, personal microservices are always ready to answer to your call. They place the power, availablity, and scalbility of online computing at your command.
 
 The cloud gives us scale and makes online computing cheap. Personal microservices make it possible to decouple online application delivery from scalable online computation delivery and data ownership.
 

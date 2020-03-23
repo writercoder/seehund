@@ -1,0 +1,45 @@
+/* Define the "system" font family */
+@font-face {
+  font-family: system;
+  font-style: normal;
+  font-weight: 300;
+  src: local(".SFNSText-Light"), local(".HelveticaNeueDeskInterface-Light"), local(".LucidaGrandeUI"), local("Ubuntu Light"), local("Segoe UI Light"), local("Roboto-Light"), local("DroidSans"), local("Tahoma");
+}
+
+body {
+  background-color: #fafafa;
+  color: #090909;
+  font-family: system;
+  line-height: 1.7;
+}
+
+h1, h2, h3, h4, h5, p {
+  margin-block-start: 0;
+  margin-block-end: 7px;
+}
+
+article {
+  margin: 2em 0;
+}
+
+.header-content,
+footer {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 1em;
+}
+
+header {
+  border-bottom: 1px solid #000;
+}
+
+.main-content {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 1em;
+}
+
+.post-title {
+  font-size: 40px;
+  margin-block-end: 20px;
+}

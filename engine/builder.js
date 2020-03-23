@@ -1,5 +1,5 @@
 const AWS = require('aws-sdk')
-const {renderPost, renderIndexPage} = require('./theme.js')
+const {renderPost, renderIndex} = require('./react-theme.js')
 const metadata = require('../lib/blog/metadata')
 const postsDb = require('../lib/blog/posts')
 
@@ -67,18 +67,17 @@ async function removePost(post, blog) {
 }
 
 async function writeIndex(posts, blog) {
-  const html = renderIndexPage(posts, blog)
+  const html = renderIndex(posts, blog)
 
   const params = {
     Bucket: bucket,
     Key: 'index.html',
     Body: html,
-    ContentType: 'text/html'
+    ContentType: 'text/html; charset=utf-8'
   }
 
   return s3Put(params)
 }
-
 
 async function writePost(postData, blog) {
   const html = renderPost(postData, blog)
@@ -87,7 +86,7 @@ async function writePost(postData, blog) {
     Bucket: bucket,
     Key: `posts/${postData.slug}-${postData.id}.html`,
     Body: html,
-    ContentType: 'text/html'
+    ContentType: 'text/html; charset=utf-8'
   }
 
   return s3Put(params);

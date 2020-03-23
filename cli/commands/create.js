@@ -10,6 +10,7 @@ const createCore = require('./create-core-stack');
 const installApi = require('./install-api');
 const buildAdmin = require('./build-admin');
 const uploadAdmin = require('./upload-admin');
+const uploadAssets = require('./upload-assets');
 const createAdminUser = require('./create-admin-user');
 
 
@@ -60,6 +61,10 @@ const create = async ({
       await uploadAdmin({blog});
 
       console.log('Uploaded admin');
+
+      await uploadAssets({blog})
+
+      console.log('Uploaded assets')
 
       createAdminUser({blogName, region}, (err) => {
         if(err) return callback(err);

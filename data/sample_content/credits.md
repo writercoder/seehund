@@ -1,4 +1,4 @@
-# We'd like to thank
+Seehund would like to thank these fantastic tech giants and open source project for making all this possible.
 
 ## Facebook
 
@@ -10,7 +10,7 @@ For pioneering the public cloud and making it possible for Seehund to exist.
 
 ## Microsoft
 
-Thanks to Microsoft for releasing the VSCode editor used to code the site. Thanks also for releasing the 
+Thanks to Microsoft for releasing the VSCode editor used to code the site. Thanks also for releasing the
 
 ## The Serverless Framework
 
