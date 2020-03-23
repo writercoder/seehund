@@ -94,7 +94,6 @@ Resources:
         DefaultCacheBehavior:
           AllowedMethods: ['GET', 'HEAD', 'OPTIONS']
           Compress: true
-          PathPattern: 'admin/*'
           TargetOriginId: AdminWebBucket
           ViewerProtocolPolicy: redirect-to-https
           ForwardedValues:
