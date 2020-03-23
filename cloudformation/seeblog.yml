@@ -68,6 +68,44 @@ Resources:
             Action:
               - s3:GetObject
             Resource: !Sub arn:aws:s3:::${AdminBucketName}/*
+  WebCDN:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        DefaultCacheBehavior:
+          AllowedMethods: ['GET', 'HEAD', 'OPTIONS']
+          Compress: true
+          TargetOriginId: FrontendWebBucket
+          ViewerProtocolPolicy: redirect-to-https
+          ForwardedValues:
+            QueryString: true
+        Enabled: true
+        Origins:
+          - Id: FrontendWebBucket
+            DomainName: !Select [2, !Split ["/", !GetAtt WebBucket.WebsiteURL]]
+            CustomOriginConfig:
+              OriginProtocolPolicy: http-only
+        ViewerCertificate:
+          CloudFrontDefaultCertificate: true
+  AdminCDN:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        DefaultCacheBehavior:
+          AllowedMethods: ['GET', 'HEAD', 'OPTIONS']
+          Compress: true
+          TargetOriginId: AdminWebBucket
+          ViewerProtocolPolicy: redirect-to-https
+          ForwardedValues:
+            QueryString: true
+        Enabled: true
+        Origins:
+          - Id: AdminWebBucket
+            DomainName: !Select [2, !Split ["/", !GetAtt AdminBucket.WebsiteURL]]
+            CustomOriginConfig:
+              OriginProtocolPolicy: http-only
+        ViewerCertificate:
+          CloudFrontDefaultCertificate: true
   BlogAdminUserPool:
     Type: "AWS::Cognito::UserPool"
     Properties:
@@ -147,3 +185,7 @@ Outputs:
     Value: !Ref AdminBucketName
   SeeBlogAdminBucketUrl:
     Value: !GetAtt AdminBucket.WebsiteURL
+  SeeBlogWebCDNDomain:
+    Value: !GetAtt WebCDN.DomainName
+  SeeBlogAdminCDNDomain:
+    Value: !GetAtt AdminCDN.DomainName
