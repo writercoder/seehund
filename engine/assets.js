@@ -37,7 +37,7 @@ async function uploadAssets({
   const s3 = new AWS.S3()
   const assetsToUpload = await listFiles(localAssetsPath)
 
-  await Promise.all(assetsToUpload.map(filePath => {
+  return Promise.all(assetsToUpload.map(filePath => {
     const params = {
       Bucket: s3Bucket,
       Key: relative(localAssetsPath, filePath),
