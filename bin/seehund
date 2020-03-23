@@ -4,6 +4,7 @@ const program = require('caporal');
 const createCommand = require('../cli/commands/create');
 const createCoreCommand = require('../cli/commands/create-core-stack');
 const destroyCommand = require('../cli/commands/destroy');
+const destroyAllCommand = require('../cli/commands/destroy-all');
 const deleteBucketCommand = require('../cli/commands/delete-bucket');
 const deleteAdminBucketCommand = require('../cli/commands/delete-admin-bucket');
 const destroyCoreCommand = require('../cli/commands/destroy-core-stack');
@@ -163,6 +164,15 @@ commandWithBlog(program, 'destroy', 'Destroy all cloud resources')
         console.log('Destroyed blog')
       }
     });
+  });
+
+program
+  .command('destroy_all', 'Destroy all Seehund blogs in AWS account and region')
+  .option('-r --region <region>',
+          'AWS Region', undefined, 'us-east-1')
+  .action((args, options, logger) => {
+    const { region } = options;
+    destroyAllCommand({region});
   });
 
 commandWithBlog(program, 'install_api', 'Installs the API')
