@@ -187,5 +187,5 @@ Outputs:
     Value: !GetAtt AdminBucket.WebsiteURL
   SeeBlogWebCDNDomain:
     Value: !GetAtt WebCDN.DomainName
-  SeeBlogWebCDNDomain:
+  SeeBlogAdminCDNDomain:
     Value: !GetAtt AdminCDN.DomainName
