@@ -1,4 +1,4 @@
-
+AWSTemplateFormatVersion: "2010-09-09"
 
 Parameters:
   WebBucketName:
@@ -13,6 +13,18 @@ Parameters:
   IdentityPoolName:
     Type: String
     Description: The name of the Cognito Identity Pool
+  CustomWebDomain:
+    Type: String
+    Default: ""
+    Description: Custom domain for the frontend blog
+  WebDomainACMCertificateArn:
+    Type: String
+    Default: ""
+    Description: ARN of an ACM certificate issued for the custom domain
+
+Conditions:
+  CreateDefaultWebCDN: !Equals [ !Ref CustomWebDomain, "" ]
+  CreateCustomWebCDN: !Not [ !Equals [ !Ref CustomWebDomain, "" ] ]
 
 Resources:
   WebBucket:
@@ -68,8 +80,9 @@ Resources:
             Action:
               - s3:GetObject
             Resource: !Sub arn:aws:s3:::${AdminBucketName}/*
-  WebCDN:
+  WebCDNDefaultDomain:
     Type: AWS::CloudFront::Distribution
+    Condition: CreateDefaultWebCDN
     Properties:
       DistributionConfig:
         DefaultCacheBehavior:
@@ -87,6 +100,30 @@ Resources:
               OriginProtocolPolicy: http-only
         ViewerCertificate:
           CloudFrontDefaultCertificate: true
+
+  WebCDNCustomDomain:
+    Type: AWS::CloudFront::Distribution
+    Condition: CreateCustomWebCDN
+    Properties:
+      DistributionConfig:
+        DefaultCacheBehavior:
+          AllowedMethods: ['GET', 'HEAD', 'OPTIONS']
+          Compress: true
+          TargetOriginId: FrontendWebBucket
+          ViewerProtocolPolicy: redirect-to-https
+          ForwardedValues:
+            QueryString: true
+        Enabled: true
+        Origins:
+          - Id: FrontendWebBucket
+            DomainName: !Select [2, !Split ["/", !GetAtt WebBucket.WebsiteURL]]
+            CustomOriginConfig:
+              OriginProtocolPolicy: http-only
+        ViewerCertificate:
+          CloudFrontDefaultCertificate: false
+          AcmCertificateArn: WebDomainACMCertificateArn
+          MinimumProtocolVersion: TLSv1.2_2018v
+          SslSupportMethod: sni-only
   AdminCDN:
     Type: AWS::CloudFront::Distribution
     Properties:
@@ -186,6 +223,6 @@ Outputs:
   SeeBlogAdminBucketUrl:
     Value: !GetAtt AdminBucket.WebsiteURL
   SeeBlogWebCDNDomain:
-    Value: !GetAtt WebCDN.DomainName
+    Value: !GetAtt WebCDNDefaultDomain.DomainName
   SeeBlogAdminCDNDomain:
     Value: !GetAtt AdminCDN.DomainName
