@@ -23,7 +23,7 @@ export default class extends React.Component {
     } else {
       return (
         <div>
-          <h2>Welcome to your seehund blog</h2>
+          <h2>Welcome to your Seehund blog</h2>
           <h3>Frontend</h3>
           <p>
             <Anchor
