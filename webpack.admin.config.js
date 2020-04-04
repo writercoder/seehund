@@ -1,6 +1,3 @@
-const path = require('path');
-const webpack = require('webpack')
-
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: './client/admin/index.html',
@@ -8,14 +5,8 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   inject: 'body'
 })
 
-
 module.exports = {
   entry: './client/admin/index.js',
-  output: {
-    path: path.resolve('dist/dev/admin'),
-    publicPath: '/',
-    filename: 'admin_bundle.js'
-  },
   module: {
     rules: [
       {
@@ -48,5 +39,7 @@ module.exports = {
       index: '/'
     }
   },
-  plugins: [HtmlWebpackPluginConfig, new webpack.SourceMapDevToolPlugin]
+  plugins: [
+    HtmlWebpackPluginConfig, 
+  ]
 }
