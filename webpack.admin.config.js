@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: './client/admin/index.html',
   filename: './index.html',
@@ -40,6 +41,7 @@ module.exports = {
     }
   },
   plugins: [
+    new CleanWebpackPlugin(),
     HtmlWebpackPluginConfig, 
   ]
 }
