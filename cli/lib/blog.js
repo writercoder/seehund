@@ -46,7 +46,11 @@ class Blog {
     this.fetchedCoreStackConfig = true;
     this.coreStackId = config.stackId
     this.webBucketName = config.SeeBlogWebBucketName;
-    this.webUrl = `https://${config.SeeBlogWebCDNDomain}`
+    if(config.SeeBlogWebCDNCustomDomain) {
+      this.webUrl = `https://${config.SeeBlogWebCDNCustomDomain}`
+    } else {
+      this.webUrl = `https://${config.SeeBloagWebCDNDomain}`
+    }
     this.adminBucketName = config.SeeBlogAdminBucketName;
     this.adminUrl = `https://${config.SeeBlogAdminCDNDomain}`;
     this.adminUserPoolId = config.SeeBlogAdminUserPoolId;
