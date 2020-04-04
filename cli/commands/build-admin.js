@@ -28,7 +28,7 @@ const buildAdmin = async ({blog, blogName}) => {
   webpackConfig.output = {
     path: path.resolve(`dist/${blog.name}`),
     publicPath: '/',
-    filename: 'admin_bundle.js'
+    filename: '[name].[contenthash].js'
   }
 
   const compiler = webpack(webpackConfig);
