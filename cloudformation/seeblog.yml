@@ -106,6 +106,7 @@ Resources:
     Condition: CreateCustomWebCDN
     Properties:
       DistributionConfig:
+        Aliases: [ !Ref CustomWebDomain ]
         DefaultCacheBehavior:
           AllowedMethods: ['GET', 'HEAD', 'OPTIONS']
           Compress: true
@@ -120,9 +121,8 @@ Resources:
             CustomOriginConfig:
               OriginProtocolPolicy: http-only
         ViewerCertificate:
-          CloudFrontDefaultCertificate: false
-          AcmCertificateArn: WebDomainACMCertificateArn
-          MinimumProtocolVersion: TLSv1.2_2018v
+          AcmCertificateArn: !Ref WebDomainACMCertificateArn
+          MinimumProtocolVersion: TLSv1.2_2018
           SslSupportMethod: sni-only
   AdminCDN:
     Type: AWS::CloudFront::Distribution
@@ -224,5 +224,10 @@ Outputs:
     Value: !GetAtt AdminBucket.WebsiteURL
   SeeBlogWebCDNDomain:
     Value: !GetAtt WebCDNDefaultDomain.DomainName
+    Condition: CreateDefaultWebCDN
+  SeeBlogWebCDNCustomDomain:
+    Value: !Ref CustomWebDomain
+    Condition: CreateCustomWebCDN
   SeeBlogAdminCDNDomain:
     Value: !GetAtt AdminCDN.DomainName
+

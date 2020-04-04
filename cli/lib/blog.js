@@ -44,6 +44,7 @@ class Blog {
     const config = await getCoreStackConfig({blogName: this.name});
 
     this.fetchedCoreStackConfig = true;
+    this.coreStackId = config.stackId
     this.webBucketName = config.SeeBlogWebBucketName;
     this.webUrl = `https://${config.SeeBlogWebCDNDomain}`
     this.adminBucketName = config.SeeBlogAdminBucketName;

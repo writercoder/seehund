@@ -3,6 +3,7 @@
 const program = require('caporal');
 const createCommand = require('../cli/commands/create');
 const createCoreCommand = require('../cli/commands/create-core-stack');
+const setWebDomainCommand = require('../cli/commands/set-web-domain');
 const destroyCommand = require('../cli/commands/destroy');
 const destroyAllCommand = require('../cli/commands/destroy-all');
 const deleteBucketCommand = require('../cli/commands/delete-bucket');
@@ -59,6 +60,27 @@ program
         console.log(`Created stack with id ${data.StackId}`)
       }
     });
+  });
+
+commandWithBlog(program, 'set_web_domain', 'Set a custom web domain for the blog')
+  .option('-d --domain <domain>',
+          'Domain to publish blog.')
+  .option('-c --certificate <certificate>',
+          'ARN of ACM certificate. Must be issued for <domain>')
+  .action(async (args, options, logger) => {
+    const { blog, region, domain, certificate } = options;
+    console.info(options)
+    try {
+      setWebDomainCommand({
+        blogName: blog,
+        region,
+        domain,
+        certificateArn: certificate
+      });
+    } catch(e) {
+      console.log('Error opening admin');
+      throw(e);
+    }
   });
 
 
