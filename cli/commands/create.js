@@ -56,11 +56,11 @@ const create = async ({
 
       await buildAdmin({blog});
 
-      console.log('Built admin API');
+      console.log('Built admin panel');
 
       await uploadAdmin({blog});
 
-      console.log('Uploaded admin');
+      console.log('Uploaded admin panel');
 
       await uploadAssets({blog})
 

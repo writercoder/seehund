@@ -1,4 +1,3 @@
-import shortid from 'shortid'
 import AWS from 'aws-sdk'
 import { fail, succeed } from './lib/respond'
 import { build, asyncBuild } from './../engine/builder'

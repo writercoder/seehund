@@ -19,6 +19,8 @@ const doInstallApi = ({blogName, region, webBucketName, userPoolArn}, callback) 
   try {
     console.log(execFileSync(serverlessBin, args, { env }).toString());
   } catch (e) {
+    console.log('install api failed')
+    console.log(e.output[1].toString())
     callback(e)
   }
   callback(null);
