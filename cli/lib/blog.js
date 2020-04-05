@@ -49,7 +49,7 @@ class Blog {
     if(config.SeeBlogWebCDNCustomDomain) {
       this.webUrl = `https://${config.SeeBlogWebCDNCustomDomain}`
     } else {
-      this.webUrl = `https://${config.SeeBloagWebCDNDomain}`
+      this.webUrl = `https://${config.SeeBlogWebCDNDomain}`
     }
     this.adminBucketName = config.SeeBlogAdminBucketName;
     this.adminUrl = `https://${config.SeeBlogAdminCDNDomain}`;
