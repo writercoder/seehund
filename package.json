@@ -78,6 +78,9 @@
     "webpack-dev-server": "^3.10.3",
     "webpack-node-externals": "^1.5.4"
   },
+  "optionalDependencies": {
+    "fsevents": "*"
+  },
   "jest": {
     "setupFilesAfterEnv": [
       "<rootDir>/test/setupTests.js"
