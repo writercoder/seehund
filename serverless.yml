@@ -2,8 +2,10 @@
 service: seeblog-api-${env:SEEHUND_BLOG}
 
 custom:
-  webpack: './webpack.api.config.js'
-  webpackIncludeModules: true
+  webpack:
+    webpackConfig: './webpack.api.config.js'
+    includeModules: true
+    packager: yarn
 
 provider:
   name: aws
@@ -36,7 +38,7 @@ plugins:
 
 functions:
   build_site:
-    handler: build.site
+    handler: api/build.site
     events:
       - http:
           path: build
@@ -45,7 +47,7 @@ functions:
           authorizer:
             arn: ${env:SEEHUND_USER_POOL_ARN}
   create_post:
-    handler: posts.create
+    handler: api/posts.create
     events:
       - http:
           path: posts
@@ -54,7 +56,7 @@ functions:
           authorizer:
             arn: ${env:SEEHUND_USER_POOL_ARN}
   show_post:
-    handler: posts.show
+    handler: api/posts.show
     events:
       - http:
           path: posts/{id}
@@ -63,7 +65,7 @@ functions:
           authorizer:
             arn: ${env:SEEHUND_USER_POOL_ARN}
   list_posts:
-    handler: posts.list
+    handler: api/posts.list
     events:
       - http:
           path: posts
@@ -73,7 +75,7 @@ functions:
             arn: ${env:SEEHUND_USER_POOL_ARN}
 
   update_post:
-    handler: posts.update
+    handler: api/posts.update
     events:
       - http:
           path: posts/{id}
@@ -82,7 +84,7 @@ functions:
             arn: ${env:SEEHUND_USER_POOL_ARN}
           cors: true
   delete_post:
-    handler: posts.destroy
+    handler: api/posts.destroy
     events:
       - http:
           path: posts/{id}
@@ -91,7 +93,7 @@ functions:
             arn: ${env:SEEHUND_USER_POOL_ARN}
           cors: true
   get_metadata:
-    handler: metadata.get
+    handler: api/metadata.get
     events:
       - http:
           path: metadata
@@ -100,7 +102,7 @@ functions:
             arn: ${env:SEEHUND_USER_POOL_ARN}
           cors: true
   set_metadata:
-    handler: metadata.set
+    handler: api/metadata.set
     events:
       - http:
           path: metadata

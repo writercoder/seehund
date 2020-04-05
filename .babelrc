@@ -1,9 +1,15 @@
 {
+  "sourceMaps": "both",
   "presets": [
     "@babel/preset-react",
-    "@babel/preset-env"
+    [
+      "@babel/preset-env", {
+        "modules": "commonjs"
+      }
+    ]
   ],
   "plugins": [
+    "source-map-support",
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
     "@babel/plugin-proposal-class-properties",
     "@babel/plugin-transform-runtime"
