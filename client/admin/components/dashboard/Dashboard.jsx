@@ -3,6 +3,7 @@ import {observer, inject} from 'mobx-react';
 import Anchor from 'grommet/components/Anchor'
 import DefaultLayout from '../layouts/DefaultLayout.jsx';
 import RedirectToLogin from '../user/RedirectToLogin.jsx'
+import DomainConfig from './DomainConfig.jsx'
 
 @inject("userStore", "blogStore") @observer
 export default class extends React.Component {
@@ -32,6 +33,7 @@ export default class extends React.Component {
             >{ frontendUrl }
             </Anchor>
           </p>
+          <DomainConfig />
         </div>
       )
     }

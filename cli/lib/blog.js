@@ -19,6 +19,9 @@ class Blog {
     if(this.fetchedCoreStackConfig) {
       Object.assign(config, {
         webBucketName: this.webBucketName,
+        webCDNDomain: this.webCDNDomain,
+        webAlias: this.webAlias,
+        webDomain: this.webDomain,
         webUrl: this.webUrl,
         adminBucketName: this.adminBucketName,
         adminUrl: this.adminUrl,
@@ -46,11 +49,16 @@ class Blog {
     this.fetchedCoreStackConfig = true;
     this.coreStackId = config.stackId
     this.webBucketName = config.SeeBlogWebBucketName;
-    if(config.SeeBlogWebCDNCustomDomain) {
-      this.webUrl = `https://${config.SeeBlogWebCDNCustomDomain}`
+    
+    if(config.SeeBlogCustomWebAlias) {
+      this.webAlias = config.SeeBlogCustomWebAlias
+      this.webDomain = this.webAlias
+      this.webCDNDomain = config.SeeBlogCustomWebCDNDomain
     } else {
-      this.webUrl = `https://${config.SeeBlogWebCDNDomain}`
+      this.webDomain = config.SeeBlogWebCDNDomain;
+      this.webCDNDomain = config.SeeBlogWebCDNDomain;
     }
+    this.webUrl = `https://${this.webDomain}`
     this.adminBucketName = config.SeeBlogAdminBucketName;
     this.adminUrl = `https://${config.SeeBlogAdminCDNDomain}`;
     this.adminUserPoolId = config.SeeBlogAdminUserPoolId;

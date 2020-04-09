@@ -19,7 +19,9 @@ const buildAdmin = async ({blog, blogName}) => {
       adminIdPoolId: JSON.stringify(blog.adminIdPoolId),
       blogApiUrl: JSON.stringify(blog.blogApiUrl),
       frontendUrl: JSON.stringify(blog.webUrl),
-      webBucketName: JSON.stringify(blog.webBucketName)
+      webAlias: JSON.stringify(blog.webAlias),
+      webBucketName: JSON.stringify(blog.webBucketName),
+      webCDNDomain: JSON.stringify(blog.webCDNDomain)
     }
   });
 
