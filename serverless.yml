@@ -35,6 +35,7 @@ provider:
 
 plugins:
   - serverless-webpack
+  - serverless-offline
 
 functions:
   build_site:
