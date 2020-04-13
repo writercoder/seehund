@@ -2,3 +2,5 @@ dist
 .serverless
 .webpack
 tsconfig.json
+node_modules
+.envrc

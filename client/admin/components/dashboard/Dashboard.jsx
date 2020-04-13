@@ -3,6 +3,7 @@ import {observer, inject} from 'mobx-react';
 import Anchor from 'grommet/components/Anchor'
 import DefaultLayout from '../layouts/DefaultLayout.jsx';
 import RedirectToLogin from '../user/RedirectToLogin.jsx'
+import DomainConfig from './DomainConfig.jsx'
 
 @inject("userStore", "blogStore") @observer
 export default class extends React.Component {
@@ -23,7 +24,7 @@ export default class extends React.Component {
     } else {
       return (
         <div>
-          <h2>Welcome to your seehund blog</h2>
+          <h2>Welcome to your Seehund blog</h2>
           <h3>Frontend</h3>
           <p>
             <Anchor
@@ -32,6 +33,7 @@ export default class extends React.Component {
             >{ frontendUrl }
             </Anchor>
           </p>
+          <DomainConfig />
         </div>
       )
     }
