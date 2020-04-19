@@ -29,6 +29,6 @@ export async function set(event, context, callback) {
       }
     });
   } catch(e) {
-    fail(callback);
+    fail(e, callback);
   }
 }
