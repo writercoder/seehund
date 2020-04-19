@@ -2,9 +2,9 @@ import AWS from 'aws-sdk'
 import { fail, succeed } from './lib/respond'
 import { build, asyncBuild } from './../engine/builder'
 import postsRepository from '../lib/blog/posts'
+import {getDocumentClient} from '../lib/dynamodb'
 
-AWS.config.update({region: process.env.AWS_REGION});
-const dynamoDb = new AWS.DynamoDB.DocumentClient();
+const dynamoDb = getDocumentClient()
 
 const postsTableName = process.env.POSTS_TABLE;
 
