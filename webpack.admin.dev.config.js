@@ -9,7 +9,7 @@ const DefinePluginConfig = new webpack.DefinePlugin({
     adminAppClientId: JSON.stringify(process.env.SEEHUND_APP_CLIENT_ID),
     adminUserPoolId: JSON.stringify(process.env.SEEHUND_USER_POOL_ID),
     adminIdPoolId: JSON.stringify(process.env.SEEHUND_ID_POOL_ID),
-    blogApiUrl: JSON.stringify(process.env.SEEHUND_BLOG_API),
+    blogApiUrl: '"http://localhost:3000/dev"',
     webBucketName: JSON.stringify(process.env.SEEHUND_WEB_BUCKET),
     awsRegion: JSON.stringify(process.env.AWS_REGION || 'us-east-1'),
   }
