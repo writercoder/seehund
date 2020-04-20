@@ -6,11 +6,18 @@ custom:
     webpackConfig: './webpack.api.config.js'
     includeModules: true
     packager: yarn
+  dynamodb:
+    stages:
+      - dev
+      - test
+    start:
+      migrate: true
+      inMemory: true
 
 provider:
   name: aws
   runtime: nodejs12.x
-  stage: 'dev'
+  stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-1'}
   environment:
     POSTS_TABLE: ${env:SEEHUND_BLOG}-postsTable
@@ -35,6 +42,7 @@ provider:
 
 plugins:
   - serverless-webpack
+  - serverless-dynamodb-local
   - serverless-offline
 
 functions:
