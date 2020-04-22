@@ -3,6 +3,11 @@
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
 version: 2
+machine:
+  environment:
+    _JAVA_OPTIONS: "-Xms512m -Xmx1024m"
+  java:
+    version: openjdk7
 jobs:
   build:
     docker:
@@ -25,14 +30,31 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: yarn install
+      - run: 
+          name: Install packages and AWS CLI
+          command: |
+            yarn install
+            sudo apt-get install awscli
+
+      - run:
+          name: Create test blog
+          # For this to work we need to supply user and password or skip admin user creation
+          command: bin/seehund create -b "Test blog" --create-admin-user false
+      
+      - run:
+          name: Run tests
+          command: |
+            eval $(bin/seehund env -b test-blog)
+            yarn test
+
+      - run:
+          name: Cleanup
+          when: always
+          command: bin/seehund destroy -b test-blog
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-
-      # run tests!
-      - run: yarn test
 
 
