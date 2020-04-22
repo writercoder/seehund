@@ -45,7 +45,7 @@ jobs:
           name: Run tests
           command: |
             eval $(bin/seehund env -b test-blog-${CIRCLE_BUILD_NUM})
-            yarn test
+            yarn test --verbose
 
       - run:
           name: Cleanup
