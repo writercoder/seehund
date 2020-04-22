@@ -30,7 +30,7 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: 
+      - run:
           name: Install packages and AWS CLI
           command: |
             yarn install
@@ -39,8 +39,8 @@ jobs:
       - run:
           name: Create test blog
           # For this to work we need to supply user and password or skip admin user creation
-          command: bin/seehund create -b "Test blog" --create-admin-user false
-      
+          command: bin/seehund create -b "Test blog" --create-admin-user=false
+
       - run:
           name: Run tests
           command: |
