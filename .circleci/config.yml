@@ -39,7 +39,7 @@ jobs:
       - run:
           name: Create test blog
           # For this to work we need to supply user and password or skip admin user creation
-          command: bin/seehund create -b "Test blog ${CIRCLE_BUILD_NUM}" --create-admin-user=false
+          command: bin/seehund create "Test blog ${CIRCLE_BUILD_NUM}" --create-admin-user=false
 
       - run:
           name: Run tests
