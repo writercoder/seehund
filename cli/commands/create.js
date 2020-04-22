@@ -11,7 +11,7 @@ const installApi = require('./install-api');
 const buildAdmin = require('./build-admin');
 const uploadAdmin = require('./upload-admin');
 const uploadAssets = require('./upload-assets');
-const createAdminUser = require('./create-admin-user');
+const createAdminUserCommand = require('./create-admin-user');
 
 
 const create = async ({
@@ -68,7 +68,7 @@ const create = async ({
       console.log('Uploaded assets')
 
       if(createAdminUser) {
-        createAdminUser({blogName, region}, (err) => {
+        createAdminUserCommand({blogName, region}, (err) => {
           if(err) return callback(err);
 
           console.log('Created admin user');
