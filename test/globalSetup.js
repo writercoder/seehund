@@ -2,6 +2,10 @@ const { setup: setupDevServer } = require('jest-dev-server')
 
 module.exports = async function globalSetup() {
 
+  if(process.env.CI) {
+    return
+  }
+
   const httpPort = 3030
   const lambdaPort = 3032
   const websocketPort = 3031
