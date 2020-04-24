@@ -1,7 +1,8 @@
 const request = require('supertest');
 const metadata = require('../../lib/blog/metadata')
 
-const host = 'http://localhost:3030/test'
+const stage = process.env.STAGE || 'test'
+const host = `http://localhost:3030/${stage}`
 const expectedTitle = "Test Domain"
 const bucketName = process.env.SEEHUND_WEB_BUCKET
 let originalTitle

@@ -7,13 +7,14 @@ module.exports = async function globalSetup() {
   const websocketPort = 3031
 
   process.env.IS_OFFLINE = 'true'
+  const stage = process.env.STAGE || 'test'
 
   await setupDevServer({
     command:
       `serverless offline start ` +
       `--httpPort ${httpPort} --lambdaPort ${lambdaPort} ` +
       `--websocketPort ${websocketPort} ` +
-      `--stage test`,
+      `--stage ${stage}`,
     port: httpPort,
     launchTimeout: 30000,
     debug: true

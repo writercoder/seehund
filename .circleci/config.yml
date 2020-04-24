@@ -41,6 +41,7 @@ jobs:
           name: Run tests
           command: |
             eval $(bin/seehund env -b test-blog-${CIRCLE_BUILD_NUM})
+            export STAGE=ci
             yarn test --verbose
 
       - run:
