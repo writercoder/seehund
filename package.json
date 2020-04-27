@@ -9,6 +9,7 @@
     "start": "webpack-dev-server --config webpack.admin.dev.config.js --port 8088",
     "test": "jest",
     "build-client": "webpack --config webpack.admin.config.js -p",
+    "offline": "IS_OFFLINE=true serverless offline start",
     "deploy-dev": "serverless deploy && webpack --config webpack.admin.config.js && aws --profile cblog s3 sync dist s3://dev.cloudblog.1000mileweb.com",
     "themedev": "nodemon engine/devserver.js --exec babel-node --presets es2015,stage-2,react",
     "watch-sass": "node-sass -w themes/default/assets/css/*.scss -o themes/default/assets/css"
@@ -18,7 +19,7 @@
     "amazon-cognito-identity-js": "^1.16.0",
     "async": "^2.1.5",
     "aws-sdk": "^2.28.0",
-    "caporal": "^0.10.0",
+    "caporal": "^1.3.0",
     "chokidar": "^3.3.1",
     "commander": "^2.11.0",
     "express": "^4.16.4",
@@ -67,16 +68,20 @@
     "express-reload": "^1.2.0",
     "html-webpack-plugin": "^4.0.4",
     "jest": "^25.0.0",
+    "jest-dev-server": "^4.4.0",
     "mobx-react-devtools": "^4.2.11",
     "nodemon": "^2.0.2",
     "pryjs": "^1.0.3",
     "react-test-renderer": "15",
     "sass-loader": "^6.0.3",
     "serverless": "^1.67.0",
-    "serverless-jest-plugin": "^0.2.1",
+    "serverless-dynamodb-local": "^0.2.39",
+    "serverless-offline": "^6.1.4",
+    "serverless-s3-local": "^0.5.4",
     "serverless-webpack": "^5.3.1",
     "sinon": "^6.1.5",
     "style-loader": "^0.16.1",
+    "supertest": "^4.0.2",
     "webpack-dev-server": "^3.10.3",
     "webpack-node-externals": "^1.5.4"
   },
@@ -84,6 +89,8 @@
     "fsevents": "*"
   },
   "jest": {
+    "globalSetup": "<rootDir>/test/globalSetup.js",
+    "globalTeardown": "<rootDir>/test/globalTeardown.js",
     "setupFilesAfterEnv": [
       "<rootDir>/test/setupTests.js"
     ],

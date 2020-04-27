@@ -89,13 +89,18 @@ program
   .argument('<title>', 'The title of the blog.')
   .option('-r --region <region>',
           'AWS Region', undefined, 'us-east-1')
+  .option('--create-admin-user <region>',
+          'Prompt to create an admin user', program.BOOLEAN, true)
   .action((args, options, logger) => {
     const { title } = args;
-    const { region } = options;
+    const { region, createAdminUser } = options;
+
+    console.info(options)
 
     createCommand({
       title,
-      region
+      region,
+      createAdminUser
     }, (err, data) => {
       if(err) {
         console.log('Error creating blog');

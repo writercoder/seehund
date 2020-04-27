@@ -11,12 +11,13 @@ const installApi = require('./install-api');
 const buildAdmin = require('./build-admin');
 const uploadAdmin = require('./upload-admin');
 const uploadAssets = require('./upload-assets');
-const createAdminUser = require('./create-admin-user');
+const createAdminUserCommand = require('./create-admin-user');
 
 
 const create = async ({
   title,
-  region
+  region,
+  createAdminUser = true
 }, callback) => {
   if (typeof blogName === 'undefined') {
     blogName = naming.blogNameFromTitle(title);
@@ -66,11 +67,13 @@ const create = async ({
 
       console.log('Uploaded assets')
 
-      createAdminUser({blogName, region}, (err) => {
-        if(err) return callback(err);
+      if(createAdminUser) {
+        createAdminUserCommand({blogName, region}, (err) => {
+          if(err) return callback(err);
 
-        console.log('Created admin user');
-      })
+          console.log('Created admin user');
+        })
+      }
     })
   })
 }
