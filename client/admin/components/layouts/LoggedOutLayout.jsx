@@ -1,27 +1,28 @@
 import React from 'react';
 
-import Split from 'grommet/components/Split';
-import Sidebar from 'grommet/components/Sidebar';
-import Box from 'grommet/components/Box';
-import Header from 'grommet/components/Header';
-import Title from 'grommet/components/Title';
+import Grid from 'grommet/components/Grid';
+import { Box, Main, Sidebar, Header, Heading } from 'grommet'
+// import Main from 'grommet/components/Main'
+// import Sidebar from 'grommet/components/Sidebar';
+// import Heading from 'grommet/components/Heading';
+// import Header from 'grommet/components/Header'
 
-export default class extends React.Component {
 
-  render() {
-    return (
-      <Split flex="left">
-        <Sidebar colorIndex="brand" size="medium">
-          <Header pad='medium' justify='between'>
-            <Title>
-              Seehund Blog Admin
-            </Title>
-          </Header>
-        </Sidebar>
-        <Box pad="large" align="start" alignSelf="start" alignContent="start" full={ true } justify="start">
-          { this.props.children }
-        </Box>
-      </Split>
-    );
-  }
+console.log(Box)
+
+export default function LoggedOutLayout(props) {
+  return (
+    <Box alignContent="center">
+      <Sidebar color="brand">
+        <Header>
+          <Heading>
+            Seehund Blog Admin
+          </Heading>
+        </Header>
+      </Sidebar>
+      <Main>
+        { props.children }
+      </Main>
+    </Box>
+  );
 }
