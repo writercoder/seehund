@@ -6,7 +6,7 @@ import {
   withRouter
 } from 'react-router-dom'
 
-import App from 'grommet/components/App';
+import {Grommet, grommet} from 'grommet'
 import {observer, inject} from "mobx-react";
 import DevTools from 'mobx-react-devtools'
 import Dashboard from './dashboard/Dashboard.jsx'
@@ -32,9 +32,9 @@ class AppWrapper extends React.Component {
   }
 
   render() {
-    return <App centered={false}>
+    return <Grommet theme={grommet} centered={false}>
       {this.props.children}
-    </App>
+    </Grommet>
   }
 }
 

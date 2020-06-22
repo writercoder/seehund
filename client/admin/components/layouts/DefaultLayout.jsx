@@ -2,58 +2,98 @@ import React from 'react';
 
 import {observer, inject} from 'mobx-react'
 
-import Split from 'grommet/components/Split';
-import Sidebar from 'grommet/components/Sidebar';
-import Box from 'grommet/components/Box';
-import Header from 'grommet/components/Header';
-import Title from 'grommet/components/Title';
-import Anchor from 'grommet/components/Anchor';
-import Article from 'grommet/components/Anchor';
-import Menu from 'grommet/components/Menu';
+import { Grid, Main, Header, Title, Sidebar, Box, Menu, Anchor } from 'grommet';
 
-import UserWidget from '../user/UserWidget.jsx'
-import MessageBox from '../messages/MessageBox.jsx'
+// import UserWidget from '../user/UserWidget.jsx'
+// import MessageBox from '../messages/MessageBox.jsx'
+
 
 @inject("metadataStore") @observer
 export default class extends React.Component {
 
   render() {
-    return (
-      <Split flex="right" priority="right">
-        <Sidebar colorIndex="brand" size="medium">
-          <Header pad="medium" justify="between">
-            <Title>
-              { this.renderTitle() }
-            </Title>
-          </Header>
-          <Box flex="grow" justify="start">
-            <Menu primary={true}>
-              <Anchor path="/">
-                Dashboard
-              </Anchor>
-              <Anchor path="/posts">
-                Posts
-              </Anchor>
-              <Anchor path="/posts/new">
-                New Post
-              </Anchor>
-              <Anchor path="/images">
-                Images
-              </Anchor>
-              <Anchor path="/settings">
-                Settings
-              </Anchor>
-            </Menu>
-          </Box>
-          <UserWidget />
-        </Sidebar>
-        <Box pad="large" >
-          <MessageBox />
-          { this.props.children }
+    <Grid
+      rows={['xxsmall', 'xsmall']}
+      columns={['xsmall', 'small']}
+      gap="small"
+      areas={[
+        { name: 'header', start: [0, 0], end: [1, 0] },
+        { name: 'sidebar', start: [0, 1], end: [0, 1] },
+        { name: 'main', start: [1, 1], end: [1, 1] },
+      ]}
+    >
+      <Header gridArea="header">
+        <Title>
+          { this.renderTitle() }
+        </Title>
+      </Header>
+
+      <Sidebar gridArea="sidebar">
+        <Box flex="grow" justify="start">
+          <Menu primary={true}>
+            <Anchor path="/">
+              Dashboard
+            </Anchor>
+            <Anchor path="/posts">
+              Posts
+            </Anchor>
+            <Anchor path="/posts/new">
+              New Post
+            </Anchor>
+            <Anchor path="/images">
+              Images
+            </Anchor>
+            <Anchor path="/settings">
+              Settings
+            </Anchor>
+          </Menu>
         </Box>
-      </Split>
-    );
+      </Sidebar>
+
+      <Main gridArea="main">
+        {this.props.children}
+      </Main>
+
+    </Grid>
   }
+
+  // render() {
+  //   return (
+  //     <Split flex="right" priority="right">
+  //       <Sidebar colorIndex="brand" size="medium">
+  //         <Header pad="medium" justify="between">
+  //           <Title>
+  //             { this.renderTitle() }
+  //           </Title>
+  //         </Header>
+  //         <Box flex="grow" justify="start">
+  //           <Menu primary={true}>
+  //             <Anchor path="/">
+  //               Dashboard
+  //             </Anchor>
+  //             <Anchor path="/posts">
+  //               Posts
+  //             </Anchor>
+  //             <Anchor path="/posts/new">
+  //               New Post
+  //             </Anchor>
+  //             <Anchor path="/images">
+  //               Images
+  //             </Anchor>
+  //             <Anchor path="/settings">
+  //               Settings
+  //             </Anchor>
+  //           </Menu>
+  //         </Box>
+  //         <UserWidget />
+  //       </Sidebar>
+  //       <Box pad="large" >
+  //         <MessageBox />
+  //         { this.props.children }
+  //       </Box>
+  //     </Split>
+  //   );
+  // }
 
   renderTitle() {
     if(this.props.metadataStore.fetched) {
