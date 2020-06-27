@@ -57,7 +57,7 @@ export default function DefaultLayout({title, children}) {
     >
 
       <Box gridArea="main">
-        <Header pad="small" background="light-4">
+        <Header pad="small" background="light-2">
           <Heading>{title}</Heading>
         </Header>
 
@@ -66,7 +66,7 @@ export default function DefaultLayout({title, children}) {
         </Main>
       </Box>
 
-      <Box gridArea="sidebar" direction="row" height={{ min: "100%" }}>
+      <Box gridArea="sidebar" direction="row">
         <Sidebar responsive={false} background="neutral-2"  pad="medium">
           <Image src={logo} width={200} />
           <MainNavigation />
