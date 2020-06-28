@@ -5,11 +5,11 @@ export const posts = {
     slug: 'hello',
     title: "Hello world",
     content: `
-      ## This is my blog
+## This is my blog
 
-      Hello and welcome to my blog.
+Hello and welcome to my blog.
 
-      I hope you enjoy reading it.
+I hope you enjoy reading it.
     `
   },
   second: {
@@ -17,7 +17,7 @@ export const posts = {
     slug: 'trees',
     title: "Trees",
     content: `
-      Today I had a dream about some trees.
+Today I had a dream about some trees.
     `
   },
   third: {
@@ -25,9 +25,9 @@ export const posts = {
     slug: 'brunch',
     title: 'Brunch',
     content: `
-      Today I had avacodo toast for brunch.
+Today I had avacodo toast for brunch.
 
-      It was super awesome.
+It was super awesome.
     `
   }
 }
