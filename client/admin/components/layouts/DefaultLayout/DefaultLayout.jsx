@@ -61,7 +61,7 @@ export default function DefaultLayout({title, children}) {
           <Heading>{title}</Heading>
         </Header>
 
-        <Main pad="large" justify="center" align="center">
+        <Main pad="large" justify="center" align="center" fill={false}>
           {children}
         </Main>
       </Box>
