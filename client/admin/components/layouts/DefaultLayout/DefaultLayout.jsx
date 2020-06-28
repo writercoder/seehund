@@ -5,19 +5,12 @@ import logo from '../../../assets/images/Icon/trnsp_seal_white_cloud.png'
 import { Grid, Main, Header, Heading, Sidebar, Box, Nav, Image, Anchor, RoutedButton } from 'grommet';
 
 import {
-  Analytics,
   Article,
-  Chat,
-  Clock,
   Configure,
   Edit,
+  Gallery,
   Projects,
-  Split,
-  StatusInfoSmall
 } from "grommet-icons";
-
-// import UserWidget from '../user/UserWidget.jsx'
-// import MessageBox from '../messages/MessageBox.jsx'
 
 const SidebarButton = ({ icon, label, ...rest }) => (
   <Box pad="small">
@@ -37,7 +30,7 @@ const MainNavigation = () => (
     <SidebarButton path="/dashboard" icon={<Projects />} label="Dashboard" />
     <SidebarButton path="/posts" icon={<Article />} label="Posts" />
     <SidebarButton path="/posts/new" icon={<Edit />} label="New Post" />
-    <SidebarButton path="/posts" icon={<Article />} label="Posts" />
+    <SidebarButton path="/images" icon={<Gallery />} label="Images" />
     <SidebarButton path="/settings" icon={<Configure />} label="Settings" />
   </Nav>
 );
@@ -61,7 +54,13 @@ export default function DefaultLayout({title, children}) {
           <Heading>{title}</Heading>
         </Header>
 
-        <Main pad="large" justify="center" align="center" fill={false}>
+        <Main
+          pad="large"
+          justify="start"
+          align="center"
+          alignContent="start"
+          fill={false}
+        >
           {children}
         </Main>
       </Box>
