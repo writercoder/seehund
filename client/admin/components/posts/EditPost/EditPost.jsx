@@ -1,7 +1,7 @@
 import React from 'react'
 import DefaultLayout from '../../layouts/DefaultLayout/DefaultLayout'
 import PostForm from '../PostForm'
-import { Heading } from 'grommet'
+import { Box, Heading } from 'grommet'
 
 export default function EditPost({
   post,
@@ -10,7 +10,9 @@ export default function EditPost({
   return (
     <DefaultLayout>
       <Heading level={2}>Edit Post</Heading>
-      <PostForm post={post} submitLabel="Update" onSubmit={onUpdatePost} />
+      <Box width="large">
+        <PostForm post={post} submitLabel="Update" onSubmit={onUpdatePost} />
+      </Box>
     </DefaultLayout>
   )
 }
