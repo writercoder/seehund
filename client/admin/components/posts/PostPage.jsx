@@ -1,6 +1,6 @@
 import React from 'react'
 import {observer, inject} from 'mobx-react'
-import PostForm from './PostForm.jsx'
+import PostForm from './PostForm.old.jsx'
 import RedirectToLogin from '../user/RedirectToLogin.jsx'
 import DefaultLayout from '../layouts/DefaultLayout.jsx';
 

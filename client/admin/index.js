@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'mobx-react';
 
 import App from './components/App.jsx';
-import { PostsStore } from '../stores/posts-store';
-import { UserStore } from '../stores/user-store';
-import { MessagesStore } from '../stores/messages-store';
-import { BlogStore } from '../stores/blog-store';
-import { MetadataStore } from '../stores/metadata-store';
-import { ImagesStore } from '../stores/images-store';
+import { PostsStore } from '../domain/posts/PostsStore';
+import { UserStore } from '../domain/user/UserStore';
+import { MessagesStore } from '../domain/messages/MessagesStore';
+import { BlogStore } from '../domain/blog/BlogStore';
+import { MetadataStore } from '../domain/metadata/MetadataStore';
+import { ImagesStore } from '../domain/images/ImagesStore';
 
 import 'grommet/scss/vanilla/index.scss';
 

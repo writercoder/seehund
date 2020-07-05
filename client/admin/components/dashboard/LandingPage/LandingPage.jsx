@@ -1,5 +1,5 @@
 import React from 'react'
-import DefaultLayout from '../../layouts/DefaultLayout/DefaultLayout'
+import DefaultLayout from '../../layouts/DefaultLayout/'
 import { Anchor, Box, Heading } from 'grommet'
 
 export default function LandingPage({

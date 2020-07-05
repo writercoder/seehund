@@ -2,7 +2,7 @@ import {action, observable, observe, runInAction} from "mobx"
 // For some reason popsicle doesn't work with ES6 import syntax
 // Tempted to use something else like fetch.
 const popsicle = require('popsicle')
-import config from './../config.js'
+import config from '../../config.js'
 
 export class Post {
   id = null

@@ -1,7 +1,7 @@
 import {action, observable, observe, runInAction} from 'mobx';
 const popsicle = require('popsicle')
 
-import config from './../config.js';
+import config from '../../config.js';
 
 export class MetadataStore {
   @observable metadata = null;

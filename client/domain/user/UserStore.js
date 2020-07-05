@@ -4,7 +4,7 @@ import {
   AuthenticationDetails,
   CognitoUser
 } from 'amazon-cognito-identity-js';
-import config from './../config.js'
+import config from '../../config.js'
 
 
 export class UserStore {
