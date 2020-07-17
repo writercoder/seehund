@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types'
+import {useHistory} from "react-router";
 import logo from '../../../assets/images/Icon/trnsp_seal_white_cloud.png'
 
-import { Grid, Main, Header, Heading, Sidebar, Box, Nav, Image, Anchor, RoutedButton } from 'grommet';
+import {Grid, Main, Header, Heading, Sidebar, Box, Nav, Image, Button} from 'grommet';
 
 import {
   Article,
@@ -12,22 +13,33 @@ import {
   Projects,
 } from "grommet-icons";
 
-const SidebarButton = ({ icon, label, ...rest }) => (
-  <Box pad="small">
-    <RoutedButton
-      gap="medium"
-      alignSelf="start"
-      plain
-      icon={icon}
-      label={label}
-      {...rest}
-    />
-  </Box>
-)
+
+
+const SidebarButton = ({ icon, label, path, ...rest }) => {
+  const history = useHistory()
+  const handleClick = (e) => {
+    e.preventDefault()
+    history.push(path)
+  }
+
+  return (
+    <Box pad="small">
+      <Button
+        gap="medium"
+        alignSelf="start"
+        plain
+        icon={icon}
+        label={label}
+        onClick={handleClick}
+        {...rest}
+      />
+    </Box>
+  )
+}
 
 const MainNavigation = () => (
   <Nav gap="large" responsive={false}>
-    <SidebarButton path="/dashboard" icon={<Projects />} label="Dashboard" />
+    <SidebarButton path="/" icon={<Projects />} label="Dashboard" />
     <SidebarButton path="/posts" icon={<Article />} label="Posts" />
     <SidebarButton path="/posts/new" icon={<Edit />} label="New Post" />
     <SidebarButton path="/images" icon={<Gallery />} label="Images" />
@@ -36,7 +48,11 @@ const MainNavigation = () => (
 );
 
 
-export default function DefaultLayout({title, children}) {
+export default function DefaultLayout({
+  title,
+  children,
+  onLogout
+}) {
 
   return (
     <Grid
@@ -50,8 +66,11 @@ export default function DefaultLayout({title, children}) {
     >
 
       <Box gridArea="main">
-        <Header pad="small" background="light-2">
-          <Heading>{title}</Heading>
+        <Header pad="medium" border="bottom">
+          <Heading size="small" pad="small" margin="none" level={1}>{title}</Heading>
+          <Box>
+            <Button onClick={onLogout}>Logout</Button>
+          </Box>
         </Header>
 
         <Main
@@ -66,8 +85,8 @@ export default function DefaultLayout({title, children}) {
       </Box>
 
       <Box gridArea="sidebar" direction="row">
-        <Sidebar responsive={false} background="neutral-2"  pad="medium">
-          <Image src={logo} width={200} />
+        <Sidebar responsive={true} background="neutral-2"  pad="medium">
+          <Image src={`/${logo}`} width={200} />
           <MainNavigation />
         </Sidebar>
       </Box>
@@ -78,7 +97,8 @@ export default function DefaultLayout({title, children}) {
 
 DefaultLayout.propTypes = {
   children: PropTypes.node,
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
+  onLogout: PropTypes.func
 }
 
 

@@ -3,8 +3,8 @@ import useProvideMetadata from "./useProvideMetadata";
 
 export const MetadataContext = createContext()
 
-export function MetadataContextProvider({initialStore, children}) {
-  const metadata = useProvideMetadata()
+export function MetadataContextProvider({initialValue, children}) {
+  const metadata = useProvideMetadata(initialValue)
 
   return (
     <MetadataContext.Provider value={metadata}>

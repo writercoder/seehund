@@ -11,7 +11,6 @@ export default function metadataReducer(state, {type, payload}) {
       return {
         ...state,
         isLoading: true,
-        isLoaded: false,
       }
     case 'LOADED':
       return {

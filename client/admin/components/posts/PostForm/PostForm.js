@@ -19,7 +19,7 @@ export default function PostForm({
 
   return (
     <Form
-      onSubmit={onSubmit}
+      onSubmit={({value}) => onSubmit(value)}
       errors={errors}
       onChange={nextValue => setValue(nextValue)}
       value={value}

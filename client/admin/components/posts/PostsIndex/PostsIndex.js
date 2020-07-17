@@ -10,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "grommet";
+import DefaultLayout from "../../layouts/DefaultLayout";
 
 
 export default function PostsIndex({
@@ -17,7 +18,7 @@ export default function PostsIndex({
   onDeletePost
 }) {
   return (
-    <>
+    <DefaultLayout>
       <Heading level={2}>Posts</Heading>
       <Table size="medium">
         <TableHeader>
@@ -42,12 +43,12 @@ export default function PostsIndex({
               <TableCell>{post.slug}</TableCell>
               <TableCell>{post.title}</TableCell>
               <TableCell><Link to={ `posts/${post.id}`}>Edit</Link></TableCell>
-              <TableCell><Anchor onClick={() => onDeletePost(post.id)}>Delete</Anchor></TableCell>
+              <TableCell><Anchor onClick={() => onDeletePost(post)}>Delete</Anchor></TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-    </>
+    </DefaultLayout>
   )
 }
 

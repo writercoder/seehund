@@ -1,3 +1,3 @@
-import NewPost from './NewPost'
+import NewPostContainer from './container'
 
-export default NewPost
+export default NewPostContainer

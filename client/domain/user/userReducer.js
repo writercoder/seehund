@@ -30,8 +30,9 @@ export default function reducer(state, {type, payload}) {
     case 'AUTHENTICATED':
       return {
         ...state,
-        isAuthenticated: false,
-        isAuthenticating: true,
+        isAuthenticated: true,
+        isAuthenticating: false,
+        isInitialized: true,
         cognitoUser: payload.cognitoUser,
         userToken: payload.userToken
       };

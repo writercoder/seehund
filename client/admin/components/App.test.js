@@ -1,9 +1,24 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { render } from '@testing-library/react'
+import '@testing-library/jest-dom/extend-expect'
+import {loadedMetadata} from '../../domain/metadata/fixtures'
+import {MetadataContextProvider} from '../domain/metadata'
+import {UserContextProvider} from "../../domain/user"
 
 import App from './App';
 
-test("We can shallow render the app", () => {
-  const wrapper = shallow(<App/>);
-  expect(wrapper.exists('BrowserRouter')).toBe(true)
-});
+const renderLoggedOut = () => render(
+  <MetadataContextProvider initialValue={loadedMetadata}>
+    <UserContextProvider>
+      <App />
+    </UserContextProvider>
+  </MetadataContextProvider>
+)
+
+describe('<App />', () => {
+  it('can render', () => {
+    const {getByText} = renderLoggedOut()
+
+    expect(getByText(loadedMetadata.value.title)).toBeInTheDocument()
+  })
+})

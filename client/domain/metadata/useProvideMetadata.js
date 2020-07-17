@@ -4,18 +4,18 @@ import metadataReducer, {initialState} from "./metadataReducer";
 import {loadMetadata} from './metadataHelper'
 
 
-export default function useProvideMetadata() {
-  const [state, dispatch] = useReducer(metadataReducer, initialState)
-  const user = useUser()
+export default function useProvideMetadata(initialValue = null) {
+  const [state, dispatch] = useReducer(metadataReducer, initialValue || initialState)
+  const {user} = useUser()
 
   useEffect( () => {
     dispatch({type: 'LOADING'})
     const fetchMetadata = async () => {
-      const metadata = await loadMetadata(user.userToken)
+      const metadata = await loadMetadata()
       dispatch({type: 'LOADED', payload: metadata})
     }
     fetchMetadata()
-  }, [user.userToken])
+  }, [state.isLoaded])
 
   const saveMetadata = async () => {
     dispatch({type: 'SAVING'})

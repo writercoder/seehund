@@ -5,7 +5,6 @@ import {
   CognitoUser
 } from 'amazon-cognito-identity-js';
 import config from "../../config";
-import {runInAction} from "mobx";
 
 export function loadUserFromSession() {
   const userPool = new CognitoUserPool({
@@ -16,11 +15,12 @@ export function loadUserFromSession() {
 
   return new Promise((resolve, reject) => {
     if(!currentUser) {
+      console.log('no user')
       resolve(null)
     } else {
       currentUser.getSession((err, session) => {
         if(err) reject(err)
-
+        console.log('loaded user')
         resolve({
           cognitoUser: currentUser,
           authToken: session.getIdToken().getJwtToken()
@@ -42,6 +42,8 @@ export function authenticateUser(credentials) {
     Username: username,
     Password: password
   };
+
+  console.log({credentials, config})
 
   const user = new CognitoUser({ Username: username, Pool: userPool });
   const authenticationDetails = new AuthenticationDetails(authenticationData);

@@ -17,4 +17,14 @@ const DefinePluginConfig = new webpack.DefinePlugin({
 
 config.plugins.push(DefinePluginConfig)
 
+config.devServer = {
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+    "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+  }
+}
+
+config.devtool = '#cheap-module-inline-source-map'
+
 module.exports = config;

@@ -16,13 +16,13 @@ export default function LoginForm({
 
   return (
     <Form
-      onSubmit={onSubmit}
+      onSubmit={({value}) => onSubmit(value)}
       errors={errors}
       onChange={nextValue => setValue(nextValue)}
       value={value}
     >
-      <FormField required name="email" label="Email"  htmlfor="email-address">
-        <TextInput type="email" id="email-address" name="email" />
+      <FormField required name="username" label="Email"  htmlfor="email-address">
+        <TextInput type="email" id="email-address" name="username" />
       </FormField>
 
       <FormField required type="password" name="password" label="password"  htmlfor="password">

@@ -4,7 +4,7 @@ import {MetadataContext} from "./MetadataContext";
 import {loadedMetadata} from "./fixtures";
 
 
-const MetadataContextProvider = ({value, children}) => (
+export const MetadataContextProvider = ({value, children}) => (
   <AuthenticatedUserProvider>
     <MetadataContext.Provider value={value}>
       {children}

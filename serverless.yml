@@ -107,8 +107,6 @@ functions:
       - http:
           path: metadata
           method: get
-          authorizer:
-            arn: ${env:SEEHUND_USER_POOL_ARN}
           cors: true
   set_metadata:
     handler: api/metadata.set

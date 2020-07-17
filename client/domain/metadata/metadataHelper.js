@@ -1,26 +1,17 @@
 import config from '../../config.js';
 import popsicle from 'popsicle'
-import {runInAction} from "mobx";
+import {authHeader} from "../apiHelper";
 
-const authHeader = (userToken) => ({
-  Authorization: userToken
-})
-
-export function loadMetadata(userToken) {
-  return new Promise((resolve, reject) => {
-    popsicle
-      .get({
-        url: `${config.apiUrl}/metadata`,
-        headers: authHeader(userToken)})
-      .use(popsicle.plugins.parse('json'))
-      .then((res) => {
-        if(res.status == 200) {
-          resolve({metadata: res.body})
-        } else {
-          reject("Error fetching metadata")
-        }
-      });
-  })
+export async function loadMetadata(userToken) {
+  const response = await fetch(
+    `${config.apiUrl}/metadata`,
+    {
+      headers: {
+        ...authHeader(userToken)
+      }
+    }
+  )
+  return response.json()
 }
 
 export function saveMetadata(userToken, values) {

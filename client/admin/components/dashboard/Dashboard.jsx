@@ -1,8 +1,8 @@
 import React from 'react';
 import {observer, inject} from 'mobx-react';
 import Anchor from 'grommet/components/Anchor'
-import DefaultLayout from '../layouts/DefaultLayout.jsx';
-import RedirectToLogin from '../user/RedirectToLogin.jsx'
+import DefaultLayout from '../layouts/DefaultLayout.old.jsx';
+import RedirectToLogin from '../user/RedirectToLogin.js'
 import DomainConfig from './DomainConfig.jsx'
 
 @inject("userStore", "blogStore") @observer
