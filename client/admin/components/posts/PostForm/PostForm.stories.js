@@ -1,7 +1,7 @@
 import React from 'react'
 import {action} from '@storybook/addon-actions'
 import PostForm from './PostForm'
-import {posts} from '../fixtures'
+import {posts} from '../../../../domain/posts/fixtures'
 import {MessagesContextProvider} from "../../../../domain/messages/MessagesContext";
 
 export default {

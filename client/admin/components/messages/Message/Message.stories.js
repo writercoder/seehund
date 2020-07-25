@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import Message from './Message'
 import {Button} from 'grommet'
-import {messages} from "../fixtures";
+import {messages} from "../../../../domain/messages/fixtures";
 
 export default {
   component: Message,

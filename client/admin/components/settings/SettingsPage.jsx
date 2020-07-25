@@ -3,8 +3,8 @@ import React from 'react';
 import {observer, inject} from "mobx-react";
 
 import SettingsForm from './SettingsForm.jsx';
-import RedirectToLogin from '../user/RedirectToLogin.jsx'
-import DefaultLayout from '../layouts/DefaultLayout.jsx';
+import RedirectToLogin from '../user/RedirectToLogin.js'
+import DefaultLayout from '../layouts/DefaultLayout.old.jsx';
 
 @inject("metadataStore", "messagesStore", "userStore") @observer
 export default class SettingsPage extends React.Component {
