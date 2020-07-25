@@ -3,22 +3,22 @@ import PostsIndex from './PostsIndex'
 import DefaultLayout from '../../layouts/DefaultLayout/DefaultLayout'
 import {action} from '@storybook/addon-actions'
 import {postsList} from '../fixtures'
+import {LoadedMetadataContextProvider} from "../../../../domain/metadata/mocks";
 
 export default {
   title: "posts / PostsIndex",
-  component: PostsIndex
+  component: PostsIndex,
+  decorators: [
+    story => <LoadedMetadataContextProvider>{story()}</LoadedMetadataContextProvider>
+  ]
 }
 
 const onDeletePost = action('onDeletePost')
 
 export const Default = () => (
-  <DefaultLayout title="My blog about clouds">
-    <PostsIndex posts={postsList} onDeletePost={onDeletePost} />
-  </DefaultLayout>
+  <PostsIndex posts={postsList} onDeletePost={onDeletePost} />
 )
 
 export const Empty = () => (
-  <DefaultLayout title="My blog about clouds">
-    <PostsIndex posts={[]} onDeletePost={onDeletePost} />
-  </DefaultLayout>
+  <PostsIndex posts={[]} onDeletePost={onDeletePost} />
 )

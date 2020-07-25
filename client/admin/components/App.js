@@ -14,13 +14,13 @@ import EditPost from "./posts/EditPost";
 
 export default function App() {
   return (
-    <Grommet theme={grommet} centered={false}>
+    <Grommet full theme={grommet} centered={false}>
       <Router basename="/">
         <Switch>
           <Route exact path="/login" component={redirectLoggedInUser(SignInPage)} />
           <Route exact path="/" component={loginRequired(LandingPage)} />
           <Route exact path="/posts" component={loginRequired(PostsIndex)} />
-          <Route exact path="/posts/new" component={loginRequired(NewPost)} />
+          <Route exact path="/write" component={loginRequired(NewPost)} />
           <Route exact path="/posts/:id" component={loginRequired(EditPost)} />
         </Switch>
       </Router>

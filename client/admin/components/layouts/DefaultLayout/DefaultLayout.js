@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import {useHistory} from "react-router";
 import logo from '../../../assets/images/Icon/trnsp_seal_white_cloud.png'
+import Message from '../../messages/Message'
 
 import {Grid, Main, Header, Heading, Sidebar, Box, Nav, Image, Button} from 'grommet';
 
@@ -41,7 +42,7 @@ const MainNavigation = () => (
   <Nav gap="large" responsive={false}>
     <SidebarButton path="/" icon={<Projects />} label="Dashboard" />
     <SidebarButton path="/posts" icon={<Article />} label="Posts" />
-    <SidebarButton path="/posts/new" icon={<Edit />} label="New Post" />
+    <SidebarButton path="/write" icon={<Edit />} label="Write" />
     <SidebarButton path="/images" icon={<Gallery />} label="Images" />
     <SidebarButton path="/settings" icon={<Configure />} label="Settings" />
   </Nav>
@@ -80,6 +81,7 @@ export default function DefaultLayout({
           alignContent="start"
           fill={false}
         >
+          <Message />
           {children}
         </Main>
       </Box>

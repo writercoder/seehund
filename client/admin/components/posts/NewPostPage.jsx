@@ -2,9 +2,9 @@ import React from 'react'
 import {observer, inject} from 'mobx-react'
 import { withRouter } from 'react-router'
 import { Redirect } from 'react-router-dom'
-import RedirectToLogin from '../user/RedirectToLogin.jsx';
-import PostForm from './PostForm.jsx'
-import DefaultLayout from '../layouts/DefaultLayout.jsx';
+import RedirectToLogin from '../user/RedirectToLogin.js';
+import PostForm from './PostForm.js'
+import DefaultLayout from '../layouts/DefaultLayout.old.jsx';
 
 @inject("postsStore", "userStore", "messagesStore") @observer @withRouter
 export default class NewPostsPage extends React.Component {

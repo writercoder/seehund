@@ -4,10 +4,10 @@ import useProvideMessages from "./useProvideMessages";
 export const MessagesContext = createContext()
 
 export function MessagesContextProvider({initialValue, children}) {
-  const posts = useProvideMessages(initialValue)
+  const messages = useProvideMessages(initialValue)
 
   return (
-    <MessagesContext.Provider value={posts}>
+    <MessagesContext.Provider value={messages}>
       {children}
     </MessagesContext.Provider>
   )
