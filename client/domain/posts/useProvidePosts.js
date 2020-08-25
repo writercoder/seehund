@@ -13,17 +13,13 @@ export default function useProvidePosts() {
     }
     dispatch({type: 'LOADING'})
     const fetchPosts = async () => {
-      console.log('about to load posts')
       const posts = await load(user.userToken)
-      console.log('loaded posts')
       dispatch({type: 'LOADED', payload: posts})
     }
     fetchPosts()
   }, [user.userToken])
 
   const createPost = async post => {
-    console.log('createPost')
-    console.log({post})
     try {
       dispatch({type: 'LOADING'})
       const createdPost = await create(user.userToken, post)
@@ -36,8 +32,6 @@ export default function useProvidePosts() {
   }
 
   const updatePost = async post => {
-    console.log('updatePost')
-    console.log({post})
     try {
       dispatch({type: 'LOADING'})
       const updatedPost = await update(user.userToken, post)
@@ -50,8 +44,6 @@ export default function useProvidePosts() {
   }
 
   const deletePost = async post => {
-    console.log('updatePost')
-    console.log({post})
     try {
       dispatch({type: 'LOADING'})
       await destroy(user.userToken, post)

@@ -1,9 +1,9 @@
 import React from 'react'
-import DefaultLayout from '../../layouts/DefaultLayout/DefaultLayout'
+import DefaultLayout from '../../layouts/DefaultLayout'
 import SettingsForm from './SettingsForm'
 import { Box, Heading } from 'grommet'
 
-export default function Settings({
+export default function SettingsPage({
   blog,
   onUpdateSettings
 }) {

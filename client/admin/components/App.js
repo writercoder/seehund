@@ -11,6 +11,7 @@ import NewPost from "./posts/NewPost";
 import loginRequired from "./user/loginRequired";
 import redirectLoggedInUser from "./user/redirectLoggedInUser";
 import EditPost from "./posts/EditPost";
+import SettingsPage from "./settings/SettingsPage";
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
           <Route exact path="/posts" component={loginRequired(PostsIndex)} />
           <Route exact path="/write" component={loginRequired(NewPost)} />
           <Route exact path="/posts/:id" component={loginRequired(EditPost)} />
+          <Route exact path="/settings" component={loginRequired(SettingsPage)} />
         </Switch>
       </Router>
     </Grommet>

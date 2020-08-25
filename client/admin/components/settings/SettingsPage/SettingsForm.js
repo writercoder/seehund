@@ -16,11 +16,9 @@ export default function SettingsForm({
 }) {
   const [value, setValue] = useState(blog)
 
-  console.log(value)
-
   return (
     <Form
-      onSubmit={onSubmit}
+      onSubmit={({value}) => onSubmit(value)}
       errors={errors}
       onChange={nextValue => setValue(nextValue)}
       value={value}
@@ -29,7 +27,7 @@ export default function SettingsForm({
         <TextInput id="blog-title" name="title" />
       </FormField>
 
-      <FormField required={true} name="description" label="Blog Description"  htmlfor="blog-description">
+      <FormField name="description" label="Blog Description"  htmlfor="blog-description">
         <TextArea rows="8" fill={true} id="blog-description" name="description" />
       </FormField>
 
@@ -41,6 +39,5 @@ export default function SettingsForm({
 SettingsForm.propTypes = {
   post: PropTypes.object,
   errors: PropTypes.object,
-  submitLabel: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired
 }

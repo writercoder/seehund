@@ -18,6 +18,11 @@ const DefinePluginConfig = new webpack.DefinePlugin({
 config.plugins.push(DefinePluginConfig)
 
 config.devServer = {
+  historyApiFallback: {
+    rewrites: [
+      { from: /^.*$/, to: '/index.html' },
+    ]
+  },
   headers: {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",

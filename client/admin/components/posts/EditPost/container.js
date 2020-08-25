@@ -13,9 +13,9 @@ export default function EditPostContainer() {
   const handleUpdatePost = async updatedPost => {
     const {error} = await updatePost(updatedPost)
     if(error) {
-      pushMessage({type: 'error', message: error})
+      pushMessage({level: 'critical', text: error})
     } else {
-      pushMessage({type: 'info', message: 'Post updated'})
+      pushMessage({level: 'success', text: 'Post updated'})
     }
   }
 

@@ -1,8 +1,8 @@
 import React from 'react'
 import {observer, inject} from 'mobx-react'
 
-import RedirectToLogin from '../user/RedirectToLogin.jsx'
-import DefaultLayout from '../layouts/DefaultLayout.jsx';
+import RedirectToLogin from '../user/RedirectToLogin.js'
+import DefaultLayout from '../layouts/DefaultLayout.old.jsx';
 
 import Form from 'grommet/components/Form';
 import FormField from 'grommet/components/FormField';

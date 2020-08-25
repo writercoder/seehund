@@ -1,7 +1,7 @@
 import {useEffect, useReducer} from "react";
 import {useUser} from "../user/UserContext";
 import metadataReducer, {initialState} from "./metadataReducer";
-import {loadMetadata} from './metadataHelper'
+import {loadMetadata, update} from './metadataHelper'
 
 
 export default function useProvideMetadata(initialValue = null) {
@@ -17,15 +17,22 @@ export default function useProvideMetadata(initialValue = null) {
     fetchMetadata()
   }, [state.isLoaded])
 
-  const saveMetadata = async () => {
+  const setMetadata = async (value) => {
+    console.log('setMetadata', value)
     dispatch({type: 'SAVING'})
-    const savedMetadata = await saveMetadata(user.userToken, state.value)
-    dispatch({type: 'LOADED', payload: savedMetadata})
+    try {
+      const savedMetadata = await update(user.userToken, value)
+      dispatch({type: 'LOADED', payload: savedMetadata})
+      return {metadata: savedMetadata}
+    } catch (e) {
+      console.log('error', e)
+      dispatch({type: 'ERROR', payload: e.message})
+      return {error: e}
+    }
   }
 
   return {
-    ...state,
-    setMetadata: update => dispatch({type: 'SET_VALUE', payload: update}),
-    saveMetadata
+    metadata: state,
+    setMetadata
   }
 }

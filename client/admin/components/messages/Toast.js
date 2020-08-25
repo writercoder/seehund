@@ -16,6 +16,7 @@ export default function Toast({
     <Layer
       position={position}
       modal={false}
+      margin="none"
     >
       {children}
     </Layer>

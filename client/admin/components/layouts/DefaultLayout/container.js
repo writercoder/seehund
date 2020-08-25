@@ -7,7 +7,7 @@ import {useUser} from "../../../../domain/user";
 
 export default function DefaultLayoutContainer ({children}) {
   const { logout } = useUser()
-  const metadata = useMetadata()
+  const { metadata } = useMetadata()
 
   if(!metadata.isLoaded) {
     return <p>Loading...</p>

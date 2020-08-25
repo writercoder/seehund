@@ -1,5 +1,5 @@
 import React from 'react'
-import DefaultLayout from '../../layouts/DefaultLayout/DefaultLayout'
+import DefaultLayout from '../../layouts/DefaultLayout'
 import PostForm from '../PostForm'
 import { Box, Heading } from 'grommet'
 

@@ -10,9 +10,9 @@ export default function PostsIndexContainer() {
   const handleDeletePost = async post => {
     const {error} = deletePost(post)
     if(error) {
-      pushMessage({type: 'error', message: error})
+      pushMessage({level: 'critical', text: error})
     } else {
-      pushMessage({type: 'error', message: 'Post deleted' })
+      pushMessage({level: 'critical', text: 'Post deleted' })
     }
   }
 
